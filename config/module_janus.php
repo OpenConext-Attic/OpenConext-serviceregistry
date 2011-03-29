@@ -402,6 +402,24 @@ $config = array(
             'filetype' => '*.jpg', // *.jpg; *.gif; *.*
             'maxsize' => '100', // Valid units are B, KB, MB, and GB. The default unit is KB.            
         ),
+	'keywords:en' => array(
+            'type' => 'text',
+            'order' => 511,
+            'default' => '',
+            'description' => array(
+                'nl' => '',
+                'en' => 'The space separated values on which an end-user can search a certain IdP in the WAYF.',
+            ),
+        ),
+        'keywords:nl' => array(
+            'type' => 'text',
+            'order' => 512,
+            'default' => '',
+            'description' => array(
+                'nl' => '',
+                'en' => 'The space separated values on which an end-user can search a certain IdP in the WAYF.',
+            ),
+        ),
         // Contact person fields
         'contacts:0:contactType' => array(
             'type' => 'select',
