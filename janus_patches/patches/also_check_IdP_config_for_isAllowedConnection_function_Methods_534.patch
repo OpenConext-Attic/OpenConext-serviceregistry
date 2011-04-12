@@ -1,7 +1,7 @@
-Index: Methods.php
+Index: modules/janus/lib/REST/Methods.php
 ===================================================================
---- Methods.php (revision 702)
-+++ Methods.php (working copy)
+--- modules/janus/lib/REST/Methods.php	(revision 784)
++++ modules/janus/lib/REST/Methods.php	(working copy)
 @@ -132,7 +132,7 @@
          return $result;
      }
