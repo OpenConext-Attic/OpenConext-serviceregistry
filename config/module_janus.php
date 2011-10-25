@@ -133,14 +133,8 @@ $config = array(
         // Buildin admin user type. Define if you want to create more admin user
         // accounts.
         'admin',
-        'operations',
-        'secretariat',
         //SAML 2.0 contact types
         'technical',
-        'support',
-        'administrative',
-        'billing',
-        'other',
     ),
 
     'messenger.external' => array(
