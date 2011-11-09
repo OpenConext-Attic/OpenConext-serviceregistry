@@ -7,11 +7,13 @@
  * @package simpleSAMLphp
  * @subpackage JANUS
  * @version $Id: module_janus.php 419 2010-06-07 13:07:31Z jach@wayf.dk $
+ *
+ * @note: These values might overwritten by config file on server (/etc/surfconext)
  */
 $config = array(
 
-    'admin.name' => 'WAYF sekretariatet',
-    'admin.email' => 'sekretariatet@wayf.dk',
+    'admin.name' => 'Surfconext',
+    'admin.email' => 'info@surfconext.nl',
 
     /*
      * Auth source used to gain access to JANUS
