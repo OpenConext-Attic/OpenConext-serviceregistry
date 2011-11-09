@@ -32,10 +32,11 @@ $template = array(
             'type' => 'select',
             'required'=>TRUE,
             'select_values' => array(
-                'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
-                'urn:oasis:names:tc:SAML:1.1:nameid-format:persistent',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
             ),
-            'default' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
         ),
     ),
 
@@ -80,8 +81,6 @@ $template = array(
         'redirect.sign'                       => array('type' => 'boolean', 'required' => TRUE, 'default' => false),
 
         'coin:eula'                     => array('validate' => 'isurl'),
-
-        'coin:default_vo_id'    => array(),
 
         'coin:alternate_public_key'     => array(),
         'coin:alternate_private_key'    => array(),
