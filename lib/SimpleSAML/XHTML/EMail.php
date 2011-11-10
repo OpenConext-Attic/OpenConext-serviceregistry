@@ -9,6 +9,8 @@
  */
 class SimpleSAML_XHTML_EMail {
 
+    const BOUNDARY_OPEN = '--';
+    const BOUNDARY_CLOSE = '--';
 
 	private $to = NULL;
 	private $cc = NULL;
@@ -17,7 +19,7 @@ class SimpleSAML_XHTML_EMail {
 	private $replyto = NULL;
 	private $subject = NULL;
 	private $headers = array();
-	
+    private $_altBoundary;
 
 	/**
 	 * Constructor
@@ -28,7 +30,18 @@ class SimpleSAML_XHTML_EMail {
 		$this->from = $from;
 		$this->replyto = $replyto;
 		$this->subject = $subject;
+        $this->_createBoundary();
 	}
+
+    /**
+     * Creates boundary string
+     *
+     * @return void
+     */
+    protected function _createBoundary() {
+        $random_hash = SimpleSAML_Utilities::stringToHex(SimpleSAML_Utilities::generateRandomBytes(16));
+        $this->_altBoundary = 'alt-' . $random_hash;
+    }
 
 	function setBody($body) {
 		$this->body = $body;
@@ -66,29 +79,28 @@ pre {
 		if ($this->subject == NULL) throw new Exception('EMail field [subject] is required and not set.');
 		if ($this->body == NULL) throw new Exception('EMail field [body] is required and not set.');
 		
-		$random_hash = SimpleSAML_Utilities::stringToHex(SimpleSAML_Utilities::generateRandomBytes(16));
-		
+
 		if (isset($this->from))
 			$this->headers[]= 'From: ' . $this->from;
 		if (isset($this->replyto))
 			$this->headers[]= 'Reply-To: ' . $this->replyto;
 
-		$this->headers[] = 'Content-Type: multipart/alternative; boundary="simplesamlphp-' . $random_hash . '"'; 
-		
+        $this->headers[] = 'Content-Type: multipart/alternative; boundary="' . $this->_altBoundary . '"';
+
 		$message = '
---simplesamlphp-' . $random_hash . '
+' . self::BOUNDARY_OPEN . $this->_altBoundary . '
 Content-Type: text/plain; charset="utf-8" 
 Content-Transfer-Encoding: 8bit
 
 ' . strip_tags(html_entity_decode($this->body)) . '
 
---simplesamlphp-' . $random_hash . '
+' . self::BOUNDARY_OPEN . $this->_altBoundary . '
 Content-Type: text/html; charset="utf-8" 
 Content-Transfer-Encoding: 8bit
 
 ' . $this->getHTML($this->body) . '
 
---simplesamlphp-' . $random_hash . '--
+' . self::BOUNDARY_OPEN . $this->_altBoundary . self::BOUNDARY_CLOSE . '
 ';
 		$headers = join("\r\n", $this->headers);
 
