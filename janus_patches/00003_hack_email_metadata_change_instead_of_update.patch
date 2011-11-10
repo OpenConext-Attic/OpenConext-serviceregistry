@@ -21,11 +21,11 @@ Index: modules/janus/lib/Cron/Job/Abstract.php
 +<p>URL: <tt>$url</tt></p>
 +MESSAGE;
 +
-+        $toAddress = $config->getString('technicalcontact_email', 'na@example.org');
++        $toAddress = $config->getString('managingcontact_email', 'na@example.org');
 +        $subject = "Metadata Change detected for entity [name] ([entityID])";
 +
 +        if ($toAddress == 'na@example.org') {
-+            SimpleSAML_Logger::error('Cron - Could not send email. [technicalcontact_email] not set in config.');
++            SimpleSAML_Logger::error('Cron - Could not send email. [managingcontact_email] not set in config.');
 +        } else {
 +            $email = new SimpleSAML_XHTML_EMail($toAddress, $subject, 'no-reply@example.edu');
 +            $email->setBody($message);
