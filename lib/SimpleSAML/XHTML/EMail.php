@@ -20,6 +20,8 @@ class SimpleSAML_XHTML_EMail {
 	private $subject = NULL;
 	private $headers = array();
     private $_altBoundary;
+    private $_mixedBoundary;
+    private $_attachmentBody;
 
 	/**
 	 * Constructor
@@ -41,6 +43,7 @@ class SimpleSAML_XHTML_EMail {
     protected function _createBoundary() {
         $random_hash = SimpleSAML_Utilities::stringToHex(SimpleSAML_Utilities::generateRandomBytes(16));
         $this->_altBoundary = 'alt-' . $random_hash;
+        $this->_mixedBoundary = 'mixed-' . $random_hash;
     }
 
 	function setBody($body) {
@@ -85,9 +88,12 @@ pre {
 		if (isset($this->replyto))
 			$this->headers[]= 'Reply-To: ' . $this->replyto;
 
-        $this->headers[] = 'Content-Type: multipart/alternative; boundary="' . $this->_altBoundary . '"';
+        $this->headers[] = 'Content-Type: multipart/mixed; boundary="' . $this->_mixedBoundary . '"';
 
 		$message = '
+' . self::BOUNDARY_OPEN . $this->_mixedBoundary . '
+Content-Type: multipart/alternative; boundary="' . $this->_altBoundary . '"
+
 ' . self::BOUNDARY_OPEN . $this->_altBoundary . '
 Content-Type: text/plain; charset="utf-8" 
 Content-Transfer-Encoding: 8bit
@@ -102,6 +108,11 @@ Content-Transfer-Encoding: 8bit
 
 ' . self::BOUNDARY_OPEN . $this->_altBoundary . self::BOUNDARY_CLOSE . '
 ';
+
+$message .= $this->_attachmentBody;
+
+$message .= self::BOUNDARY_CLOSE . $this->_mixedBoundary .self::BOUNDARY_CLOSE;
+
 		$headers = join("\r\n", $this->headers);
 
 		$mail_sent = @mail($this->to, $this->subject, $message, $headers);
@@ -109,6 +120,31 @@ Content-Transfer-Encoding: 8bit
 		if (!$mail_sent) throw new Exception('Error when sending e-mail');
 	}
 
-}
+    /**
+     * Add attachment from string
+     *
+     * @param   string $content
+     * @param   string    $name
+     * @return  void
+     *
+     * NOTE: This was added to solve Surfconext Backlog 287
+     * This might not be the best or safest way to add attachments
+     * It would be a very good idea to use something like Zend_Mail to replace this whole class
+     */
+    public function addAttachment($content, $name, $mimeType = 'application/octet-stream') {
+        // encode attachment content
+        $attachment = chunk_split(base64_encode($content));
 
+        $attachmentString = '
+--' . $this->_mixedBoundary . '
+Content-Type: ' . $mimeType . '; name="' . $name . '"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="' . $name . '"
+
+' . $attachment . '
+';
+
+        $this->_attachmentBody .= $attachmentString;
+    }
+}
 ?>
