@@ -1,0 +1,57 @@
+Index: modules/janus/lib/Cron/Job/Abstract.php
+===================================================================
+--- modules/janus/lib/Cron/Job/Abstract.php	(revision 924)
++++ modules/janus/lib/Cron/Job/Abstract.php	(working copy)
+@@ -35,6 +35,38 @@
+         }
+     }
+ 
++    /**
++     * @param   string $metadataXml
++     * @return void
++     */
++    protected function _mailUpdatedMetaData($metadataXml) {
++        $config = SimpleSAML_Configuration::getInstance();
++        $time = date(DATE_RFC822);
++        $url = SimpleSAML_Utilities::selfURL();
++
++        $message = <<<MESSAGE
++<h1>Metadata Change detected</h1>
++<p>Cron ran at $time</p>
++<p>URL: <tt>$url</tt></p>
++MESSAGE;
++
++        $toAddress = $config->getString('technicalcontact_email', 'na@example.org');
++        $subject = "Metadata Change detected for entity [name] ([entityID])";
++
++        if ($toAddress == 'na@example.org') {
++            SimpleSAML_Logger::error('Cron - Could not send email. [technicalcontact_email] not set in config.');
++        } else {
++            $email = new SimpleSAML_XHTML_EMail($toAddress, $subject, 'no-reply@example.edu');
++            $email->setBody($message);
++
++            // Add gzipped metadata
++            $attachmentContent  = gzencode($metadataXml);
++            $email->addAttachment($attachmentContent, 'metadata.xml.gz', 'application/zip');
++
++            $email->send();
++        }
++    }
++
+     protected function _getHtmlForMessages($messages, $type)
+     {
+         if (count($messages) > 0) {
+Index: modules/janus/lib/Cron/Job/MetadataRefresh.php
+===================================================================
+--- modules/janus/lib/Cron/Job/MetadataRefresh.php	(revision 924)
++++ modules/janus/lib/Cron/Job/MetadataRefresh.php	(working copy)
+@@ -142,8 +142,7 @@
+                 }
+ 
+                 if ($updated) {
+-                    $entity->setParent($entity->getRevisionid());
+-                    $entityController->saveEntity();
++                    $this->_mailUpdatedMetaData($xml);
+ 
+                     $cronLogger->with($entityId)->notice(
+                         "Entity updated"
