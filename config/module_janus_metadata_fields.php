@@ -62,7 +62,7 @@ $template = array(
 
         // MDUI stuff
         'keywords:#'    => array('required' => true, 'supported'=>array('en','nl')),
-        'logo:0:url'    => array('required' => true, 'default' => 'https://.png', 'default_allow' => false),
+        'logo:0:url'    => array('required' => true, 'default' => 'https://.png', 'default_allow' => FALSE),
         'logo:0:width'  => array('required' => true, 'default' => '120'),
         'logo:0:height' => array('required' => true, 'default' => '60'),
     ),
@@ -78,7 +78,9 @@ $template = array(
             'required' => true,
         ),
         'AssertionConsumerService:0:Location' => array('required' => TRUE, 'validate' => 'isurl'),
-        'redirect.sign'                       => array('type' => 'boolean', 'required' => TRUE, 'default' => false),
+        'redirect.sign'                       => array('type' => 'boolean', 'required' => TRUE, 'default' => FALSE),
+
+        'coin:no_consent_required'      => array('type' => 'boolean', 'default' => FALSE),
 
         'coin:eula'                     => array('validate' => 'isurl'),
 
@@ -96,10 +98,10 @@ $template = array(
             'default' => 'HMAC_SHA1',
         ),
         'coin:oauth:public_key'         => array(),
-        'coin:oauth:app_title'          => array('default' => 'Application Title','default_allow' => false),
+        'coin:oauth:app_title'          => array('default' => 'Application Title','default_allow' => FALSE),
         'coin:oauth:app_description'    => array(),
-        'coin:oauth:app_thumbnail'      => array('validate' => 'isurl', 'default' => 'https://www.surfnet.nl/thumb.png', 'default_allow' => false),
-        'coin:oauth:app_icon'           => array('validate' => 'isurl', 'default' => 'https://www.surfnet.nl/icon.gif' ,'default_allow' => false),
+        'coin:oauth:app_thumbnail'      => array('validate' => 'isurl', 'default' => 'https://www.surfnet.nl/thumb.png', 'default_allow' => FALSE),
+        'coin:oauth:app_icon'           => array('validate' => 'isurl', 'default' => 'https://www.surfnet.nl/icon.gif' ,'default_allow' => FALSE),
         'coin:oauth:callback_url'       => array('validate' => 'isurl'),
 
         // Provisioning
@@ -174,10 +176,10 @@ class sspmod_janus_fieldsTemplates
         }
         if (!isset($field['default'])) {
             $field['default'] = '';
-            $field['default_allow'] = false;
+            $field['default_allow'] = FALSE;
         }
         if (!isset($field['required'])) {
-            $field['required'] = false;
+            $field['required'] = FALSE;
         }
         return $field;
     }
