@@ -1,6 +1,6 @@
 Index: modules/janus/lib/Cron/Job/Abstract.php
 ===================================================================
---- modules/janus/lib/Cron/Job/Abstract.php	(revision 924)
+--- modules/janus/lib/Cron/Job/Abstract.php	(revision 935)
 +++ modules/janus/lib/Cron/Job/Abstract.php	(working copy)
 @@ -35,6 +35,38 @@
          }
@@ -43,7 +43,7 @@ Index: modules/janus/lib/Cron/Job/Abstract.php
          if (count($messages) > 0) {
 Index: modules/janus/lib/Cron/Job/MetadataRefresh.php
 ===================================================================
---- modules/janus/lib/Cron/Job/MetadataRefresh.php	(revision 924)
+--- modules/janus/lib/Cron/Job/MetadataRefresh.php	(revision 935)
 +++ modules/janus/lib/Cron/Job/MetadataRefresh.php	(working copy)
 @@ -142,8 +142,7 @@
                  }
