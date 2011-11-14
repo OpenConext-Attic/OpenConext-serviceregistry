@@ -30,7 +30,7 @@ $template = array(
 
         'NameIDFormat' => array(
             'type' => 'select',
-            'required'=>TRUE,
+            'required'=>FALSE,
             'select_values' => array(
                 'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
                 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
@@ -53,18 +53,18 @@ $template = array(
                 'urn:oasis:names:tc:SAML:2.0:bindings:URI'
             ),
             'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
-            'required' => true,
+            'required' => TRUE,
         ),
-        'SingleSignOnService:0:Location' => array('required' => true, 'validate' => 'isurl'),
+        'SingleSignOnService:0:Location' => array('required' => TRUE, 'validate' => 'isurl'),
         'certData'                  => array('required'=>TRUE),
 
-        'coin:guest_qualifier' => array('required' => true, 'default' => 'All'),
+        'coin:guest_qualifier' => array('required' => TRUE, 'default' => 'All'),
 
         // MDUI stuff
-        'keywords:#'    => array('required' => true, 'supported'=>array('en','nl')),
-        'logo:0:url'    => array('required' => true, 'default' => 'https://.png', 'default_allow' => FALSE),
-        'logo:0:width'  => array('required' => true, 'default' => '120'),
-        'logo:0:height' => array('required' => true, 'default' => '60'),
+        'keywords:#'    => array('required' => TRUE, 'supported'=>array('en','nl')),
+        'logo:0:url'    => array('required' => TRUE, 'default' => 'https://.png', 'default_allow' => FALSE),
+        'logo:0:width'  => array('required' => TRUE, 'default' => '120'),
+        'logo:0:height' => array('required' => TRUE, 'default' => '60'),
     ),
 
     JANUS_FIELDS_TYPE_SP => array(
@@ -75,7 +75,7 @@ $template = array(
                 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
             ),
             'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
-            'required' => true,
+            'required' => TRUE,
         ),
         'AssertionConsumerService:0:Location' => array('required' => TRUE, 'validate' => 'isurl'),
         'redirect.sign'                       => array('type' => 'boolean', 'required' => TRUE, 'default' => FALSE),
@@ -172,7 +172,7 @@ class sspmod_janus_fieldsTemplates
             $field['type'] = 'text';
         }
         if (isset($field['default']) && !isset($field['default_allow'])) {
-            $field['default_allow'] = true;
+            $field['default_allow'] = TRUE;
         }
         if (!isset($field['default'])) {
             $field['default'] = '';
