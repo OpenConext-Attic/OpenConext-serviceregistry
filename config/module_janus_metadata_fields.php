@@ -59,6 +59,7 @@ $template = array(
         'certData'                  => array('required'=>TRUE),
 
         'coin:guest_qualifier' => array('required' => TRUE, 'default' => 'All'),
+        'coin:schachomeorganization' => array(),
 
         // MDUI stuff
         'keywords:#'    => array('required' => TRUE, 'supported'=>array('en','nl')),
