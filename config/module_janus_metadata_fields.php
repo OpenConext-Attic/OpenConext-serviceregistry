@@ -27,17 +27,6 @@ $template = array(
         'OrganizationName:#'        => array(                    'supported' => array('en', 'nl')),
         'OrganizationDisplayName:#' => array(                    'supported' => array('en', 'nl')),
         'OrganizationURL:#'         => array('validate' => 'isurl', 'supported' => array('en', 'nl')),
-
-        'NameIDFormat' => array(
-            'type' => 'select',
-            'required'=>FALSE,
-            'select_values' => array(
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
-            ),
-            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
-        ),
     ),
 
     JANUS_FIELDS_TYPE_IDP => array(
@@ -114,6 +103,17 @@ $template = array(
             'type' => 'select',
             'select_values' => array("none", "google"),
             'default' => 'google'
+        ),
+
+        'NameIDFormat' => array(
+            'type' => 'select',
+            'required'=>FALSE,
+            'select_values' => array(
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+            ),
+            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
         ),
     ),
 );
