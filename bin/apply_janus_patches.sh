@@ -1,5 +1,19 @@
 #!/bin/sh
 
+# Get janus dir
+scriptPath=$(readlink -f "$0")
+binDir=$(dirname $scriptPath)
+serviceRegistryRootDir=$(dirname $binDir)
+janusDir=${serviceRegistryRootDir}"/modules/janus/"
+
+echo -e "\nReverting versioned files"
+svn revert --recursive ${janusDir}
+
+echo -e "\nRemoving unversioned files"
+svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'
+svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'  | xargs rm -rf
+
+echo -e "\nPatching files"
 REJFILE="/tmp/janus_patches-rej-$(date +%s)"
 touch $REJFILE
 for FILENAME in janus_patches/*.patch
@@ -8,3 +22,8 @@ do
 done
 rm $REJFILE
 echo "Removed $REJFILE"
+
+echo -e "\nCreating enable file"
+touch ${janusDir}"enable"
+
+echo -e "\nFinished"
