@@ -105,6 +105,8 @@ $template = array(
             'default' => 'google'
         ),
 
+        'coin:provide_is_member_of'     => array('type' => 'boolean', 'default' => FALSE),
+
         'NameIDFormat' => array(
             'type' => 'select',
             'required'=>FALSE,

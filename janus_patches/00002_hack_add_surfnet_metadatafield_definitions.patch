@@ -1,8 +1,8 @@
 Index: modules/janus/dictionaries/metadatafields.definition.json
 ===================================================================
---- modules/janus/dictionaries/metadatafields.definition.json	(revision 848)
+--- modules/janus/dictionaries/metadatafields.definition.json	(revision 948)
 +++ modules/janus/dictionaries/metadatafields.definition.json	(working copy)
-@@ -2,88 +2,172 @@
+@@ -2,88 +2,175 @@
      "AssertionConsumerService_Binding": {
          "en": "Binding for the endpoint for connection that supports the Authentication Request protocol [SAMLProf]."
      },
@@ -245,6 +245,9 @@ Index: modules/janus/dictionaries/metadatafields.definition.json
 +    },
 +    "coin_eula": {
 +        "en": "URL of the End User License Agreement for the service."
++    },
++    "coin_provide_is_member_of": {
++        "en": "Provide SAML attribute isMemberOf containing all groups a person is a member of (note: resource intensive depending on number of groups)"
 +    },
 +    "logo_url": {
 +        "en": "The URL of the IDPs logo image. This URL must be accessible from the public internet."
