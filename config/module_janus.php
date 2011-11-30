@@ -99,6 +99,7 @@ $config = array(
                 'da' => 'Forbindelsen er på Produktions systemet',
                 'es' => 'Desc 5 es',
             ),
+            'isDeployable' => true
         ),
     ),
 
