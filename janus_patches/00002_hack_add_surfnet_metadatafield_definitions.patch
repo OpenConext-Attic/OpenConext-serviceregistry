@@ -1,8 +1,8 @@
 Index: modules/janus/dictionaries/metadatafields.definition.json
 ===================================================================
---- modules/janus/dictionaries/metadatafields.definition.json	(revision 948)
-+++ modules/janus/dictionaries/metadatafields.definition.json	(working copy)
-@@ -2,88 +2,175 @@
+--- modules/janus/dictionaries/metadatafields.definition.json	(revision 947)
++++ modules/janus/dictionaries/metadatafields.definition.json	(revision )
+@@ -2,88 +2,178 @@
      "AssertionConsumerService_Binding": {
          "en": "Binding for the endpoint for connection that supports the Authentication Request protocol [SAMLProf]."
      },
@@ -30,6 +30,33 @@ Index: modules/janus/dictionaries/metadatafields.definition.json
 -        "certData": {
 -            "en": "Base 64 encoded certificate used for this connection."
 -        },
++    "AssertionConsumerService_Location": {
++        "en": "Endpoint for connection that supports the Authentication Request protocol [SAMLProf]."
++    },
++    "AssertionConsumerService_index": {
++        "en": "Index for the endpoint for connection that supports the Authentication Request protocol [SAMLProf]."
++    },
++    "SingleLogoutService_Binding": {
++        "en": "Binding for the single logout endpoint for connection that supports Single Logout profile [SAMLProf]."
++    },
++    "SingleLogoutService_Location": {
++        "en": "Endpoint for connection that supports the Single Sign Logout profile [SAMLProf]."
++    },
++    "SingleLogoutService_ResponseLocation": {
++        "en": "Optionally specifies a different location to which response messages sent as part of the protocol or profile should be sent. The allowable syntax of this URI depends on the protocol binding."
++    },
++    "SingleSignOnService_Binding": {
++        "en": "Binding for the single sign on endpoint for connection that supports Single Sign On profile [SAMLProf]."
++    },
++    "SingleSignOnService_Location": {
++        "en": "Endpoint for connection that supports the Single Sign On profile [SAMLProf]."
++    },
++    "certData": {
++        "en": "Base 64 encoded certificate used for this connection."
++    },
++    "certData2": {
++        "en": "Fallback base 64 encoded certificate used for this connection. Most likely used when this entity migrates to a new signing certificate."
++    },
 -        "certFingerprint": {
 -            "en": "One or more fingerprint for the certificate userd for the connection."
 -        },
@@ -89,34 +116,6 @@ Index: modules/janus/dictionaries/metadatafields.definition.json
 -        },
 -        "NameIDFormat": {
 -            "en": "NameID supported by this connection."
--        }
-+    "AssertionConsumerService_Location": {
-+        "en": "Endpoint for connection that supports the Authentication Request protocol [SAMLProf]."
-+    },
-+    "AssertionConsumerService_index": {
-+        "en": "Index for the endpoint for connection that supports the Authentication Request protocol [SAMLProf]."
-+    },
-+    "SingleLogoutService_Binding": {
-+        "en": "Binding for the single logout endpoint for connection that supports Single Logout profile [SAMLProf]."
-+    },
-+    "SingleLogoutService_Location": {
-+        "en": "Endpoint for connection that supports the Single Sign Logout profile [SAMLProf]."
-+    },
-+    "SingleLogoutService_ResponseLocation": {
-+        "en": "Optionally specifies a different location to which response messages sent as part of the protocol or profile should be sent. The allowable syntax of this URI depends on the protocol binding."
-+    },
-+    "SingleSignOnService_Binding": {
-+        "en": "Binding for the single sign on endpoint for connection that supports Single Sign On profile [SAMLProf]."
-+    },
-+    "SingleSignOnService_Location": {
-+        "en": "Endpoint for connection that supports the Single Sign On profile [SAMLProf]."
-+    },
-+    "certData": {
-+        "en": "Base 64 encoded certificate used for this connection."
-+    },
-+    "certData2": {
-+        "en": "Fallback base 64 encoded certificate used for this connection. Most likely used when this entity migrates to a new signing certificate."
-+    },
 +    "certFingerprint": {
 +        "en": "One or more fingerprint for the certificate userd for the connection."
 +    },
@@ -183,7 +182,7 @@ Index: modules/janus/dictionaries/metadatafields.definition.json
 +    "coin_gadgetbaseurl": {
 +        "en": "Used to lookup the OAuth parameters belonging to a gadget. Format is a regular expression matching the URL of the gadget's XML descriptor. Example: https://gadgets.store.com/.* Also used when Shindig acts as the provider in 2-legged OAuth"
 +    },
-+    "coin_oauthsecret": {
++    "coin_oauthcret": {
 +        "en": "When Shindig acts as the provider in 2- or 3-legged OAuth with keytype HMAC_SHA1, this is the secret. Not used when Shindig is the consumer."
 +    },
 +    "coin_oauth_consumer_key": {
@@ -243,6 +242,9 @@ Index: modules/janus/dictionaries/metadatafields.definition.json
 +    "coin_alternate_public_key": {
 +        "en": "Overrides the public signing key used by SURFconext for this Service Provider"
 +    },
++    "coin_consent_required": {
++        "en": "Demand that users do not have to give consent to release their personal information"
++    },
 +    "coin_eula": {
 +        "en": "URL of the End User License Agreement for the service."
 +    },
@@ -260,5 +262,6 @@ Index: modules/janus/dictionaries/metadatafields.definition.json
 +    },
 +    "keywords": {
 +        "en": "Space separated list of keywords users can search on in the WAYF screen"
+-        }
 +    }
  }
