@@ -96,6 +96,7 @@ $template = array(
 
         // Provisioning
         'coin:is_provision_sp'          => array('type' => 'boolean'),
+        'coin:is_provision_sp_groups'   => array('type' => 'boolean'),
         'coin:provision_domain'         => array(),
         'coin:provision_admin'          => array(),
         'coin:provision_password'       => array(),
