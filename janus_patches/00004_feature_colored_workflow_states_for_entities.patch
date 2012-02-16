@@ -1,0 +1,13 @@
+Index: modules/janus/templates/dashboard.php
+===================================================================
+--- modules/janus/templates/dashboard.php	(revision 962)
++++ modules/janus/templates/dashboard.php	(working copy)
+@@ -596,7 +596,7 @@
+     foreach($cval AS $sp) {
+         $tfooter .= '<tr id="list-'.$sp->getEid().'">';
+         $tfooter .= '<td class="'.($i % 2 == 0 ? 'even' : 'odd').'">';
+-        $tfooter .= '<a title="' . $sp->getEntityid() . '" href="editentity.php?eid='.$sp->getEid().'&amp;revisionid=' . $sp->getRevisionid() . '">'. htmlspecialchars($sp->getPrettyname()) . ' - r' . $sp->getRevisionid() . '</a></td>';
++        $tfooter .= '<a ' . (($sp->getWorkflow() === "prodaccepted") ? 'style="color: green"' : 'style="color: black"') . ' title="' . $sp->getEntityid() . '" href="editentity.php?eid='.$sp->getEid().'&amp;revisionid=' . $sp->getRevisionid() . '">'. htmlspecialchars($sp->getPrettyname()) . ' - r' . $sp->getRevisionid() . '</a></td>';
+         $tfooter .= '</tr>';
+         $i++;
+     }
