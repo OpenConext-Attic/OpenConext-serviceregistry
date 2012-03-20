@@ -109,22 +109,36 @@ $config = array(
      * Allowed attributes
      */
     'attributes' => array(
-        'cn',
-        'sn',
-        'gn',
-        'eduPersonPrincipalName',
-        'mail',
-        'eduPersonPrimaryAffiliation',
-        'organizationName',
-        'norEduPersonNIN',
-        'schacPersonalUniqueID',
-        'eduPersonScopedAffiliation',
-        'preferredLanguage',
-        'eduPersonEntitlement',
-        'norEduPersonLIN',
-        'eduPersonAssurance',
-        'schacHomeOrganization',
-        'eduPersonTargetedID',
+        'urn:oid:1.3.6.1.4.1.1076.20.40.40.1',
+        'urn:mace:dir:attribute-def:uid',
+        'urn:mace:terena.org:attribute-def:schacHomeOrganization',
+        'urn:mace:dir:attribute-def:displayName',
+        'urn:mace:dir:attribute-def:mail',
+        'urn:mace:dir:attribute-def:sn',
+        'urn:mace:dir:attribute-def:givenName',
+        'urn:mace:dir:attribute-def:cn',
+        'urn:mace:dir:attribute-def:eduPersonPrincipalName',
+        'urn:mace:dir:attribute-def:eduPersonAffiliation',
+        'urn:mace:dir:attribute-def:eduPersonEntitlement',
+        'urn:mace:terena.org:attribute-def:schacHomeOrganizationType',
+        'urn:mace:surffederatie.nl:attribute-def:nlEduPersonOrgUnit',
+        'urn:mace:surffederatie.nl:attribute-def:nlEduPersonStudyBranch',
+        'urn:mace:surffederatie.nl:attribute-def:nlStudielinkNummer',
+        'urn:mace:surffederatie.nl:attribute-def:nlDigitalAuthorIdentifier',
+        'urn:mace:dir:attribute-def:preferredLanguage',
+        'urn:mace:dir:attribute-def:isMemberOf',
+        'urn:mace:dir:attribute-def:eduPersonTargetedID',
+        'urn:nl.surfconext.licenseInfo',
+    ),
+
+    /**
+     * Attributes that require specification of an allowed value for ARP
+     */
+    'attributes.restrict_values' => array(
+        'urn:mace:dir:attribute-def:eduPersonEntitlement',
+        'urn:mace:dir:attribute-def:isMemberOf',
+        'urn:mace:surffederatie.nl:attribute-def:nlEduPersonOrgUnit',
+        'urn:mace:surffederatie.nl:attribute-def:nlEduPersonStudyBranch',
     ),
 
     /*
