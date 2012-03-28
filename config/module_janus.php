@@ -109,36 +109,78 @@ $config = array(
      * Allowed attributes
      */
     'attributes' => array(
-        'urn:oid:1.3.6.1.4.1.1076.20.40.40.1',
-        'urn:mace:dir:attribute-def:uid',
-        'urn:mace:terena.org:attribute-def:schacHomeOrganization',
-        'urn:mace:dir:attribute-def:displayName',
-        'urn:mace:dir:attribute-def:mail',
-        'urn:mace:dir:attribute-def:sn',
-        'urn:mace:dir:attribute-def:givenName',
-        'urn:mace:dir:attribute-def:cn',
-        'urn:mace:dir:attribute-def:eduPersonPrincipalName',
-        'urn:mace:dir:attribute-def:eduPersonAffiliation',
-        'urn:mace:dir:attribute-def:eduPersonEntitlement',
-        'urn:mace:terena.org:attribute-def:schacHomeOrganizationType',
-        'urn:mace:surffederatie.nl:attribute-def:nlEduPersonOrgUnit',
-        'urn:mace:surffederatie.nl:attribute-def:nlEduPersonStudyBranch',
-        'urn:mace:surffederatie.nl:attribute-def:nlStudielinkNummer',
-        'urn:mace:surffederatie.nl:attribute-def:nlDigitalAuthorIdentifier',
-        'urn:mace:dir:attribute-def:preferredLanguage',
-        'urn:mace:dir:attribute-def:isMemberOf',
-        'urn:mace:dir:attribute-def:eduPersonTargetedID',
-        'urn:nl.surfconext.licenseInfo',
-    ),
 
-    /**
-     * Attributes that require specification of an allowed value for ARP
-     */
-    'attributes.restrict_values' => array(
-        'urn:mace:dir:attribute-def:eduPersonEntitlement',
-        'urn:mace:dir:attribute-def:isMemberOf',
-        'urn:mace:surffederatie.nl:attribute-def:nlEduPersonOrgUnit',
-        'urn:mace:surffederatie.nl:attribute-def:nlEduPersonStudyBranch',
+        // SCHAC
+        'schacHomeOrganization' => array(
+            'name' => 'urn:mace:terena.org:attribute-def:schacHomeOrganization',
+        ),
+        'schacHomeOrganizationType' => array(
+            'name' => 'urn:mace:terena.org:attribute-def:schacHomeOrganizationType',
+        ),
+
+        // MACE
+        'uid' => array(
+            'name' => 'urn:mace:dir:attribute-def:uid',
+        ),
+        'displayName' => array(
+            'name' => 'urn:mace:dir:attribute-def:displayName',
+        ),
+        'cn (common name)' => array(
+            'name' => 'urn:mace:dir:attribute-def:cn',
+        ),
+        'givenName' => array(
+            'name' => 'urn:mace:dir:attribute-def:givenName',
+        ),
+        'sn (surname)' => array(
+            'name' => 'urn:mace:dir:attribute-def:sn',
+        ),
+        'mail' => array(
+            'name' => 'urn:mace:dir:attribute-def:mail',
+        ),
+        'eduPersonPrincipalName' => array(
+            'name' => 'urn:mace:dir:attribute-def:eduPersonPrincipalName',
+        ),
+        'eduPersonAffiliation' => array(
+            'name' => 'urn:mace:dir:attribute-def:eduPersonAffiliation',
+        ),
+        'eduPersonEntitlement' => array(
+            'name' => 'urn:mace:dir:attribute-def:eduPersonEntitlement',
+            'specify_values' => TRUE,
+        ),
+        'preferredLanguage' => array(
+            'name' => 'urn:mace:dir:attribute-def:preferredLanguage',
+        ),
+        'isMemberOf' => array(
+            'name' => 'urn:mace:dir:attribute-def:isMemberOf',
+            'specify_values' => TRUE,
+        ),
+        'eduPersonTargetedID' => array(
+            'name' => 'urn:mace:dir:attribute-def:eduPersonTargetedID',
+        ),
+
+        // NLEDUPERSON
+        'nlEduPersonOrgUnit' => array(
+            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlEduPersonOrgUnit',
+            'specify_values' => TRUE,
+        ),
+        'nlEduPersonStudyBranch' => array(
+            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlEduPersonStudyBranch',
+            'specify_values' => TRUE,
+        ),
+        'nlStudielinkNummer' => array(
+            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlStudielinkNummer',
+        ),
+        'nlDigitalAuthorIdentifier' => array(
+            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlDigitalAuthorIdentifier',
+        ),
+
+        // SURFconext specific
+        'collabPersonId' => array(
+            'name' => 'urn:oid:1.3.6.1.4.1.1076.20.40.40.1',
+        ),
+        'licenseInfo' => array(
+            'name' => 'urn:nl.surfconext.licenseInfo',
+        ),
     ),
 
     /*
