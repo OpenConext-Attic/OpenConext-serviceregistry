@@ -1,0 +1,1 @@
+ALTER TABLE janus__arp ADD COLUMN is_default BOOLEAN AFTER attributes;
