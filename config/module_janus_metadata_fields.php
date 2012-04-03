@@ -165,7 +165,6 @@ class sspmod_janus_fieldsTemplates
         }
         $fields = static::_merge($fields, $entityFields);
 
-        $fields = $this->_orderFields($fields);
         return $fields;
     }
 
@@ -186,16 +185,6 @@ class sspmod_janus_fieldsTemplates
             $field['required'] = FALSE;
         }
         return $field;
-    }
-
-    protected function _orderFields($fields)
-    {
-        $order = 0;
-        foreach ($fields as &$field) {
-            $order += 10;
-            $field['order'] = $order;
-        }
-        return $fields;
     }
 
     protected static function _merge($array1, $array2)
