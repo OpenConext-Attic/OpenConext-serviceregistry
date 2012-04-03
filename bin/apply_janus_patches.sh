@@ -6,8 +6,11 @@ binDir=$(dirname $scriptPath)
 serviceRegistryRootDir=$(dirname $binDir)
 janusDir=${serviceRegistryRootDir}"/modules/janus/"
 
+echo -e "\nCreating enable file"
+touch ${janusDir}"enable"
+
 echo -e "\nReverting versioned files"
-svn revert --recursive ${janusDir}
+git checkout HEAD ${janusDir}
 
 echo -e "\nRemoving unversioned files"
 svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'
@@ -22,8 +25,5 @@ do
 done
 rm $REJFILE
 echo "Removed $REJFILE"
-
-echo -e "\nCreating enable file"
-touch ${janusDir}"enable"
 
 echo -e "\nFinished"
