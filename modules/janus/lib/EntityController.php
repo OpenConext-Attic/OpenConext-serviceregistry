@@ -11,7 +11,7 @@
  * @author     Ivo Jansch <ivo@ibuildings.nl>
  * @copyright  2009 Jacob Christiansen 
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: EntityController.php 999 2012-04-03 10:07:18Z jach@wayf.dk $
+ * @version    SVN: $Id: EntityController.php 1001 2012-04-03 13:42:44Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
@@ -27,7 +27,7 @@
  * @author     Ivo Jansch <ivo@ibuildings.nl>
  * @copyright  2009 Jacob Christiansen 
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: EntityController.php 999 2012-04-03 10:07:18Z jach@wayf.dk $
+ * @version    SVN: $Id: EntityController.php 1001 2012-04-03 13:42:44Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      Class available since Release 1.0.0
  */
@@ -350,6 +350,16 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
                 'JANUS:EntityController:addMetadata - Metadata already exists'
             );
             return false;
+        }
+
+        if ($allowedfields[$key]->type == 'select') {
+            $allowedselectvalues = $allowedfields[$key]->select_values;
+            if (!in_array($value, $allowedselectvalues)) {
+                SimpleSAML_Logger::error(
+                    'JANUS:EntityController:addMetadata - Value: ' . $value . ' not allowed for field ' . $key
+                );
+                return false;
+            } 
         }
 
         $metadata = new sspmod_janus_Metadata($this->_config->getValue('store'));
