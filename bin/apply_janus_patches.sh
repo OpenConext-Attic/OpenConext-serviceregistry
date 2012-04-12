@@ -12,9 +12,10 @@ touch ${janusDir}"enable"
 echo -e "\nReverting versioned files"
 git checkout HEAD ${janusDir}
 
-echo -e "\nRemoving unversioned files"
-svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'
-svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'  | xargs rm -rf
+#FIXME to work with git
+#echo -e "\nRemoving unversioned files"
+#svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'
+#svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'  | xargs rm -rf
 
 echo -e "\nPatching files"
 REJFILE="/tmp/janus_patches-rej-$(date +%s)"
