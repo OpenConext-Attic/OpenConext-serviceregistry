@@ -27,6 +27,9 @@ $template = array(
         'OrganizationName:#'        => array(                    'supported' => array('en', 'nl')),
         'OrganizationDisplayName:#' => array(                    'supported' => array('en', 'nl')),
         'OrganizationURL:#'         => array('validate' => 'isurl', 'supported' => array('en', 'nl')),
+        'logo:0:url'    => array('required' => TRUE, 'default' => 'https://.png', 'default_allow' => FALSE),
+        'logo:0:width'  => array('required' => TRUE, 'default' => '120'),
+        'logo:0:height' => array('required' => TRUE, 'default' => '60'),
     ),
 
     JANUS_FIELDS_TYPE_IDP => array(
@@ -52,9 +55,6 @@ $template = array(
 
         // MDUI stuff
         'keywords:#'    => array('required' => TRUE, 'supported'=>array('en','nl')),
-        'logo:0:url'    => array('required' => TRUE, 'default' => 'https://.png', 'default_allow' => FALSE),
-        'logo:0:width'  => array('required' => TRUE, 'default' => '120'),
-        'logo:0:height' => array('required' => TRUE, 'default' => '60'),
     ),
 
     JANUS_FIELDS_TYPE_SP => array(
