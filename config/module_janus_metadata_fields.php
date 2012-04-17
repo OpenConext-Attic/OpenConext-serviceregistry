@@ -80,6 +80,7 @@ $template = array(
         // OAuth
         'coin:gadgetbaseurl'            => array('validate' => 'isurl'),
         'coin:oauth:secret'             => array('validate' => 'lengteq20'),
+        'coin:oauth:two_legged_allowed' => array('type' => 'boolean'),
         'coin:oauth:consumer_key'       => array(),
         'coin:oauth:consumer_secret'    => array('validate' => 'lengteq20'),
         'coin:oauth:key_type'           => array(
