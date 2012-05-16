@@ -120,6 +120,7 @@ $template = array(
 
         // Other
         'coin:provide_is_member_of'     => array('type' => 'boolean', 'default' => FALSE),
+        'coin:implicit_vo_id'           => array(),
 
         'NameIDFormat' => array(
             'type' => 'select',
