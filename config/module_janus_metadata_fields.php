@@ -4,7 +4,16 @@ define('JANUS_FIELDS_TYPE_ALL' , '*');
 define('JANUS_FIELDS_TYPE_IDP' , 'saml20-idp');
 define('JANUS_FIELDS_TYPE_SP'  , 'saml20-sp');
 
+/**
+ * Defaults:
+ *      type = 'text'
+ *      required = FALSE
+ *      default = '' (default value)
+ *      default_allow = FALSE (unless you set a default, in which case this is TRUE by default)
+ */
+
 $template = array(
+    // Fields for ALL entities (both Service Provider and Identity Provider)
     JANUS_FIELDS_TYPE_ALL => array(
         'name:#'                    => array('required'=>TRUE, 'supported' => array('en', 'nl')),
         'displayName:#'             => array(                  'supported' => array('en', 'nl')),
@@ -32,6 +41,7 @@ $template = array(
         'logo:0:height' => array('required' => TRUE, 'default' => '60'),
     ),
 
+    // Fields only for Identity Providers
     JANUS_FIELDS_TYPE_IDP => array(
         // Endpoint fields
         'SingleSignOnService:0:Binding' => array(
@@ -57,6 +67,7 @@ $template = array(
         'keywords:#'    => array('required' => TRUE, 'supported'=>array('en','nl')),
     ),
 
+    // Fields only for Service Providers
     JANUS_FIELDS_TYPE_SP => array(
         'AssertionConsumerService:0:Binding' => array(
             'type' => 'select',
@@ -107,6 +118,7 @@ $template = array(
             'default' => 'google'
         ),
 
+        // Other
         'coin:provide_is_member_of'     => array('type' => 'boolean', 'default' => FALSE),
 
         'NameIDFormat' => array(
