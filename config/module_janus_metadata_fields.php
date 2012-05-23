@@ -117,6 +117,8 @@ $template = array(
             'select_values' => array("none", "google"),
             'default' => 'google'
         ),
+		//Self Service
+		'coin:ss:idp_visible_only'      => array('type' => 'boolean', 'default' => FALSE),
 
         // Other
         'coin:provide_is_member_of'     => array('type' => 'boolean', 'default' => FALSE),
