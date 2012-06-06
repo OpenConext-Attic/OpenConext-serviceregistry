@@ -105,6 +105,7 @@ $template = array(
         'coin:oauth:app_thumbnail'      => array('validate' => 'isurl', 'default' => 'https://www.surfnet.nl/thumb.png', 'default_allow' => FALSE),
         'coin:oauth:app_icon'           => array('validate' => 'isurl', 'default' => 'https://www.surfnet.nl/icon.gif' ,'default_allow' => FALSE),
         'coin:oauth:callback_url'       => array('validate' => 'isurl'),
+        'coin:oauth:consent_not_required'   => array('type' => 'boolean'),
 
         // Provisioning
         'coin:is_provision_sp'          => array('type' => 'boolean'),
