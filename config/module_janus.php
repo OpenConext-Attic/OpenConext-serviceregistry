@@ -143,6 +143,7 @@ $config = array(
         ),
         'eduPersonAffiliation' => array(
             'name' => 'urn:mace:dir:attribute-def:eduPersonAffiliation',
+            'specify_values' => TRUE,
         ),
         'eduPersonEntitlement' => array(
             'name' => 'urn:mace:dir:attribute-def:eduPersonEntitlement',
