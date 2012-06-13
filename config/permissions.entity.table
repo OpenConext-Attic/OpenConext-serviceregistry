@@ -1,0 +1,17 @@
+                    |     Default     |  testaccepted   | prodaccepted
+-----------------------------------------------------------------------------------------------
+Change Entity Type  |        N       |  all             | admin
+Export Metadata     |        N       |  all             | admin
+Block Remote Entity |        N       |  all             | admin
+Change Workflow     |        Y       |                  |
+Change Entity Id    |        Y       |                  |
+Change ARP          |        N       |  all             | admin
+Edit ARP            |        N       |  all             | admin
+Add ARP             |        N       |  all             | admin
+Add Metadata        |        N       |  all             | admin
+Validate Metadata   |        Y       |                  |
+Delete Metadata     |        N       |  all             | admin
+Modify Metadata     |        N       |  all             | admin
+Import Metadata     |        N       |  all             | admin
+Entity History      |        Y       |                  |
+Disable Consent     |        N       |  all             | admin
