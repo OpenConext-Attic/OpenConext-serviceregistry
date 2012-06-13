@@ -568,7 +568,7 @@ require 'module_janus_metadata_fields.php';
 $config += $fields;
 
 $access = array();
-require 'module_janus_metadata_fields.php';
+require 'module_janus_access.php';
 $config['access'] = $access;
 
 $localConfig = '/etc/surfconext/serviceregistry.module_janus.php';

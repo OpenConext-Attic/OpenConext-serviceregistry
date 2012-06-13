@@ -1,10 +1,10 @@
 <?php
 
 $access = array();
-$parser = new GlobalPermissionTableParser('permissions.table');
+$parser = new GlobalPermissionTableParser(__DIR__ . '/permissions.table');
 $access = $parser->parse();
 
-$parser = new EntityPermissionTableParser('permissions.entity.table');
+$parser = new EntityPermissionTableParser(__DIR__ . '/permissions.entity.table');
 $access = array_merge_recursive($access, $parser->parse());
 
 class GlobalPermissionTableParser
@@ -27,7 +27,7 @@ class GlobalPermissionTableParser
             list ($right, $roles) = explode('|', $line);
             $right = strtolower(preg_replace('/\s+/', '', $right));
             $roles = array_map('trim', explode(',', $roles));
-            $access[$right] = array( 'roles' => $roles );
+            $access[$right] = array( 'role' => $roles );
         }
 
         return $access;
