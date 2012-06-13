@@ -6,12 +6,9 @@ binDir=$(dirname $scriptPath)
 serviceRegistryRootDir=$(dirname $binDir)
 janusDir=${serviceRegistryRootDir}"/modules/janus/"
 
-echo -e "\nCreating enable file"
-touch ${janusDir}"enable"
-
-echo -e "\nReverting versioned files"
-git checkout HEAD ${janusDir}
-
+#echo -e "\nReverting versioned files"
+#git checkout HEAD ${janusDir}
+#
 #FIXME to work with git
 #echo -e "\nRemoving unversioned files"
 #svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'
