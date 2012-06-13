@@ -268,7 +268,7 @@ $config = array(
     /* Certificate which should be included in the signature. Should correspond to the private key. */
     'sign.certificate' => 'server.crt',
 
-        /*
+    /**
      * Access configuration of JANUS.
      *
      * If a permission is not set for a given user for a given system, the default
@@ -511,6 +511,13 @@ $config = array(
         ),
     ),
 
+
+    /**
+     *              |  Default |  testaccepted  |  prodacccepted
+     * --------------------------------------------------------
+     * testaccepted |  Y       |     X          |       admin
+     * prodaccepted |  N       |   admin        |         X
+     */
     'workflow_states' => array(
         'testaccepted' => array(
             'prodaccepted' => array(
