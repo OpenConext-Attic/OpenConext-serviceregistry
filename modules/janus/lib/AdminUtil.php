@@ -11,7 +11,7 @@
  * @author     Sixto Martín, <smartin@yaco.es>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: AdminUtil.php 963 2012-01-11 12:28:07Z jach@wayf.dk $
+ * @version    SVN: $Id: AdminUtil.php 1022 2012-04-27 07:06:38Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
@@ -30,7 +30,7 @@
  * @author     Sixto Martín, <smartin@yaco.es>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: AdminUtil.php 963 2012-01-11 12:28:07Z jach@wayf.dk $
+ * @version    SVN: $Id: AdminUtil.php 1022 2012-04-27 07:06:38Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @see        Sspmod_Janus_Database
  * @since      Class available since Release 1.0.0
@@ -70,7 +70,7 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
      *
      * @return false|array All entities from the database
      */
-    public function getEntitiesByStateType($state = null, $type = null)
+    public function getEntitiesByStateType($state = null, $type = null, $active = 'yes')
     {
 
         if (!is_null($state) && !is_array($state)) {
@@ -96,12 +96,18 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
             $params = array_merge($params, $type);
         } 
         
-        $st = self::execute(
-            'SELECT DISTINCT `eid`, `entityid`, MAX(`revisionid`) AS `revisionid`,
-                `created`
-            FROM `'. self::$prefix .'entity` WHERE ' . implode(' AND ', $sql) . '
-            GROUP BY `eid`;', 
-            $params
+        $params[] = $active;
+        
+        $st = self::execute('
+            SELECT T.`eid`, T.`entityid`, T.`revisionid`, T.`created` 
+            FROM `'. self::$prefix .'entity` AS T, (
+                SELECT `eid`, MAX(`revisionid`) AS `revisionid`, `created` 
+                FROM `'. self::$prefix .'entity` 
+                WHERE ' . implode(' AND ', $sql) . ' AND `active` = ? 
+                GROUP BY `eid`
+            ) AS M
+            WHERE T.`revisionid` = M.`revisionid` AND T.`eid` = M.`eid`;',
+            $params    
         );
 
         if ($st === false) {
@@ -447,6 +453,56 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
     {
         $arp = new sspmod_janus_ARP;
         return $arp->getARPlist();
+    }
+
+    /**
+     * Disable an entity from the database
+     *
+     * @param int $eid The entitys Eid
+     *
+     * @return void
+     * @since Methos available since Release 1.11.0
+     */
+    public function disableEntity($eid)
+    {
+        $st = $this->execute(
+            'UPDATE `'. self::$prefix .'entity` SET `active` = ?
+            WHERE `eid` = ?;',
+            array('no', $eid)
+        );
+
+        if ($st === false) {
+            SimpleSAML_Logger::error(
+                'JANUS:disableEntity - Not all revisions of entity was disabled.'
+            );
+        }
+
+        return;
+    }
+    
+    /**
+     * Enable an entity from the database
+     *
+     * @param int $eid The entitys Eid
+     *
+     * @return void
+     * @since Methos available since Release 1.11.0
+     */
+    public function enableEntity($eid)
+    {
+        $st = $this->execute(
+            'UPDATE `'. self::$prefix .'entity` SET `active` = ?
+            WHERE `eid` = ?;',
+            array('yes', $eid)
+        );
+
+        if ($st === false) {
+            SimpleSAML_Logger::error(
+                'JANUS:disableEntity - Not all revisions of entity was enabled.'
+            );
+        }
+
+        return;
     }
 }
 ?>

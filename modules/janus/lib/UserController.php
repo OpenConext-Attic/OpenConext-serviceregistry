@@ -10,7 +10,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: UserController.php 991 2012-03-28 12:58:12Z relaxnownl@gmail.com $
+ * @version    SVN: $Id: UserController.php 1095 2012-05-25 07:50:05Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
@@ -25,7 +25,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: UserController.php 991 2012-03-28 12:58:12Z relaxnownl@gmail.com $
+ * @version    SVN: $Id: UserController.php 1095 2012-05-25 07:50:05Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      Class available since Release 1.0.0
  */
@@ -150,9 +150,13 @@ class sspmod_janus_UserController extends sspmod_janus_Database
 
         // Include given state
         if(!is_null($state)) {
-            $whereClauses[] = "ENTITY.state = :state ";
+            $whereClauses[] = "
+                ENTITY.eid IN (
+                SELECT DISTINCT eid
+                FROM janus__entity
+                WHERE state = :state
+            )";
             $queryData['state'] = $state;
-            
         }
 
         // Exclude given state
@@ -416,7 +420,7 @@ class sspmod_janus_UserController extends sspmod_janus_Database
      */
     public function getUsers()
     {
-        $st = $this->execute('SELECT * FROM '. self::$prefix .'user;');
+        $st = $this->execute('SELECT * FROM '. self::$prefix .'user ORDER BY `userid`;');
 
         $rs = $st->fetchAll(PDO::FETCH_ASSOC);
 

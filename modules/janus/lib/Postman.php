@@ -10,7 +10,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: Postman.php 917 2011-11-07 11:36:51Z jach@wayf.dk $
+ * @version    SVN: $Id: Postman.php 1047 2012-05-03 09:03:53Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.2.0
  */
@@ -23,7 +23,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: Postman.php 917 2011-11-07 11:36:51Z jach@wayf.dk $
+ * @version    SVN: $Id: Postman.php 1047 2012-05-03 09:03:53Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @see        sspmod_janus_Database
  * @since      Class available since Release 1.2.0
@@ -134,7 +134,7 @@ class sspmod_janus_Postman extends sspmod_janus_Database
                         ));
                     }
                     catch(Exception $e) {
-                        SimpleSAML_Logger::error('JANUS: Error sending external message. ' . var_export($messenger, true));
+                        SimpleSAML_Logger::error('JANUS: Error sending external message. ' . $e->getMessage());
                     }
                 }
             }

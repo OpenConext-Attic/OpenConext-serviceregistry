@@ -11,7 +11,7 @@
  * @author     Ivo Jansch <ivo@ibuildings.nl>
  * @copyright  2009 Jacob Christiansen 
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: EntityController.php 1001 2012-04-03 13:42:44Z jach@wayf.dk $
+ * @version    SVN: $Id: EntityController.php 1045 2012-05-03 08:24:34Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
@@ -27,7 +27,7 @@
  * @author     Ivo Jansch <ivo@ibuildings.nl>
  * @copyright  2009 Jacob Christiansen 
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: EntityController.php 1001 2012-04-03 13:42:44Z jach@wayf.dk $
+ * @version    SVN: $Id: EntityController.php 1045 2012-05-03 08:24:34Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      Class available since Release 1.0.0
  */
@@ -262,8 +262,10 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
             $this->_arp = null;
         } else {
             $this->_arp = new sspmod_janus_ARP();
-            $this->_arp->setAid($this->_entity->getArp());
-            $this->_arp->load();
+            $this->_arp->setAid((int)$this->_entity->getArp());
+            if (!$this->_arp->load()) {
+                $this->_arp = null;
+            }
         }
 
         return true;
@@ -1419,14 +1421,11 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
                 $metaArray['NameIDFormat'] 
                     = 'urn:mace:shibboleth:1.0:nameIdentifier';
             }
-        } 
+        }
 
         if ($entity_type == 'saml20-sp') {
             if (!is_null($this->_arp)) {
-                $metaArray['attributes'] = array();
-                foreach ($this->_arp->getAttributes() AS $attr) {
-                    $metaArray['attributes'][] = $attr;
-                }
+                $metaArray['attributes'] = array_keys($this->_arp->getAttributes());
             } else {
                 $defaultarp 
                     = $this->_config->getArray('entity.defaultarp', 'NOTDEFINED');

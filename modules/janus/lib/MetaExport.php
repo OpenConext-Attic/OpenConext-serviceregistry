@@ -5,7 +5,7 @@
  * @author Jacob Christiansen, <jach@wayf.dk>
  * @package SimpleSAMLphp
  * @subpackeage JANUS
- * @version $Id: MetaExport.php 946 2011-11-17 10:09:56Z vanlieroplucas@gmail.com $
+ * @version $Id: MetaExport.php 1095 2012-05-25 07:50:05Z jach@wayf.dk $
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
 class sspmod_janus_MetaExport

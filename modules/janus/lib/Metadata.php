@@ -10,7 +10,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: Metadata.php 946 2011-11-17 10:09:56Z vanlieroplucas@gmail.com $
+ * @version    SVN: $Id: Metadata.php 1095 2012-05-25 07:50:05Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
@@ -26,7 +26,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: Metadata.php 946 2011-11-17 10:09:56Z vanlieroplucas@gmail.com $
+ * @version    SVN: $Id: Metadata.php 1095 2012-05-25 07:50:05Z jach@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      Class available since Release 1.0.0
  */
