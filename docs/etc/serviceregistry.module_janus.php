@@ -33,12 +33,3 @@ $config['store'] = array(
  */
 $config['user.autocreate'] = true;
 
-/*
- * JANUS supports a blacklist (mark idps that are not allowed to connect to an sp)
- * and/or a whitelist (mark idps that are allowed to connect to an sp). 
- * You can enable both to make this choice per entity.
-*/
-
-$config['entity.useblacklist'] = false;
-$config['entity.usewhitelist'] = true;
-
