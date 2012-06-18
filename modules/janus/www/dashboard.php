@@ -12,7 +12,7 @@
  * @author     Sixto Martín <smartin@yaco.es>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: dashboard.php 1085 2012-05-24 12:57:08Z jach@wayf.dk $
+ * @version    SVN: $Id: dashboard.php 1127 2012-06-18 11:52:16Z relaxnownl@gmail.com $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
