@@ -5,6 +5,7 @@ All Entities        | admin
 Export All Entities | secretariat, operations, admin
 ARP editor          | secretariat, operations, admin
 Admin tab           | admin
+Admin user tab      | admin
 Federation tab      | secretariat, operations, admin
 Show Subscriptions  | secretariat, operations, admin
 Add Subscriptions   | secretariat, operations, admin
