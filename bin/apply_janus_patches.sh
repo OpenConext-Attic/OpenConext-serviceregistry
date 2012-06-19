@@ -1,11 +1,12 @@
 #!/bin/sh
 
+# FIXME to work with OS X / Linux and git
 # Get janus dir
-scriptPath=$(readlink -f "$0")
-binDir=$(dirname $scriptPath)
-serviceRegistryRootDir=$(dirname $binDir)
-janusDir=${serviceRegistryRootDir}"/modules/janus/"
-
+#scriptPath=$(readlink -f "$0")
+#binDir=$(dirname $scriptPath)
+#serviceRegistryRootDir=$(dirname $binDir)
+#janusDir=${serviceRegistryRootDir}"/modules/janus/"
+#
 #echo -e "\nReverting versioned files"
 #git checkout HEAD ${janusDir}
 #
