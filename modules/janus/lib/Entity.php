@@ -10,7 +10,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: Entity.php 1005 2012-04-20 11:01:45Z jach@wayf.dk $
+ * @version    SVN: $Id: Entity.php 1129 2012-06-20 10:09:37Z relaxnownl@gmail.com $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
@@ -25,7 +25,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: Entity.php 1005 2012-04-20 11:01:45Z jach@wayf.dk $
+ * @version    SVN: $Id: Entity.php 1129 2012-06-20 10:09:37Z relaxnownl@gmail.com $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      Class available since Release 1.0.0
  */
@@ -73,7 +73,7 @@ class sspmod_janus_Entity extends sspmod_janus_Database
      * Entity type
      * @var string
      */
-    private $_type = 'idp';
+    private $_type;
 
     /**
      * Expiration date of current entity.
