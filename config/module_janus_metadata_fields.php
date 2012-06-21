@@ -85,6 +85,8 @@ $template = array(
 
         'coin:eula'                     => array('validate' => 'isurl'),
 
+        'url:#'                    		=> array('required'=>TRUE, 'supported' => array('en', 'nl'), 'validate' =>'isurl'),
+
         'coin:alternate_public_key'     => array(),
         'coin:alternate_private_key'    => array(),
 
