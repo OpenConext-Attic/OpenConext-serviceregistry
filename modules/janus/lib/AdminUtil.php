@@ -11,7 +11,7 @@
  * @author     Sixto Martín, <smartin@yaco.es>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: AdminUtil.php 1128 2012-06-19 11:20:15Z relaxnownl@gmail.com $
+ * @version    SVN: $Id: AdminUtil.php 1131 2012-06-26 12:02:48Z relaxnownl@gmail.com $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
@@ -30,7 +30,7 @@
  * @author     Sixto Martín, <smartin@yaco.es>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: AdminUtil.php 1128 2012-06-19 11:20:15Z relaxnownl@gmail.com $
+ * @version    SVN: $Id: AdminUtil.php 1131 2012-06-26 12:02:48Z relaxnownl@gmail.com $
  * @link       http://code.google.com/p/janus-ssp/
  * @see        Sspmod_Janus_Database
  * @since      Class available since Release 1.0.0
