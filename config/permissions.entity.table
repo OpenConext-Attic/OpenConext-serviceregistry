@@ -14,4 +14,4 @@ Delete Metadata     |        N       |  all             | admin
 Modify Metadata     |        N       |  all             | admin
 Import Metadata     |        N       |  all             | admin
 Entity History      |        Y       |                  |
-Disable Consent     |        N       |  all             | admin
+Disable Consent     |        N       |                  |

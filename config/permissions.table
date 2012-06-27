@@ -2,13 +2,13 @@ Right               | Roles
 -----------------------------------------------
 Create new Entity   | all
 All Entities        | admin
-Export All Entities | secretariat, operations, admin
-ARP editor          | secretariat, operations, admin
+Export All Entities | admin
+ARP editor          | admin
 Admin tab           | admin
 Admin user tab      | admin
-Federation tab      | secretariat, operations, admin
-Show Subscriptions  | secretariat, operations, admin
-Add Subscriptions   | secretariat, operations, admin
-Edit Subscriptions  | secretariat, operations, admin
-Delete Subscriptions| secretariat, operations, admin
-Experimental        | experimental
+Federation tab      |
+Show Subscriptions  |
+Add Subscriptions   |
+Edit Subscriptions  |
+Delete Subscriptions|
+Experimental        |
