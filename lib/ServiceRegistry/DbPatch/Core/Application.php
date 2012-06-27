@@ -45,7 +45,7 @@ class ServiceRegistry_DbPatch_Core_Application extends DbPatch_Core_Application
             'patch_directory' => realpath(__DIR__ . self::PATCH_DIR_RELATIVE),
             'color' => true,
         );
-        return new Zend_Config($config);
+        return new Zend_Config($config, true);
     }
 
     private function _convertPdoDriverToZendDbAdapter($pdoDriver)
