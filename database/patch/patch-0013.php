@@ -14,7 +14,10 @@ $entityTable        = 'janus__entity';
 
 // First: allowed entities
 
+echo "Converting whitelists" . PHP_EOL;
+
 $blockedEntityTable = 'janus__allowedEntity';
+
 $statement = $db->query("
 SELECT be.*, entities.eid AS newremoteeid
 FROM (
@@ -34,8 +37,11 @@ JOIN (
         WHERE eid = e.eid
     )) entities ON be.remoteentityid = entities.entityid
 ");
+$rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+foreach ($rows as $row) {
+    echo "ALLOW ({$row['eid']}): {$row['remoteentityid']} => {$row['newremoteeid']} ";
+
     $query = "
         UPDATE $blockedEntityTable
         SET remoteeid = ?
@@ -51,9 +57,24 @@ while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 
     $update = $db->prepare($query);
     $update->execute($params);
+
+    if ($update) {
+        if ($update->rowCount() > 0) {
+            echo "[SUCCESS]";
+        }
+        else {
+            echo "[NO CHANGE REQUIRED]";
+        }
+    }
+    else {
+        echo "[FAILURE]";
+    }
+    echo PHP_EOL;
 }
 
 // Next blocked entities
+
+echo "Converting blacklists" . PHP_EOL;
 
 $blockedEntityTable = 'janus__blockedEntity';
 
@@ -76,8 +97,10 @@ JOIN (
         WHERE eid = e.eid
     )) entities ON be.remoteentityid = entities.entityid
 ");
+$rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+foreach ($rows as $row) {
+    echo "BLOCK ({$row['eid']}): {$row['remoteentityid']} => {$row['newremoteeid']} ";
 
-while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
     $query = "
         UPDATE $blockedEntityTable
         SET remoteeid = ?
@@ -93,4 +116,19 @@ while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 
     $update = $db->prepare($query);
     $update->execute($params);
+
+    if ($update && $update->rowCount() > 0) {
+        if ($update->rowCount() > 0) {
+            echo "[SUCCESS]";
+        }
+        else {
+            echo "[NO CHANGE REQUIRED]";
+        }
+    }
+    else {
+        echo "[FAILURE]";
+    }
+    echo PHP_EOL;
 }
+
+echo "All done, enjoy!" . PHP_EOL;
