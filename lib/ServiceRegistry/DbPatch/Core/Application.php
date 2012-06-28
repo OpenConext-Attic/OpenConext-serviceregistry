@@ -37,7 +37,7 @@ class ServiceRegistry_DbPatch_Core_Application extends DbPatch_Core_Application
                 'adapter'   => $this->_convertPdoDriverToZendDbAdapter($dsnParsed['scheme']),
                 'params' => array(
                     'host'      => isset($dsnProperties['host'])    ? $dsnProperties['host']    : 'localhost',
-                    'username'  => isset($dbConfig->user)           ? $dbConfig->user           : 'root',
+                    'username'  => isset($dbConfig->username)       ? $dbConfig->username   : 'root',
                     'password'  => isset($dbConfig->password)       ? $dbConfig->password       : '',
                     'dbname'    => isset($dsnProperties['dbname'])  ? $dsnProperties['dbname']  : 'serviceregistry',
                     'charset'   => isset($dsnProperties['charset']) ? $dsnProperties['charset'] : 'utf8',
