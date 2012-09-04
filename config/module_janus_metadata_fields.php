@@ -69,6 +69,7 @@ $template = array(
 
     // Fields only for Service Providers
     JANUS_FIELDS_TYPE_SP => array(
+        # Must have at least 1 binding
         'AssertionConsumerService:0:Binding' => array(
             'type' => 'select',
             'select_values' => array(
@@ -78,7 +79,19 @@ $template = array(
             'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
             'required' => TRUE,
         ),
+        'AssertionConsumerService:#:Binding' => array(
+            'type' => 'select',
+            'select_values' => array(
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+            ),
+            'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+            'required' => FALSE,
+            'supported' => array(1,2,3,4,5,6,7,8,9),
+        ),
+        # Must have at least 1 location
         'AssertionConsumerService:0:Location' => array('required' => TRUE, 'validate' => 'isurl'),
+        'AssertionConsumerService:#:Location' => array('required' => FALSE, 'validate' => 'isurl', 'supported' => array(1,2,3,4,5,6,7,8,9)),
         'redirect.sign'                       => array('type' => 'boolean', 'required' => TRUE, 'default' => FALSE),
 
         'coin:no_consent_required'      => array('type' => 'boolean', 'default' => FALSE),
