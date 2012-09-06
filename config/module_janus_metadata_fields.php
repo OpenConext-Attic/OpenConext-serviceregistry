@@ -39,6 +39,8 @@ $template = array(
         'logo:0:url'    => array('required' => TRUE, 'default' => 'https://.png', 'default_allow' => FALSE),
         'logo:0:width'  => array('required' => TRUE, 'default' => '120'),
         'logo:0:height' => array('required' => TRUE, 'default' => '60'),
+		// LMNG identifier to map LMNG entities to the SURFconext world
+		'lmng:identifier'           => array(),
     ),
 
     // Fields only for Identity Providers
