@@ -66,7 +66,12 @@ $template = array(
         'SingleSignOnService:0:Location' => array('required' => TRUE, 'validate' => 'isurl'),
         'certData'                  => array('required'=>TRUE),
 
-        'coin:guest_qualifier' => array('required' => TRUE, 'default' => 'All'),
+        'coin:guest_qualifier' => array(
+            'type' => 'select',
+            'required' => TRUE,
+            'select_values' => array('All', 'Some', 'None'),
+            'default' => 'All',
+        ),
         'coin:schachomeorganization' => array(),
 
         // MDUI stuff
