@@ -65,6 +65,9 @@ $template = array(
 
         // MDUI stuff
         'keywords:#'    => array('required' => TRUE, 'supported'=>array('en','nl')),
+
+        // Institution
+        'coin:institution_id' => array(),
     ),
 
     // Fields only for Service Providers
