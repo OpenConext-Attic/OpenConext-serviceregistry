@@ -86,6 +86,10 @@ $template = array(
             'select_values' => array(
                 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
                 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+                'urn:oasis:names:tc:SAML:2.0:bindings:SOAP',
+                'urn:oasis:names:tc:SAML:2.0:bindings:PAOS',
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact',
+                'urn:oasis:names:tc:SAML:2.0:bindings:URI'
             ),
             'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
             'required' => TRUE,
@@ -95,6 +99,11 @@ $template = array(
             'select_values' => array(
                 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
                 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+                'urn:oasis:names:tc:SAML:2.0:bindings:SOAP',
+                'urn:oasis:names:tc:SAML:2.0:bindings:PAOS',
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact',
+                'urn:oasis:names:tc:SAML:2.0:bindings:URI'
+
             ),
             'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
             'required' => FALSE,
