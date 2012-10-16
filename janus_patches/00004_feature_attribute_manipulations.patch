@@ -1,0 +1,302 @@
+diff --git a/modules/janus/UPGRADE b/modules/janus/UPGRADE
+index 841a81f..e537670 100644
+--- a/modules/janus/UPGRADE
++++ b/modules/janus/UPGRADE
+@@ -1,5 +1,9 @@
+ UPGRADE NOTES FOR JANUS
+ 
++v. 1.12 to v.1.13
++ALTER TABLE `serviceregistry`.`janus__entity` ADD COLUMN `manipulation` MEDIUMTEXT NULL DEFAULT NULL  AFTER `arp` ;
++
++
+ v. 1.11 to v.1.12
+ Blacklisting / Whitelisting has switched from whitelisting EntityIds (which can change)
+ to JANUS internal Eids (which can't change).
+diff --git a/modules/janus/lib/Entity.php b/modules/janus/lib/Entity.php
+index c148914..6b17b79 100644
+--- a/modules/janus/lib/Entity.php
++++ b/modules/janus/lib/Entity.php
+@@ -100,6 +100,8 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+     private $_modified = false;
+ 
+     private $_arp;
++
++    private $_manipulation;
+     
+     private $_prettyname;
+     
+@@ -163,33 +165,33 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+             } else {
+                 $new_revisionid = $row[0]['maxrevisionid'] + 1;
+             }
+-
+-            $st = $this->execute(
+-                'INSERT INTO '. self::$prefix .'entity 
+-                (`eid`, `entityid`, `revisionid`, `state`, `type`, 
+-                `expiration`, `metadataurl`, `allowedall`, `arp`, `user`, `created`, 
+-                `ip`, `parent`, `active`, `revisionnote`) 
+-                VALUES 
+-                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+-                array(
+-                    $this->_eid,
+-                    $this->_entityid,
+-                    $new_revisionid,
+-                    $this->_workflow,
+-                    $this->_type,
+-                    $this->_expiration,
+-                    $this->_metadataurl,
+-                    $this->_allowedall,
+-                    $this->_arp,
+-                    $this->_user,
+-                    date('c'),
+-                    $_SERVER['REMOTE_ADDR'],
+-                    $this->_parent,
+-                    $this->_active,
+-                    $this->_revisionnote,
+-                )
++            
++            $insertFields = array(
++                'eid'           => $this->_eid,
++                'entityid'      => $this->_entityid,
++                'revisionid'    => $new_revisionid,
++                'state'         => $this->_workflow,
++                'type'          => $this->_type,
++                'expiration'    => $this->_expiration,
++                'metadataurl'   => $this->_metadataurl,
++                'allowedall'    => $this->_allowedall,
++                'arp'           => $this->_arp,
++                'manipulation'  => $this->_manipulation,
++                'user'          => $this->_user,
++                'created'       => date('c'),
++                'ip'            => $_SERVER['REMOTE_ADDR'],
++                'parent'        => $this->_parent,
++                'active'        => $this->_active,
++                'revisionnote'  => $this->_revisionnote,
+             );
+ 
++            $tableName = self::$prefix . 'entity';
++            $insertQuery = "INSERT INTO $tableName (" . implode(',', array_keys($insertFields)) . ') '.
++                'VALUES (' . str_repeat('?,', count($insertFields)-1) . '?)';
++            var_dump($insertQuery);
++
++            $st = $this->execute($insertQuery, array_values($insertFields));
++
+             if ($st === false) {
+                 return false;
+             }
+@@ -341,21 +343,22 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+         }
+ 
+         $row = $st->fetch(PDO::FETCH_ASSOC);
+-        $this->_eid = $row['eid'];
+-        $this->_entityid = $row['entityid'];
+-        $this->_revisionid = $row['revisionid'];
+-        $this->_workflow = $row['state'];
+-        $this->_type = $row['type'];
+-        $this->_expiration = $row['expiration'];
+-        $this->_metadataurl = $row['metadataurl'];
+-        $this->_allowedall = $row['allowedall'];
+-        $this->_parent = $row['parent'];
+-        $this->_revisionnote = $row['revisionnote'];
+-        $this->_arp = $row['arp'];
+-        $this->_user = $row['user'];
+-        $this->_created = $row['created'];
+-        $this->_active = $row['active'];
+-        $this->_modify   = false;
++        $this->_eid             = $row['eid'];
++        $this->_entityid        = $row['entityid'];
++        $this->_revisionid      = $row['revisionid'];
++        $this->_workflow        = $row['state'];
++        $this->_type            = $row['type'];
++        $this->_expiration      = $row['expiration'];
++        $this->_metadataurl     = $row['metadataurl'];
++        $this->_allowedall      = $row['allowedall'];
++        $this->_parent          = $row['parent'];
++        $this->_revisionnote    = $row['revisionnote'];
++        $this->_arp             = $row['arp'];
++        $this->_user            = $row['user'];
++        $this->_created         = $row['created'];
++        $this->_active          = $row['active'];
++        $this->_manipulation    = $row['manipulation'];
++        $this->_modified        = false;
+ 
+         return $st;
+     }
+@@ -646,6 +649,20 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+     public function getArp() {
+         return $this->_arp;
+     }
++
++    public function setManipulation($manipulationCode) {
++        if ($this->_manipulation === $manipulationCode) {
++            return false;
++        }
++
++        $this->_manipulation = $manipulationCode;
++        $this->_modified = true;
++        return true;
++    }
++
++    public function getManipulation() {
++        return $this->_manipulation;
++    }
+     
+     public function getPrettyname() {
+         if(isset($this->_prettyname)) {
+diff --git a/modules/janus/lib/REST/Methods.php b/modules/janus/lib/REST/Methods.php
+index 6d534d0..de9ed55 100644
+--- a/modules/janus/lib/REST/Methods.php
++++ b/modules/janus/lib/REST/Methods.php
+@@ -149,6 +149,7 @@ class sspmod_janus_REST_Methods
+         $result['metadataurl']  = $entity->getMetadataURL();
+         $result['prettyname']   = $entity->getPrettyname();
+         $result['arp']          = $entity->getArp();
++        $result['manipulation'] = $entity->getManipulation();
+         $result['user']         = $entity->getUser();
+ 
+         return $result;
+diff --git a/modules/janus/templates/editentity.php b/modules/janus/templates/editentity.php
+index 2dd9cfa..faa44b1 100644
+--- a/modules/janus/templates/editentity.php
++++ b/modules/janus/templates/editentity.php
+@@ -122,6 +122,7 @@ define('JANUS_FORM_ELEMENT_DISABLED', 'disabled="disabled"');
+ <input type="hidden" name="eid" value="<?php echo $this->data['entity']->getEid(); ?>" />
+ <input type="hidden" name="revisionid" value="<?php echo $this->data['entity']->getRevisionid(); ?>" />
+ <input type="hidden" name="selectedtab" value="<?php echo $this->data['selectedtab']; ?>" />
++<input type="hidden" name="csrf_token" value="<?php echo session_id(); ?>" />
+ 
+ <div id="tabdiv">
+ <a href="<?php echo SimpleSAML_Module::getModuleURL('janus/index.php'); ?>"><?php echo $this->t('text_dashboard'); ?></a>
+@@ -146,6 +147,7 @@ define('JANUS_FORM_ELEMENT_DISABLED', 'disabled="disabled"');
+     }
+     ?>
+     <li><a href="#metadata"><?php echo $this->t('tab_metadata'); ?></a></li>
++    <li><a href="#manipulation_tab">Manipulation</a></li>
+     <?php if($this->data['uiguard']->hasPermission('validatemetadata', $wfstate, $this->data['user']->getType())): ?>
+     <li><a href="#validate" id="validate_link"><?php echo $this->t('tab_edit_entity_validate'); ?></a></li>
+     <?php endif; ?>
+@@ -175,7 +177,7 @@ define('JANUS_FORM_ELEMENT_DISABLED', 'disabled="disabled"');
+         $user = new sspmod_janus_User($janus_config->getValue('store'));
+         $wstates = $janus_config->getArray('workflowstates');
+         $curLang = $this->getLanguage();
+-        
++
+         foreach($history AS $data) {
+             echo '<a href="?eid='. $data->getEid() .'&amp;revisionid='. $data->getRevisionid().'">'. $this->t('tab_edit_entity_connection_revision') .' '. $data->getRevisionid() .'</a>';
+             if (strlen($data->getRevisionnote()) > 80) {
+@@ -1010,6 +1012,66 @@ if($this->data['entity']->getType() == 'saml20-idp' || $this->data['entity']->ge
+     ?>
+ </div>
+ 
++<div id="manipulation_tab">
++    <style type="text/css" media="screen">
++        .editor-container {
++            position:relative;
++            height: 650px;
++            width: 100%;
++            overflow: hidden;
++        }
++        .editor {
++            position: absolute;
++            width: 100%;
++            height: 600px;
++            overflow: hidden;
++        }
++    </style>
++    <pre>
++/**
++ * PHP code for advanced Response Manipulation.
++ * The following variables are available:
++ *
++ * @var string &$subjectId  NameID (empty for IdPs)
++ * @var array  &$attributes URN attributes (example: array('urn:mace:terena.org:attribute-def:schacHomeOrganization'=>array('example.edu')))
++ * @var array  &$response   XmlToArray formatted Response
++ */
++    </pre>
++    <p>
++        <a href="https://wiki.surfnetlabs.nl/display/conextdocumentation/SURFConext-attribute-manipulations">
++            Documentation on Confluence: SURFconext-attribute-manipulations
++        </a>
++    </p>
++    <textarea id="manipulation" name="entity_manipulation" rows="25" cols="80"><?php
++        echo htmlentities($this->data['entity']->getManipulation());
++    ?></textarea>
++    <div class="editor-container">
++        <div id="manipulation_edit" class="editor"></div>
++    </div>
++
++    <script src="//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
++    <script>
++        $(function() {
++            var editor = ace.edit("manipulation_edit"),
++                editorSession = editor.getSession(),
++                textArea = $('textarea[name="entity_manipulation"]');
++
++            textArea.hide();
++            editorSession.setValue(textArea.val());
++            editorSession.on('change', function(){
++                textArea.val(editor.getSession().getValue());
++            });
++
++            editorSession.setMode("ace/mode/php");
++            editor.setTheme("ace/theme/crimson_editor");
++
++            return {
++                editor: editor
++            };
++        });
++    </script>
++</div>
++
+ <div id="addmetadata">
+     <h2><?php echo $this->t('tab_edit_entity_import_from_url'); ?></h2>
+     <p>
+diff --git a/modules/janus/www/editentity.php b/modules/janus/www/editentity.php
+index 27c603e..1639ecd 100644
+--- a/modules/janus/www/editentity.php
++++ b/modules/janus/www/editentity.php
+@@ -4,12 +4,14 @@
+  * @author Sixto Martín, <smartin@yaco.es>
+  */
+ // Initial import
++/** @var $session SimpleSAML_Session */
+ $session = SimpleSAML_Session::getInstance();
+ $config = SimpleSAML_Configuration::getInstance();
+ $janus_config = SimpleSAML_Configuration::getConfig('module_janus.php');
+ 
+ // Get data from config
+ $authsource = $janus_config->getValue('auth', 'login-admin');
++/** @var $useridattr string */
+ $useridattr = $janus_config->getValue('useridattr', 'eduPersonPrincipalName');
+ $workflow = $janus_config->getValue('workflow_states');
+ $workflowstates = $janus_config->getValue('workflowstates');
+@@ -136,6 +138,13 @@ if(!empty($_POST)) {
+     // Array for collecting addresses to notify
+     $addresses = array();
+ 
++    if (empty($_POST['csrf_token']) || $_POST['csrf_token']!==session_id()) {
++        SimpleSAML_Logger::warning('Janus: [SECURITY] CSRF token not found or does not match session id');
++        throw new SimpleSAML_Error_Exception(
++            '[SECURITY] CSRF token not found or did not match session id!'
++        );
++    }
++
+     // Change entityID
+     if(isset($_POST['entityid']) && $guard->hasPermission('changeentityid', $entity->getWorkflow(), $user->getType())) {
+         if(check_uri($_POST['entityid']) || true) { # HACK: For SURFnetGuests : https://espee-test.surfnet.nl/federate/metadata/saml20/SURFnetGuests
+@@ -379,6 +388,15 @@ if(!empty($_POST)) {
+         }
+     }
+ 
++    // change Manipulation
++    if(isset($_POST['entity_manipulation']) && $guard->hasPermission('changemanipulation', $entity->getWorkflow(), $user->getType())) {
++        if($entity->setManipulation($_POST['entity_manipulation'])) {
++            $update = TRUE;
++            $note .= 'Changed manipulation: ' . $_POST['entity_manipulation'] . '<br />';
++            $addresses[] = 'ENTITYUPDATE-' . $eid . '-CHANGEMANIPULATION-' . $_POST['entity_manipulation'];
++        }
++    }
++
+     // Change entity type
+     if($entity->setType($_POST['entity_type']) && $guard->hasPermission('changeentitytype', $entity->getWorkflow(), $user->getType())) {
+         $old_metadata = $mcontroller->getMetadata();
