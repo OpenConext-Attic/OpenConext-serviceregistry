@@ -1,7 +1,286 @@
-diff --git a/modules/janus/dictionaries/dashboard.definition.json b/modules/janus/dictionaries/dashboard.definition.json
-index f7786de..c4c4773 100644
---- a/modules/janus/dictionaries/dashboard.definition.json
-+++ b/modules/janus/dictionaries/dashboard.definition.json
+diff --git janus_patches/00004_pagination_and_filtering_arp_screen.patch janus_patches/00004_pagination_and_filtering_arp_screen.patch
+index e5a0a04..e69de29 100644
+--- janus_patches/00004_pagination_and_filtering_arp_screen.patch
++++ janus_patches/00004_pagination_and_filtering_arp_screen.patch
+@@ -1,274 +0,0 @@
+-diff --git a/modules/janus/dictionaries/dashboard.definition.json b/modules/janus/dictionaries/dashboard.definition.json
+-index f7786de..c4c4773 100644
+---- a/modules/janus/dictionaries/dashboard.definition.json
+-+++ b/modules/janus/dictionaries/dashboard.definition.json
+-@@ -14,6 +14,9 @@
+- 	"tab_arpedit_header": {
+- 		"en": "ARP"
+- 	},
+-+	"tab_arp_no_results": {
+-+		"en": "No ARP records found"
+-+	},
+- 	"tab_message_header": {
+- 		"en": "Inbox"
+- 	},
+-diff --git a/modules/janus/dictionaries/dashboard.translation.json b/modules/janus/dictionaries/dashboard.translation.json
+-index b7141ae..66bf719 100644
+---- a/modules/janus/dictionaries/dashboard.translation.json
+-+++ b/modules/janus/dictionaries/dashboard.translation.json
+-@@ -125,6 +125,8 @@
+- 		"lv": "ARP",
+- 		"hu": "ARP"
+- 	},
+-+	"tab_arp_no_results": {
+-+	},
+- 	"tab_message_header": {
+- 		"da": "Indbakke",
+- 		"hr": "Gautieji",
+-diff --git a/modules/janus/lib/ARP.php b/modules/janus/lib/ARP.php
+-index 333cc36..9bac470 100644
+---- a/modules/janus/lib/ARP.php
+-+++ b/modules/janus/lib/ARP.php
+-@@ -363,14 +363,26 @@ class sspmod_janus_ARP extends sspmod_janus_Database
+-     /**
+-      * Get all ARP's in the system
+-      *
+-+     * @param int $offset Omit to have no pagination
+-+     * @param int $limit Omit to have no pagination
+-+     * @param string $query
+-      * @return array|false An array of ARP's or false on error'
+-      */
+--    public function getARPList()
+-+    public function getARPList($offset = null, $limit = null, $query = '')
+-     {
+-+        $sql = "SELECT * FROM `". self::$prefix ."arp`
+-+                WHERE `deleted` = '' AND `name` LIKE ?";
+-+
+-+        // optional pagination
+-+        if ($offset !== null || $limit !== null) {
+-+            // using sprintf to circumvent https://bugs.php.net/bug.php?id=44639
+-+            $sql .= sprintf(
+-+                    ' LIMIT %d, %d', $offset, $limit
+-+            );
+-+        }
+-+
+-         $st = $this->execute(
+--            "SELECT * FROM ". self::$prefix ."arp
+--            WHERE `deleted` = '';",
+--            array()
+-+            "$sql;", array("%$query%")
+-         );
+- 
+-         if ($st === false) {
+-@@ -388,5 +400,27 @@ class sspmod_janus_ARP extends sspmod_janus_Database
+-         );
+-         return $row;
+-     }
+-+
+-+    /**
+-+     * Count all ARP's in the system by given query
+-+     *
+-+     * @param string $query
+-+     * @return array|false An array of ARP's or false on error'
+-+     */
+-+    public function getARPCount($query = '')
+-+    {
+-+        $st = $this->execute(
+-+            "SELECT COUNT(*) FROM `". self::$prefix ."arp`
+-+             WHERE `deleted` = '' AND `name` LIKE ?",
+-+            array("%$query%")
+-+        );
+-+
+-+        if ($st === false) {
+-+            return false;
+-+        }
+-+
+-+        // return the count column
+-+        return (int)$st->fetchColumn();
+-+    }
+- }
+- ?>
+-diff --git a/modules/janus/lib/AdminUtil.php b/modules/janus/lib/AdminUtil.php
+-index e05643b..d061bc6 100644
+---- a/modules/janus/lib/AdminUtil.php
+-+++ b/modules/janus/lib/AdminUtil.php
+-@@ -485,14 +485,38 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
+-     }
+- 
+-     /**
+--     * Get a complete list of all ARPs in the system
+-+     * Get all parameters needed to render the paginated ARP list
+-      *
+-      * @return array
+-      */
+--    public function getARPList()
+-+    public function getARPListParams()
+-     {
+-+        // define default page size
+-+        $defaultPageSize = 15;
+-+
+-+        // parse GET parameters (search query q, page p and page size ps)
+-+        $query = isset($_GET['q']) ? $_GET['q'] : '';
+-+        $page  = !empty($_GET['p']) ? (int)$_GET['p'] : 1;
+-+        $size  = !empty($_GET['ps']) ? (int)$_GET['ps'] : $defaultPageSize;
+-+
+-         $arp = new sspmod_janus_ARP;
+--        return $arp->getARPlist();
+-+
+-+        // count all ARPs in the system
+-+        $count = $arp->getARPCount($query);
+-+
+-+        // calculate total pages
+-+        $total = ceil($count / $size);
+-+
+-+        return array(
+-+            'page'  => $page,
+-+            'total' => $total,
+-+            'query' => $query,
+-+            'list'  => $arp->getARPList(
+-+                ($page * $size) - $size, // offset
+-+                $size,                   // limit
+-+                $query                   // filter by...
+-+            ),
+-+        );
+-     }
+- 
+-     /**
+-diff --git a/modules/janus/templates/dashboard.php b/modules/janus/templates/dashboard.php
+-index ccf5ea9..5fc7ce4 100644
+---- a/modules/janus/templates/dashboard.php
+-+++ b/modules/janus/templates/dashboard.php
+-@@ -1089,10 +1089,31 @@ function renderPaginator($uid, $currentpage, $lastpage) {
+- <!-- TAB- ARP -->
+- <?php
+- if($this->data['uiguard']->hasPermission('arpeditor', null, $this->data['user']->getType(), TRUE)) {
+-+    // retrieve page/pagesize/count and ARP list
+-+    $arpparams = $util->getARPListParams();
+- ?>
+- <div id="arpAdmin">
+-     <!-- ARP ADMIN -->
+-     <h3>Attribute Release Policies</h3>
+-+
+-+    <form action="" method="GET">
+-+        <table style="display: block;" class="" id="arp-search">
+-+            <tbody>
+-+                <tr>
+-+                    <td><?php echo $this->t('text_entities_search'); ?>:</td>
+-+                    <td>
+-+                        <input type="text" id="admin_arp_search" name="q" value="<?php echo htmlentities($arpparams['query'])?>"/>
+-+                    </td>
+-+                    <td>
+-+                        <input type="hidden" name="selectedtab" value="2" />
+-+                        <button type="submit" class="janus_button"><?php echo $this->t('text_entities_search') ?></button>
+-+                    </td>
+-+                </tr>
+-+            </tbody>
+-+        </table>
+-+    </form>
+-+
+-+    <hr/>
+-     <table id="arpList" border="0" style="border-collapse: collapse;">
+-         <thead>
+-             <tr>
+-@@ -1102,8 +1123,7 @@ if($this->data['uiguard']->hasPermission('arpeditor', null, $this->data['user']-
+-             </tr>
+-         </thead>
+-         <tbody>
+--            <?php $arplist = $util->getARPList(); ?>
+--            <?php foreach($arplist AS $arp): ?>
+-+            <?php foreach($arpparams['list'] AS $arp): ?>
+-             <tr id="arp_row_<?php echo $arp['aid']; ?>">
+-                 <td class="arp_name">
+-                     <?php if ($arp['is_default']) echo "<strong>"; ?>
+-@@ -1134,8 +1154,37 @@ if($this->data['uiguard']->hasPermission('arpeditor', null, $this->data['user']-
+-                 </td>
+-             </tr>
+-             <?php endforeach; ?>
+-+            <?php if (count($arpparams['list']) === 0): ?>
+-+            <tr>
+-+                <td colspan="3">
+-+                    <em><?php echo $this->t('tab_arp_no_results')?></em>
+-+                </td>
+-+            </tr>
+-+            <?php endif ?>
+-         </tbody>
+-+        <?php if ($arpparams['total'] > 1): /* only render pagination when applicable */ ?>
+-+        <tfoot>
+-+            <tr>
+-+                <td colspan="3">
+-+                    <ul class="pagination">
+-+                        <?php foreach(range(1, $arpparams['total']) as $page): ?>
+-+                            <li>
+-+                                <?php if ($arpparams['page'] == $page): /* current page*/ ?>
+-+                                    <?php echo $page?>
+-+                                <?php else: ?>
+-+                                    <a href="?p=<?php echo $page?>&q=<?php echo htmlentities(urlencode($arpparams['query']))?>&selectedtab=2">
+-+                                        <?php echo $page?>
+-+                                    </a>
+-+                                <?php endif?>
+-+                            </li>
+-+                        <?php endforeach ?>
+-+                    </ul>
+-+                </td>
+-+            </tr>
+-+        </tfoot>
+-+        <?php endif ?>
+-     </table>
+-+
+-     <img src="resources/images/pm_plus_16.png"
+-          alt="Edit"
+-          width="16"
+-diff --git a/modules/janus/www/resources/images/pixel-mixer-license.txt b/modules/janus/www/resources/images/pixel-mixer-license.txt
+-old mode 100755
+-new mode 100644
+-diff --git a/modules/janus/www/resources/scripts/arp.js b/modules/janus/www/resources/scripts/arp.js
+-index ef9becc..7eec020 100644
+---- a/modules/janus/www/resources/scripts/arp.js
+-+++ b/modules/janus/www/resources/scripts/arp.js
+-@@ -28,6 +28,11 @@ var ARP = {
+-             },
+-             function(data) {
+-                 ARP._loadArp(data);
+-+
+-+                // visually focus the edit form
+-+                $('html,body').scrollTop(
+-+                    $('#arpEdit').position().top
+-+                );
+-             },
+-             "json"
+-         );
+-diff --git a/modules/janus/www/resources/scripts/jquery-asyncUpload-0.1.js b/modules/janus/www/resources/scripts/jquery-asyncUpload-0.1.js
+-old mode 100755
+-new mode 100644
+-diff --git a/modules/janus/www/resources/scripts/swfupload.js b/modules/janus/www/resources/scripts/swfupload.js
+-old mode 100755
+-new mode 100644
+-diff --git a/modules/janus/www/resources/style.css b/modules/janus/www/resources/style.css
+-index cc6615b..7f886af 100644
+---- a/modules/janus/www/resources/style.css
+-+++ b/modules/janus/www/resources/style.css
+-@@ -95,6 +95,24 @@ div.arpbgpopup {
+-     z-index:1;  
+- }
+- 
+-+/* search and pagination in ARP screen */
+-+#arpAdmin ul.pagination {
+-+    margin-top: 10px;
+-+    text-align: center;
+-+}
+-+
+-+#arpAdmin ul.pagination li {
+-+    display: inline;
+-+    list-style: none;
+-+    margin: 5px;
+-+    font-style: italic;
+-+}
+-+
+-+#arpAdmin ul.pagination li a {
+-+    font-style: normal;
+-+    font-weight: bold;
+-+}
+-+
+- /* Dashboard */
+- div.subscription {
+-     border-bottom: 1px solid #AAAAAA;
+diff --git modules/janus/dictionaries/dashboard.definition.json modules/janus/dictionaries/dashboard.definition.json
+index f7786de..f1f4bc7 100644
+--- modules/janus/dictionaries/dashboard.definition.json
++++ modules/janus/dictionaries/dashboard.definition.json
 @@ -14,6 +14,9 @@
  	"tab_arpedit_header": {
  		"en": "ARP"
@@ -12,10 +291,10 @@ index f7786de..c4c4773 100644
  	"tab_message_header": {
  		"en": "Inbox"
  	},
-diff --git a/modules/janus/dictionaries/dashboard.translation.json b/modules/janus/dictionaries/dashboard.translation.json
+diff --git modules/janus/dictionaries/dashboard.translation.json modules/janus/dictionaries/dashboard.translation.json
 index b7141ae..66bf719 100644
---- a/modules/janus/dictionaries/dashboard.translation.json
-+++ b/modules/janus/dictionaries/dashboard.translation.json
+--- modules/janus/dictionaries/dashboard.translation.json
++++ modules/janus/dictionaries/dashboard.translation.json
 @@ -125,6 +125,8 @@
  		"lv": "ARP",
  		"hu": "ARP"
@@ -25,10 +304,10 @@ index b7141ae..66bf719 100644
  	"tab_message_header": {
  		"da": "Indbakke",
  		"hr": "Gautieji",
-diff --git a/modules/janus/lib/ARP.php b/modules/janus/lib/ARP.php
-index 333cc36..9bac470 100644
---- a/modules/janus/lib/ARP.php
-+++ b/modules/janus/lib/ARP.php
+diff --git modules/janus/lib/ARP.php modules/janus/lib/ARP.php
+index 333cc36..b885a44 100644
+--- modules/janus/lib/ARP.php
++++ modules/janus/lib/ARP.php
 @@ -363,14 +363,26 @@ class sspmod_janus_ARP extends sspmod_janus_Database
      /**
       * Get all ARP's in the system
@@ -88,10 +367,10 @@ index 333cc36..9bac470 100644
 +    }
  }
  ?>
-diff --git a/modules/janus/lib/AdminUtil.php b/modules/janus/lib/AdminUtil.php
-index e05643b..d061bc6 100644
---- a/modules/janus/lib/AdminUtil.php
-+++ b/modules/janus/lib/AdminUtil.php
+diff --git modules/janus/lib/AdminUtil.php modules/janus/lib/AdminUtil.php
+index e05643b..b6770c9 100644
+--- modules/janus/lib/AdminUtil.php
++++ modules/janus/lib/AdminUtil.php
 @@ -485,14 +485,38 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
      }
  
@@ -134,10 +413,10 @@ index e05643b..d061bc6 100644
      }
  
      /**
-diff --git a/modules/janus/templates/dashboard.php b/modules/janus/templates/dashboard.php
-index ccf5ea9..5fc7ce4 100644
---- a/modules/janus/templates/dashboard.php
-+++ b/modules/janus/templates/dashboard.php
+diff --git modules/janus/templates/dashboard.php modules/janus/templates/dashboard.php
+index ccf5ea9..f7f304b 100644
+--- modules/janus/templates/dashboard.php
++++ modules/janus/templates/dashboard.php
 @@ -1089,10 +1089,31 @@ function renderPaginator($uid, $currentpage, $lastpage) {
  <!-- TAB- ARP -->
  <?php
@@ -218,13 +497,10 @@ index ccf5ea9..5fc7ce4 100644
      <img src="resources/images/pm_plus_16.png"
           alt="Edit"
           width="16"
-diff --git a/modules/janus/www/resources/images/pixel-mixer-license.txt b/modules/janus/www/resources/images/pixel-mixer-license.txt
-old mode 100755
-new mode 100644
-diff --git a/modules/janus/www/resources/scripts/arp.js b/modules/janus/www/resources/scripts/arp.js
+diff --git modules/janus/www/resources/scripts/arp.js modules/janus/www/resources/scripts/arp.js
 index ef9becc..7eec020 100644
---- a/modules/janus/www/resources/scripts/arp.js
-+++ b/modules/janus/www/resources/scripts/arp.js
+--- modules/janus/www/resources/scripts/arp.js
++++ modules/janus/www/resources/scripts/arp.js
 @@ -28,6 +28,11 @@ var ARP = {
              },
              function(data) {
@@ -237,16 +513,10 @@ index ef9becc..7eec020 100644
              },
              "json"
          );
-diff --git a/modules/janus/www/resources/scripts/jquery-asyncUpload-0.1.js b/modules/janus/www/resources/scripts/jquery-asyncUpload-0.1.js
-old mode 100755
-new mode 100644
-diff --git a/modules/janus/www/resources/scripts/swfupload.js b/modules/janus/www/resources/scripts/swfupload.js
-old mode 100755
-new mode 100644
-diff --git a/modules/janus/www/resources/style.css b/modules/janus/www/resources/style.css
-index cc6615b..7f886af 100644
---- a/modules/janus/www/resources/style.css
-+++ b/modules/janus/www/resources/style.css
+diff --git modules/janus/www/resources/style.css modules/janus/www/resources/style.css
+index cc6615b..83a6c93 100644
+--- modules/janus/www/resources/style.css
++++ modules/janus/www/resources/style.css
 @@ -95,6 +95,24 @@ div.arpbgpopup {
      z-index:1;  
  }
