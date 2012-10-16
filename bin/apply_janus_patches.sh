@@ -1,26 +1,11 @@
 #!/bin/sh
 
-# FIXME to work with OS X / Linux and git
-# Get janus dir
-#scriptPath=$(readlink -f "$0")
-#binDir=$(dirname $scriptPath)
-#serviceRegistryRootDir=$(dirname $binDir)
-#janusDir=${serviceRegistryRootDir}"/modules/janus/"
-#
-#echo -e "\nReverting versioned files"
-#git checkout HEAD ${janusDir}
-#
-#FIXME to work with git
-#echo -e "\nRemoving unversioned files"
-#svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'
-#svn status --no-ignore ${janusDir} | grep '^\?' | sed 's/^\?      //'  | xargs rm -rf
-
 echo -e "\nPatching files"
 REJFILE="/tmp/janus_patches-rej-$(date +%s)"
 touch $REJFILE
 for FILENAME in janus_patches/*.patch
 do
-  patch -Np0 -r $REJFILE < $FILENAME
+  patch -Np1 -r $REJFILE < $FILENAME
 done
 rm $REJFILE
 echo "Removed $REJFILE"

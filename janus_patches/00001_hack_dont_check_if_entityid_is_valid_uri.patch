@@ -1,7 +1,7 @@
-Index: modules/janus/www/dashboard.php
-===================================================================
---- modules/janus/www/dashboard.php
-+++ modules/janus/www/dashboard.php
+diff --git a/modules/janus/UPGRADE b/modules/janus/UPGRADE
+index 841a81f..e537670 100644
+--- a/modules/janus/www/dashboard.php
++++ b/modules/janus/www/dashboard.php
 @@ -90,7 +90,7 @@ if(isset($_POST['add_usersubmit'])) {
  if(isset($_POST['submit'])) {
      $selectedtab = '1';
@@ -11,10 +11,10 @@ Index: modules/janus/www/dashboard.php
              if(!isset($_POST['entityid']) || empty($_POST['entitytype'])) {
                  $msg = 'error_no_type';
                  $old_entityid = $_POST['entityid'];
-Index: modules/janus/www/editentity.php
-===================================================================
---- modules/janus/www/editentity.php	(revision 867)
-+++ modules/janus/www/editentity.php	(working copy)
+diff --git a/modules/janus/UPGRADE b/modules/janus/UPGRADE
+index 841a81f..e537670 100644
+--- a/modules/janus/www/editentity.php
++++ b/modules/janus/www/editentity.php
 @@ -135,7 +135,7 @@
  
      // Change entityID

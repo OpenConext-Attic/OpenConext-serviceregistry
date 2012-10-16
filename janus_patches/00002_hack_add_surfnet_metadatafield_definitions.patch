@@ -1,7 +1,7 @@
-Index: modules/janus/dictionaries/metadatafields.definition.json
-===================================================================
---- modules/janus/dictionaries/metadatafields.definition.json	(revision 947)
-+++ modules/janus/dictionaries/metadatafields.definition.json	(revision )
+diff --git a/modules/janus/UPGRADE b/modules/janus/UPGRADE
+index 841a81f..e537670 100644
+--- a/modules/janus/dictionaries/metadatafields.definition.json
++++ b/modules/janus/dictionaries/metadatafields.definition.json
 @@ -2,88 +2,178 @@
      "AssertionConsumerService_Binding": {
          "en": "Binding for the endpoint for connection that supports the Authentication Request protocol [SAMLProf]."
