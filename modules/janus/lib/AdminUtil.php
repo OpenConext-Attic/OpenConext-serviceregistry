@@ -11,7 +11,7 @@
  * @author     Sixto Martín, <smartin@yaco.es>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: AdminUtil.php 1131 2012-06-26 12:02:48Z relaxnownl@gmail.com $
+ * @version    SVN: $Id: AdminUtil.php 1140 2012-10-16 14:45:08Z relaxnownl@gmail.com $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
@@ -30,7 +30,7 @@
  * @author     Sixto Martín, <smartin@yaco.es>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: AdminUtil.php 1131 2012-06-26 12:02:48Z relaxnownl@gmail.com $
+ * @version    SVN: $Id: AdminUtil.php 1140 2012-10-16 14:45:08Z relaxnownl@gmail.com $
  * @link       http://code.google.com/p/janus-ssp/
  * @see        Sspmod_Janus_Database
  * @since      Class available since Release 1.0.0
@@ -485,14 +485,38 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
     }
 
     /**
-     * Get a complete list of all ARPs in the system
+     * Get all parameters needed to render the paginated ARP list
      *
      * @return array
      */
-    public function getARPList()
+    public function getARPListParams()
     {
+        // define default page size
+        $defaultPageSize = 15;
+
+        // parse GET parameters (search query q, page p and page size ps)
+        $query = isset($_GET['q']) ? $_GET['q'] : '';
+        $page  = !empty($_GET['p']) ? (int)$_GET['p'] : 1;
+        $size  = !empty($_GET['ps']) ? (int)$_GET['ps'] : $defaultPageSize;
+
         $arp = new sspmod_janus_ARP;
-        return $arp->getARPlist();
+
+        // count all ARPs in the system
+        $count = $arp->getARPCount($query);
+
+        // calculate total pages
+        $total = ceil($count / $size);
+
+        return array(
+            'page'  => $page,
+            'total' => $total,
+            'query' => $query,
+            'list'  => $arp->getARPList(
+                ($page * $size) - $size, // offset
+                $size,                   // limit
+                $query                   // filter by...
+            ),
+        );
     }
 
     /**
