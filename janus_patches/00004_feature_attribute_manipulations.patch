@@ -77,7 +77,6 @@ index c148914..6b17b79 100644
 +            $tableName = self::$prefix . 'entity';
 +            $insertQuery = "INSERT INTO $tableName (" . implode(',', array_keys($insertFields)) . ') '.
 +                'VALUES (' . str_repeat('?,', count($insertFields)-1) . '?)';
-+            var_dump($insertQuery);
 +
 +            $st = $this->execute($insertQuery, array_values($insertFields));
 +
@@ -118,7 +117,6 @@ index c148914..6b17b79 100644
 +        $this->_created         = $row['created'];
 +        $this->_active          = $row['active'];
 +        $this->_manipulation    = $row['manipulation'];
-+        $this->_modified        = false;
  
          return $st;
      }
