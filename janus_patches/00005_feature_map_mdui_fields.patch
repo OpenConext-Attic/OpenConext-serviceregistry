@@ -1,8 +1,106 @@
-Index: lib/EntityController.php
-===================================================================
---- lib/EntityController.php	(revision 1140)
-+++ lib/EntityController.php	(working copy)
-@@ -51,6 +51,22 @@
+diff --git a/janus_patches/00005_feature_map_mdui_fields.patch b/janus_patches/00005_feature_map_mdui_fields.patch
+index 166e201..e69de29 100644
+--- a/janus_patches/00005_feature_map_mdui_fields.patch
++++ b/janus_patches/00005_feature_map_mdui_fields.patch
+@@ -1,93 +0,0 @@
+-Index: lib/EntityController.php
+-===================================================================
+---- lib/EntityController.php	(revision 1140)
+-+++ lib/EntityController.php	(working copy)
+-@@ -51,6 +51,22 @@
+-      */
+-     private $_metadata;
+- 
+-+    /**
+-+     * List of MDUI extension field mappings,
+-+     *  saml name => janus field
+-+     *
+-+     * @var type
+-+     */
+-+    private $_mduiMetadataMapping = array(
+-+        'UIInfo:Logo:0:height'  => 'logo:0:height',
+-+        'UIInfo:Logo:0:width'   => 'logo:0:width',
+-+        'UIInfo:Logo:0:url'     => 'logo:0:url',
+-+        'UIInfo:Keywords:en:0'  => 'keywords:en',
+-+        'UIInfo:Keywords:nl:0'  => 'keywords:nl',
+-+        'UIInfo:Description:en' => 'description:en',
+-+        'UIInfo:Description:nl' => 'description:nl',
+-+    );
+-+
+-     private $_blocked = array();
+-     private $_blockedLoaded = false;
+- 
+-@@ -540,6 +556,29 @@
+-     }
+- 
+-     /**
+-+     * Set the mapping of SAML keys -> janus metadata field names
+-+     *
+-+     * @param array $mapping
+-+     * @return \sspmod_janus_EntityController
+-+     */
+-+    public function setMDUIMetadataMapping(array $mapping)
+-+    {
+-+        $this->_mduiMetadataMapping = $mapping;
+-+
+-+        return $this;
+-+    }
+-+
+-+    /**
+-+     * Returns mapping of SAML keys -> janus metadata field names
+-+     *
+-+     * @return array
+-+     */
+-+    public function getMDUIMetadataMapping()
+-+    {
+-+        return $this->_mduiMetadataMapping;
+-+    }
+-+
+-+    /**
+-      * Import SP SAML 2.0 metadata.
+-      *
+-      * Imports SP SAML 2.0 metadata. The entity id is conpared with that entity
+-@@ -879,6 +918,9 @@
+-             }
+-         }
+- 
+-+        // import MDUI extension values defined in mapping
+-+        $parsedmetadata += $this->_importMduiMetadata($parsedmetadata);
+-+
+-         foreach ($parsedmetadata AS $key => $value) {        
+-             if ($this->hasMetadata($key)) {
+-                 if (!$this->updateMetadata($key, $value)) {
+-@@ -905,6 +947,25 @@
+-     }
+- 
+-     /**
+-+     * Retreive mdui info from $parsedmetadata
+-+     *
+-+     * @param array $parsedmetadata
+-+     * @return array
+-+     */
+-+    private function _importMduiMetadata($parsedmetadata)
+-+    {
+-+        $result = array();
+-+
+-+        foreach ($this->getMDUIMetadataMapping() as $samlKey => $janusKey) {
+-+            if (isset($parsedmetadata[$samlKey])) {
+-+                $result[$janusKey] = $parsedmetadata[$samlKey];
+-+            }
+-+        }
+-+
+-+        return $result;
+-+    }
+-+
+-+    /**
+-      * Has metadata
+-      *
+-      * Ask if the given metadata exist
+diff --git a/modules/janus/lib/EntityController.php b/modules/janus/lib/EntityController.php
+index d6b5b78..52ca777 100644
+--- a/modules/janus/lib/EntityController.php
++++ b/modules/janus/lib/EntityController.php
+@@ -51,6 +51,22 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
       */
      private $_metadata;
  
@@ -25,7 +123,7 @@ Index: lib/EntityController.php
      private $_blocked = array();
      private $_blockedLoaded = false;
  
-@@ -540,6 +556,29 @@
+@@ -540,6 +556,29 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
      }
  
      /**
@@ -55,7 +153,7 @@ Index: lib/EntityController.php
       * Import SP SAML 2.0 metadata.
       *
       * Imports SP SAML 2.0 metadata. The entity id is conpared with that entity
-@@ -879,6 +918,9 @@
+@@ -879,6 +918,9 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
              }
          }
  
@@ -65,7 +163,7 @@ Index: lib/EntityController.php
          foreach ($parsedmetadata AS $key => $value) {        
              if ($this->hasMetadata($key)) {
                  if (!$this->updateMetadata($key, $value)) {
-@@ -905,6 +947,25 @@
+@@ -905,6 +947,25 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
      }
  
      /**
