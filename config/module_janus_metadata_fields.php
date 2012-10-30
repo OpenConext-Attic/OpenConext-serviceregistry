@@ -40,11 +40,13 @@ $template = array(
         'logo:0:width'  => array('required' => TRUE, 'default' => '120'),
         'logo:0:height' => array('required' => TRUE, 'default' => '60'),
 
-		// LMNG identifier to map LMNG entities to the SURFconext world
-        'lmng:identifier'           => array(),
+        'redirect.sign' => array('type' => 'boolean', 'required' => TRUE, 'default' => FALSE),
+
+        // LMNG identifier to map LMNG entities to the SURFconext world
+        'lmng:identifier' => array(),
 
         // publish SP/IDP metadata to edugain
-        'coin:publish_in_edugain'       => array('type' => 'boolean'),
+        'coin:publish_in_edugain' => array('type' => 'boolean'),
     ),
 
     // Fields only for Identity Providers
@@ -115,7 +117,6 @@ $template = array(
         # Must have at least 1 location
         'AssertionConsumerService:0:Location' => array('required' => TRUE, 'validate' => 'isurl'),
         'AssertionConsumerService:#:Location' => array('required' => FALSE, 'validate' => 'isurl', 'supported' => array(1,2,3,4,5,6,7,8,9)),
-        'redirect.sign'                       => array('type' => 'boolean', 'required' => TRUE, 'default' => FALSE),
 
         'coin:no_consent_required'      => array('type' => 'boolean', 'default' => FALSE),
 
