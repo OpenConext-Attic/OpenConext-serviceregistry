@@ -1,5 +1,5 @@
 diff --git a/modules/janus/lib/MetaExport.php b/modules/janus/lib/MetaExport.php
-index 41c50f8..d5c9391 100644
+index 41c50f8..3af81fd 100644
 --- a/modules/janus/lib/MetaExport.php
 +++ b/modules/janus/lib/MetaExport.php
 @@ -11,9 +11,9 @@
@@ -55,12 +55,12 @@ index 41c50f8..d5c9391 100644
 -        
 -        if (!empty($missing_required)) {
 +
-+        if (!empty($missing_required) && !empty($option['noRequiredFields'])) {
++        if (!empty($missing_required) && empty($option['noRequiredFields'])) {
              SimpleSAML_Logger::error('JANUS - Missing required metadata fields. Entity_id:' . $entityId);
              self::$_error = $missing_required;
              return false;
 diff --git a/modules/janus/www/exportentity.php b/modules/janus/www/exportentity.php
-index 9d37c2a..1b66532 100644
+index 9d37c2a..bc38d5b 100644
 --- a/modules/janus/www/exportentity.php
 +++ b/modules/janus/www/exportentity.php
 @@ -41,7 +41,7 @@ if(isset($_GET['revisionid'])) {
@@ -78,11 +78,11 @@ index 9d37c2a..1b66532 100644
  
 -$metaflat = sspmod_janus_MetaExport::getFlatMetadata($eid, $revisionid);
 +$metaflat = sspmod_janus_MetaExport::getFlatMetadata($eid, $revisionid, null, array(
-+    'noRequiredFields'
++    'noRequiredFields' => true,
 +));
 +
 +$metaarray = sspmod_janus_MetaExport::getPHPArrayMetadata($eid, $revisionid, null, array(
-+    'noRequiredFields'
++    'noRequiredFields' => true,
 +));
  
 -$metaarray = sspmod_janus_MetaExport::getPHPArrayMetadata($eid, $revisionid);
