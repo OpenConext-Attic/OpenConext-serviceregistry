@@ -22,6 +22,28 @@ $template = array(
         'certData'                  => array(),
         'certData2'                 => array(),
 
+        'NameIDFormat' => array(
+            'type' => 'select',
+            'required'=>FALSE,
+            'select_values' => array(
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+            ),
+            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+        ),
+        'NameIDFormats:#' => array(
+            'supported' => array(0,1,2),
+            'type' => 'select',
+            'required'=>FALSE,
+            'select_values' => array(
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+            ),
+            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+        ),
+
         'contacts:#:contactType'    => array(
             'type' => 'select',
             'required' => TRUE,
@@ -163,17 +185,6 @@ $template = array(
         // Other
         'coin:provide_is_member_of'     => array('type' => 'boolean', 'default' => FALSE),
         'coin:implicit_vo_id'           => array(),
-
-        'NameIDFormat' => array(
-            'type' => 'select',
-            'required'=>FALSE,
-            'select_values' => array(
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
-            ),
-            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
-        ),
 
         'coin:transparant_issuer'       => array('type' => 'boolean')
     ),

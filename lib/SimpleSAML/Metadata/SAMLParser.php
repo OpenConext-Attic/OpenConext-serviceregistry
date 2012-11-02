@@ -648,11 +648,6 @@ class SimpleSAML_Metadata_SAMLParser {
 	 * @return Associative array with metadata or NULL if we are unable to generate metadata for a SAML 2.0 IdP.
 	 */
 	public function getMetadata20IdP() {
-
-		$ret = $this->getMetadataCommon();
-		$ret['metadata-set'] = 'saml20-idp-remote';
-
-
 		/* Find IdP information which supports the SAML 2.0 protocol. */
 		$idp = $this->getIdPDescriptors(self::$SAML20Protocols);
 		if(count($idp) === 0) {
@@ -661,6 +656,9 @@ class SimpleSAML_Metadata_SAMLParser {
 
 		/* We currently only look at the first IDP descriptor which supports SAML 2.0. */
 		$idp = $idp[0];
+
+        $ret = $this->getMetadataCommon();
+        $ret['metadata-set'] = 'saml20-idp-remote';
 
 		/* Add expire time to metadata. */
 		if (array_key_exists('expire', $idp)) {
@@ -682,6 +680,7 @@ class SimpleSAML_Metadata_SAMLParser {
 		/* Find the ArtifactResolutionService endpoint. */
 		$ret['ArtifactResolutionService'] = $idp['ArtifactResolutionService'];
 
+        $ret['NameIDFormats'] = $idp['nameIDFormats'];
 
 		/* Add public keys. */
 		if (!empty($idp['keys'])) {
