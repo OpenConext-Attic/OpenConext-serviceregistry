@@ -8,16 +8,11 @@
  */
 class ServiceRegistry_DbPatch_Core_Application extends DbPatch_Core_Application
 {
-    const CONFIG_FILE = 'module_janus.php';
-    const CONFIG_DIR_RELATIVE = '/../../../../config/';
     const PATCH_DIR_RELATIVE = '/../../../../database/patch';
 
     private function _getDatabaseConfig()
     {
-        $config = array();
-        $configFile = realpath(__DIR__ . self::CONFIG_DIR_RELATIVE . self::CONFIG_FILE);
-        require $configFile;
-        return new Zend_Config($config['store']);
+        return new Zend_Config(SimpleSAML_Configuration::getConfig('module_janus.php')->getArray('store'));
     }
 
     protected function getConfig($filename = null)
@@ -55,7 +50,7 @@ class ServiceRegistry_DbPatch_Core_Application extends DbPatch_Core_Application
             case 'mysql':
                 return 'Mysqli';
             default:
-                throw new EngineBlock_Exception("Unsupported PDO driver '$pdoDriver'");
+                throw new Exception("Unsupported PDO driver '$pdoDriver'");
         }
     }
 }

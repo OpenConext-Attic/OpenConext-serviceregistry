@@ -26,10 +26,15 @@
 
 set_include_path(realpath(__DIR__ . '/../lib') . PATH_SEPARATOR . get_include_path());
 
+// Include SSP
+require __DIR__ . '/../www/_include.php';
+
+// Include Zend Autoloader
 require_once 'Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
 $autoloader->registerNamespace('DbPatch_');
 $autoloader->registerNamespace('ServiceRegistry_');
 
+// Start DbPatch
 $application = new ServiceRegistry_DbPatch_Core_Application();
 $application->main();
