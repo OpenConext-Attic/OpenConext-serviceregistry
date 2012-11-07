@@ -181,6 +181,7 @@ $template = array(
         ),
 		//Self Service
 		'coin:ss:idp_visible_only'      => array('type' => 'boolean', 'default' => FALSE),
+        'coin:application_url'          => array('default' => 'Application URL','default_allow' => FALSE),
 
         // Other
         'coin:provide_is_member_of'     => array('type' => 'boolean', 'default' => FALSE),
