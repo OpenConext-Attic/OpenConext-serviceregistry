@@ -64,9 +64,6 @@ $template = array(
 
         'redirect.sign' => array('type' => 'boolean', 'required' => TRUE, 'default' => FALSE),
 
-        // LMNG identifier to map LMNG entities to the SURFconext world
-        'lmng:identifier' => array(),
-
         // publish SP/IDP metadata to edugain
         'coin:publish_in_edugain' => array('type' => 'boolean'),
     ),
