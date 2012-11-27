@@ -1,0 +1,163 @@
+commit 0dd40587cbe056518336f6c613452d9d5e40289d
+Author: Joris Steyn <joris@ibuildings.nl>
+Date:   Tue Nov 27 16:25:23 2012 +0100
+
+    BACKLOG-706 fixed notices and logging requirements
+
+diff --git a/modules/janus/lib/REST/Mapper/SamlEntity.php b/modules/janus/lib/REST/Mapper/SamlEntity.php
+index 6ff1bc1..80b191b 100644
+--- a/modules/janus/lib/REST/Mapper/SamlEntity.php
++++ b/modules/janus/lib/REST/Mapper/SamlEntity.php
+@@ -36,7 +36,7 @@ abstract class sspmod_janus_REST_Mapper_SamlEntity extends sspmod_janus_REST_Map
+         );
+ 
+         try {
+-            $this->_setEntityId($entity, $id, $this->_request->getParameter('revision'));
++            $this->_setEntityId($entity, (string)$id, $this->_request->getParameter('revision'));
+         } catch (Exception $e) {
+             // workaround for bad janus' error handling
+             if (!preg_match('/could not get newest revision/i', $e->getMessage())) {
+@@ -73,7 +73,7 @@ abstract class sspmod_janus_REST_Mapper_SamlEntity extends sspmod_janus_REST_Map
+         unset($params['revisionid']);
+ 
+         // creates entity object
+-        $entity = $this->_toEntity($id, $params);
++        $entity = $this->_toEntity((string)$id, $params);
+ 
+         $controller = self::getEntityController();
+         $controller->loadEntity();
+@@ -106,6 +106,13 @@ abstract class sspmod_janus_REST_Mapper_SamlEntity extends sspmod_janus_REST_Map
+             $params['entityid'] = $params['metadataurl'];
+         }
+ 
++        // check minimum values
++        if (empty($params['entityid'])) {
++            throw new sspmod_janus_REST_Exception_BadRequest(
++                "Missing required entityid, provide at least 'metadataurl' or 'entityid' in the request body"
++            );
++        }
++
+         // check entityid
+         $controller = self::getUserController();
+         if ($controller->isEntityIdInUse($params['entityid'], $message)) {
+@@ -115,13 +122,6 @@ abstract class sspmod_janus_REST_Mapper_SamlEntity extends sspmod_janus_REST_Map
+             );
+         }
+ 
+-        // check minimum values
+-        if (empty($params['entityid'])) {
+-            throw new sspmod_janus_REST_Exception_BadRequest(
+-                "Missing required entityid, provide at least 'metadataurl' or 'entityid' in the request body"
+-            );
+-        }
+-
+         $params['type'] = $this->_samlType;
+ 
+         $controller = self::getEntityController();
+@@ -448,7 +448,7 @@ abstract class sspmod_janus_REST_Mapper_SamlEntity extends sspmod_janus_REST_Map
+                 $controller->clearAllowedEntities();
+             } else {
+                 foreach ($allowed as $allowEid) {
+-                    $controller->addAllowedEntity($allowEid);
++                    $controller->addAllowedEntity((string)$allowEid);
+                 }
+             }
+         }
+@@ -470,7 +470,7 @@ abstract class sspmod_janus_REST_Mapper_SamlEntity extends sspmod_janus_REST_Map
+                 $controller->clearBlockedEntities();
+             } else {
+                 foreach ($blocked as $blockEid) {
+-                    $controller->addBlockedEntity($blockEid);
++                    $controller->addBlockedEntity((string)$blockEid);
+                 }
+             }
+         }
+@@ -493,7 +493,7 @@ abstract class sspmod_janus_REST_Mapper_SamlEntity extends sspmod_janus_REST_Map
+                 $controller->clearConsent();
+             } else {
+                 foreach ($requested as $eid) {
+-                    $controller->addDisableConsent($eid);
++                    $controller->addDisableConsent((string)$eid);
+                 }
+             }
+         }
+diff --git a/modules/janus/lib/REST/PermissionManager.php b/modules/janus/lib/REST/PermissionManager.php
+index 9d39a68..cfbcf52 100644
+--- a/modules/janus/lib/REST/PermissionManager.php
++++ b/modules/janus/lib/REST/PermissionManager.php
+@@ -120,7 +120,7 @@ class sspmod_janus_REST_PermissionManager
+ 
+     /**
+      * Returns true if the user has any of the provided roles
+-     * 
++     *
+      * @param sspmod_janus_User $user
+      * @param array $roles
+      * @return boolean
+@@ -153,11 +153,15 @@ class sspmod_janus_REST_PermissionManager
+         }
+ 
+         if ($name === 'blocked') {
+-            return $this->hasRole($user, 'rest-blocked');
++            return $this->hasRole($user, 'rest-acl');
+         }
+ 
+         if ($name === 'allowed') {
+-            return $this->hasRole($user, 'rest-allowed');
++            return $this->hasRole($user, 'rest-acl');
++        }
++
++        if ($name === 'allowall') {
++            return $this->hasRole($user, 'rest-acl');
+         }
+ 
+         return true;
+diff --git a/modules/janus/lib/REST/Response.php b/modules/janus/lib/REST/Response.php
+index e52b834..7c89f82 100644
+--- a/modules/janus/lib/REST/Response.php
++++ b/modules/janus/lib/REST/Response.php
+@@ -144,10 +144,16 @@ class sspmod_janus_REST_Response
+      */
+     public function logResponse()
+     {
++        $user = sspmod_janus_REST_Mapper_Abstract::getUserController()->getUser();
++        $userName = ($user)
++            ? $user->getUserid()
++            : 'none';
++
+         SimpleSAML_Logger::error(sprintf(
+-            'Error handling request: %s %s [BODY: \'%s\']',
++            'Error handling request: %s %s [USER: \'%s\' BODY: \'%s\']',
+             $this->_httpCode,
+             $this->_httpMessage,
++            $userName,
+             var_export($this->_data, true)
+         ));
+     }
+diff --git a/modules/janus/lib/REST/Server.php b/modules/janus/lib/REST/Server.php
+index eb6af2a..9d737e7 100644
+--- a/modules/janus/lib/REST/Server.php
++++ b/modules/janus/lib/REST/Server.php
+@@ -41,7 +41,9 @@ class sspmod_janus_REST_Server
+             $this->_request->initParameters();
+ 
+             // log this request
+-            $this->_request->logRequest();
++            if (!$this->_request->isGet()) {
++                $this->_request->logRequest();
++            }
+ 
+             // authenticate & authorize
+             $this->_login();
+@@ -58,6 +60,11 @@ class sspmod_janus_REST_Server
+             // set error data on response object
+             $this->_response->setError($e);
+ 
++            // request already logged for !GET
++            if ($this->_request->isGet()) {
++                $this->_request->logRequest();
++            }
++
+             // log this error
+             $this->_response->logResponse();
+         }
