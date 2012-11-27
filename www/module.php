@@ -43,10 +43,21 @@ try {
 
 	if (empty($_SERVER['PATH_INFO'])) {
 		throw new SimpleSAML_Error_NotFound('No PATH_INFO to module.php');
-	}	
+	}
 
 	$url = $_SERVER['PATH_INFO'];
-	assert('substr($url, 0, 1) === "/"');
+        assert('substr($url, 0, 1) === "/"');
+
+        // load configuration
+        $config = SimpleSAML_Configuration::getConfig('module_janus.php');
+
+        // setup REST API if configured
+        if ($config->hasValue('rest-api')) {
+            // rewrite REST v2 API URL (no index.php on user side)
+            if (strstr($url, 'index.php') === false) {
+                $url = str_replace('/rest-v2/', '/rest-v2/index.php/', $url);
+            }
+        }
 
 	/* Clear the PATH_INFO option, so that a script can detect whether it is called
 	 * with anything following the '.php'-ending.
