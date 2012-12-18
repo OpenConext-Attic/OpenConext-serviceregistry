@@ -66,6 +66,9 @@ $template = array(
 
         // publish SP/IDP metadata to edugain
         'coin:publish_in_edugain' => array('type' => 'boolean'),
+
+        // disable SAML scoping
+        'coin:disable_scoping' => array('type' => 'boolean'),
     ),
 
     // Fields only for Identity Providers
