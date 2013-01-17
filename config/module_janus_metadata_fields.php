@@ -26,7 +26,7 @@ $template = array(
             'type' => 'select',
             'required'=>FALSE,
             'select_values' => array(
-                'urn:oasis:names:tc:SAML:1.1:nameid-format:email',
+                'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
                 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
                 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
                 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
