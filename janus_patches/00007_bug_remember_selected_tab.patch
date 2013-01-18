@@ -39,3 +39,5 @@ index 830e95f..f22f86b 100644
 -        $("#mainform input[name=\'selectedtab\']").val("2");
 -    });
  });
+ </script>';
+ $this->data['head'] .= '
