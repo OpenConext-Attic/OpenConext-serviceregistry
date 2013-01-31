@@ -77,6 +77,7 @@ $template = array(
 
         // disable SAML scoping
         'coin:disable_scoping' => array('type' => 'boolean'),
+        'coin:additional_logging' => array('type' => 'boolean')
     ),
 
     // Fields only for Identity Providers
