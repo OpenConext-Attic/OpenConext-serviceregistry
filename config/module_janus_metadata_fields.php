@@ -26,10 +26,13 @@ $template = array(
             'type' => 'select',
             'required'=>FALSE,
             'select_values' => array(
-                'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
                 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
                 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
                 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+                /**
+                 * @deprecated This is an incorrect name id format since unspecified does no longer exist in SAML 2.0, only use this for backwards compatibility
+                 */
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified'
             ),
             'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
         ),
@@ -38,9 +41,13 @@ $template = array(
             'type' => 'select',
             'required'=>FALSE,
             'select_values' => array(
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified',
+                'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
                 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
                 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+                /**
+                 * @deprecated This is an incorrect name id format since unspecified does no longer exist in SAML 2.0, only use this for backwards compatibility
+                 */
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified'
             ),
             'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
         ),
