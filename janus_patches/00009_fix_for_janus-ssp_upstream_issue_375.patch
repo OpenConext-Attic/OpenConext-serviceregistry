@@ -1,0 +1,26 @@
+diff --git a/modules/janus/lib/AdminUtil.php b/modules/janus/lib/AdminUtil.php
+index 430acab..e1ba313 100644
+--- a/modules/janus/lib/AdminUtil.php
++++ b/modules/janus/lib/AdminUtil.php
+@@ -106,8 +106,7 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
+         $whereClauses[] = "ENTITY.revisionid = (
+                 SELECT      MAX(revisionid)
+                 FROM        " . self::$prefix . "entity
+-                WHERE       eid = ENTITY.eid
+-                GROUP BY    eid)";
++                WHERE       eid = ENTITY.eid)";
+ 
+         $orderFields = array('created ASC');
+ 
+diff --git a/modules/janus/lib/UserController.php b/modules/janus/lib/UserController.php
+index afb2d57..d5e128b 100644
+--- a/modules/janus/lib/UserController.php
++++ b/modules/janus/lib/UserController.php
+@@ -138,7 +138,6 @@ class sspmod_janus_UserController extends sspmod_janus_Database
+                 SELECT      MAX(revisionid)
+                 FROM        " . self::$prefix . "entity
+                 WHERE       eid = ENTITY.eid
+-                GROUP BY    eid
+             )"
+         );
+ 
