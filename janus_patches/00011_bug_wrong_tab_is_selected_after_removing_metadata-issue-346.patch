@@ -1,0 +1,12 @@
+diff --git a/modules/janus/templates/editentity.php b/modules/janus/templates/editentity.php
+index f22f86b..ef54eb0 100644
+--- a/modules/janus/templates/editentity.php
++++ b/modules/janus/templates/editentity.php
+@@ -707,7 +707,6 @@ if($this->data['entity']->getType() == 'saml20-idp' || $this->data['entity']->ge
+             if(confirm('<?php echo $this->t('delete_metadata_question'); ?>')) {
+                 var input_delete_metadata = "delete-matadata-"+metadata_name;
+                 $("#"+input_delete_metadata).attr('checked', 'checked');
+-                $("#mainform input[name='selectedtab']").val("2");
+                 $('#mainform').trigger('submit');
+             }
+         }

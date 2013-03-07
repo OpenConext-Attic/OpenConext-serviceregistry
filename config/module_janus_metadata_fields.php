@@ -36,22 +36,6 @@ $template = array(
             ),
             'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
         ),
-        'NameIDFormats:#' => array(
-            'supported' => array(0,1,2),
-            'type' => 'select',
-            'required'=>FALSE,
-            'select_values' => array(
-                'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
-                /**
-                 * @deprecated This is an incorrect name id format since unspecified does no longer exist in SAML 2.0, only use this for backwards compatibility
-                 */
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified'
-            ),
-            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
-        ),
-
         'contacts:#:contactType'    => array(
             'type' => 'select',
             'required' => TRUE,
@@ -75,8 +59,6 @@ $template = array(
         // publish SP/IDP metadata to edugain
         'coin:publish_in_edugain' => array('type' => 'boolean'),
 
-        // disable SAML scoping
-        'coin:disable_scoping' => array('type' => 'boolean'),
         'coin:additional_logging' => array('type' => 'boolean')
     ),
 
@@ -112,6 +94,9 @@ $template = array(
 
         // Institution
         'coin:institution_id' => array(),
+
+        // disable SAML scoping
+        'coin:disable_scoping' => array('type' => 'boolean'),
     ),
 
     // Fields only for Service Providers
@@ -148,6 +133,22 @@ $template = array(
         # Must have at least 1 location
         'AssertionConsumerService:0:Location' => array('required' => TRUE, 'validate' => 'isurl'),
         'AssertionConsumerService:#:Location' => array('required' => FALSE, 'validate' => 'isurl', 'supported' => array(1,2,3,4,5,6,7,8,9)),
+
+        'NameIDFormats:#' => array(
+            'supported' => array(0,1,2),
+            'type' => 'select',
+            'required'=>FALSE,
+            'select_values' => array(
+                'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+                /**
+                 * @deprecated This is an incorrect name id format since unspecified does no longer exist in SAML 2.0, only use this for backwards compatibility
+                 */
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified'
+            ),
+            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+        ),
 
         'coin:no_consent_required'      => array('type' => 'boolean', 'default' => FALSE),
 
