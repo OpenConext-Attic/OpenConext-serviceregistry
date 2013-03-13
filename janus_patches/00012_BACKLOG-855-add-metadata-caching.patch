@@ -1,0 +1,834 @@
+diff --git a/modules/janus/lib/Entity.php b/modules/janus/lib/Entity.php
+index 65cce73..ecb9437 100644
+--- a/modules/janus/lib/Entity.php
++++ b/modules/janus/lib/Entity.php
+@@ -147,23 +147,11 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+         }
+ 
+         if (!empty($this->_entityid) && !empty($this->_eid)) {
+-            // Get next revisionid
+-            $st = $this->execute(
+-                'SELECT MAX(`revisionid`) AS maxrevisionid 
+-                FROM '. self::$prefix .'entity 
+-                WHERE `eid` = ?;',
+-                array($this->_eid)
+-            );
+-
+-            if ($st === false) {
+-                return false;
+-            }
+-            $row = $st->fetchAll(PDO::FETCH_ASSOC);
+-
+-            if ($row[0]['maxrevisionid'] === null) {
++            $new_revisionid = $this->_loadNewestRevisionFromDatabase($this->_eid);
++            if ($new_revisionid === null) {
+                 $new_revisionid = 0;
+             } else {
+-                $new_revisionid = $row[0]['maxrevisionid'] + 1;
++                $new_revisionid = $new_revisionid + 1;
+             }
+             
+             $insertFields = array(
+@@ -236,34 +224,45 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+      */
+     private function _newestRevision($state = null)
+     {
+-        if(is_null($state)) {
+-            $st = $this->execute(
+-                'SELECT MAX(`revisionid`) AS maxrevisionid 
+-                FROM '. self::$prefix .'entity 
+-                WHERE `eid` = ?;',
+-                array($this->_eid)
+-            );
+-        } else {
+-            $st = $this->execute(
+-                'SELECT MAX(`revisionid`) AS maxrevisionid 
+-                FROM '. self::$prefix .'entity 
+-                WHERE `eid` = ? AND `state` = ?;',
+-                array($this->_eid, $state)
+-            );
+-        
++        $newestRevision = $this->_loadNewestRevisionFromDatabase($this->_eid, $state);
++
++        if (!is_null($newestRevision)) {
++            return $newestRevision;
++        }
++
++        throw new Exception(
++            'JANUS:Entity:load - Could not get newest revision.'
++        );
++    }
++
++    /**
++     * @param int $eid
++     * @param string|null $state
++     * @return int|null
++     */
++    private function _loadNewestRevisionFromDatabase($eid, $state = null)
++    {
++        $query = '
++            SELECT  MAX(`revisionid`) AS maxrevisionid
++            FROM    ' . self::$prefix . 'entity
++            WHERE   `eid` = ?';
++        $params = array($eid);
++
++        if(!is_null($state)) {
++            $query .= ' AND `state` = ?';
++            $params[] = $state;
+         }
+ 
++        $st = $this->execute($query, $params);
+         if (is_object($st)) {
+-            $row = $st->fetchAll(PDO::FETCH_ASSOC);
+-            if (is_numeric($row[0]['maxrevisionid'])) {
+-                $this->_revisionid = $row[0]['maxrevisionid'];
++            $row = $st->fetch(PDO::FETCH_ASSOC);
++            if (is_numeric($row['maxrevisionid'])) {
++                $this->_revisionid = $row['maxrevisionid'];
+                 return $this->_revisionid;
+             }
+         }
+ 
+-        throw new Exception(
+-            'JANUS:Entity:load - Could not get newest revision.'
+-        );
++        return null;
+     }
+ 
+     /**
+@@ -306,23 +305,22 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+      * is not set or an error occures and the method returns false. If only
+      * _eid is set, the newest revision will be fetched.
+      *
+-     * @return PDOStatement|bool The PDOstatement executed or false in case of error
++     * @return bool
+      */
+     public function load()
+     {
+-        if (!empty($this->_eid) && is_null($this->_revisionid)) {
++        if (empty($this->_eid) && isset($this->_entityid)) {
++            $this->_findEid();
++        }
++
++        if (is_null($this->_revisionid)) {
+             if(empty($this->_workflow)) {
+                 $this->_newestRevision();
+             } else {
+                 $this->_newestRevision($this->_workflow);
+             }
+-        } else if(isset($this->_entityid)) {
+-            $res = $this->_findEid();
+-            if($res === true) {
+-                $res =  $this->load();
+-            }
+-            return $res;
+         }
++
+         if (empty($this->_eid) || is_null($this->_revisionid)) {
+             SimpleSAML_Logger::error(
+                 'JANUS:Entity:load - entityid and revisionid needs to be set.'
+@@ -330,18 +328,11 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+             return false;
+         }
+ 
+-        $st = $this->execute(
+-            'SELECT *
+-            FROM '. self::$prefix .'entity
+-            WHERE `eid` = ? AND `revisionid` = ?;',
+-            array($this->_eid, $this->_revisionid)
+-        );
+-
+-        if ($st === false) {
++        $row = $this->_loadFromCache($this->_eid, $this->_revisionid);
++        if (!$row) {
+             return false;
+         }
+ 
+-        $row = $st->fetch(PDO::FETCH_ASSOC);
+         $this->_eid             = $row['eid'];
+         $this->_entityid        = $row['entityid'];
+         $this->_revisionid      = $row['revisionid'];
+@@ -358,7 +349,69 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+         $this->_active          = $row['active'];
+         $this->_manipulation    = $row['manipulation'];
+ 
+-        return $st;
++        return true;
++    }
++
++    /**
++     * @param int $eid
++     * @param int $revisionid
++     * @return bool|array
++     */
++    private function _loadFromCache($eid, $revisionid)
++    {
++        $cacheStore = SimpleSAML_Store::getInstance();
++
++        // Only cache when memcache is configured, for caching in session does not work with REST
++        // and caching database results in a database is pointless
++        $useCache = false;
++        if($cacheStore instanceof SimpleSAML_Store_Memcache) {
++            $useCache = true;
++        }
++
++        $cachedResult = null;
++        if ($useCache) {
++            // Try to get result from cache
++            $cacheKey = 'entity-' . $eid . '-' . $revisionid;
++            $cachedResult = $cacheStore->get('array', $cacheKey);
++        }
++
++        if (!is_null($cachedResult)) {
++            $row = $cachedResult;
++        } else {
++            $row = $this->_loadFromDatabase($eid, $revisionid);
++            if (!$row) {
++                return false;
++            }
++        }
++
++        if ($useCache) {
++            // Store entity in cache, note that this does not have to be flushed since a new revision
++            // will trigger a new version of the cache anyway
++            $cacheStore->set('array', $cacheKey, $row);
++        }
++
++        return $row;
++    }
++
++    /**
++     * @param int $eid
++     * @param int $revisionid
++     * @return bool|array
++     */
++    private function _loadFromDatabase($eid, $revisionid)
++    {
++        $st = $this->execute(
++            'SELECT *
++                FROM '. self::$prefix .'entity
++                WHERE `eid` = ? AND `revisionid` = ?;',
++            array($eid, $revisionid)
++        );
++
++        if ($st === false) {
++            return false;
++        }
++
++        return $st->fetch(PDO::FETCH_ASSOC);
+     }
+ 
+ 
+@@ -674,18 +727,39 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+         $metadatafields = $mb->getMetadatafields();
+ 
+         if(!is_null($fieldname)) {
+-            $st = $this->execute('
+-                SELECT t1.value AS value
+-                FROM '. self::$prefix .'metadata AS t1
+-                WHERE t1.eid = ? AND t1.key = ? AND t1.revisionid = ?;',
+-                array($this->_eid, $fieldname, $this->_revisionid)
+-            );
++            $cacheStore = SimpleSAML_Store::getInstance();
+ 
+-            if ($st === false) {
+-                return false;
++            // Only cache when memcache is configured, for caching in session does not work with REST
++            // and caching database results in a database is pointless
++            $useCache = false;
++            if($cacheStore instanceof SimpleSAML_Store_Memcache) {
++                $useCache = true;
++            }
++
++            $eid = $this->_eid;
++            $revisionId = $this->_revisionid;
++
++            $cachedResult = null;
++            if ($useCache) {
++                // Try to get result from cache
++                $cacheKey = 'entity-prettyname' . $eid . '-' . $revisionId;
++                $cachedResult = $cacheStore->get('array', $cacheKey);
+             }
+ 
+-            $rows = $st->fetchAll(PDO::FETCH_ASSOC);
++            if (!is_null($cachedResult)) {
++                $rows = $cachedResult;
++            } else {
++                $rows = $this->_loadPrettyNameFromDatabase($eid, $revisionId, $fieldname);
++                if (!is_array($rows)) {
++                    return false;
++                }
++            }
++
++            if ($useCache) {
++                // Store entity pretty nane in cache, note that this does not have to be flushed since a new revision
++                // will trigger a new version of the cache anyway
++                $cacheStore->set('array', $cacheKey, $rows);
++            }
+ 
+             if(empty($rows)) {
+                 $this->_prettyname =  $this->_entityid;
+@@ -701,6 +775,28 @@ class sspmod_janus_Entity extends sspmod_janus_Database
+         return $this->_prettyname;
+     }
+ 
++    /**
++     * @param int $eid
++     * @param int $revisionId
++     * @param string $fieldName
++     * @return array|bool
++     */
++    private function _loadPrettyNameFromDatabase($eid, $revisionId, $fieldName)
++    {
++        $st = $this->execute('
++                SELECT t1.value AS value
++                FROM '. self::$prefix .'metadata AS t1
++                WHERE t1.eid = ? AND t1.key = ? AND t1.revisionid = ?;',
++            array($eid, $fieldName, $revisionId)
++        );
++
++        if ($st === false) {
++            return false;
++        }
++
++        return $st->fetchAll(PDO::FETCH_ASSOC);
++    }
++
+     public function getUser() {
+         return $this->_user;
+     }
+diff --git a/modules/janus/lib/EntityController.php b/modules/janus/lib/EntityController.php
+index 52ca777..f44f945 100644
+--- a/modules/janus/lib/EntityController.php
++++ b/modules/janus/lib/EntityController.php
+@@ -79,6 +79,8 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+ 
+     private $_arp;
+ 
++    private $_disableConsent = array();
++
+     /**
+      * Class constructor.
+      *
+@@ -162,16 +164,39 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+      * Loades the metadata associated with the entity.
+      *
+      * @return bool Return true on success and false on error.
++     * @throws SimpleSAML_Error_Exception
+      */
+     private function _loadMetadata()
+     {
+         assert('$this->_entity instanceof Sspmod_Janus_Entity');
+ 
++        $eid = $this->_entity->getEid();
++        $revisionId = $this->_entity->getRevisionid();
++
++        $cacheStore = SimpleSAML_Store::getInstance();
++
++        // Only cache when memcache is configured, for caching in session does not work with REST
++        // and caching database results in a database is pointless
++        $useCache = false;
++        if($cacheStore instanceof SimpleSAML_Store_Memcache) {
++            $useCache = true;
++        }
++
++        if ($useCache) {
++            // Try to get result from cache
++            $cacheKey = 'entity-metadata-' . $eid . '-' . $revisionId;
++            $result = $cacheStore->get('array', $cacheKey);
++            if (!is_null($result)) {
++                $this->_metadata = $result;
++                return true;
++            }
++        }
++
+         $st = $this->execute(
+             'SELECT * 
+             FROM '. self::$prefix .'metadata 
+             WHERE `eid` = ? AND `revisionid` = ?;',
+-            array($this->_entity->getEid(), $this->_entity->getRevisionid())
++            array($eid, $revisionId)
+         );
+ 
+         if ($st === false) {
+@@ -201,6 +226,13 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+             }
+             $this->_metadata[] = $metadata;
+         }
++
++        if ($useCache) {
++            // Store metadata in cache, note that this does not have to be flushed since a new revision
++            // will trigger a new version of the cache anyway
++            $cacheStore->set('array', $cacheKey, $this->_metadata);
++        }
++
+         return true;
+     }
+ 
+@@ -1128,7 +1160,7 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+      */
+     public function addAllowedEntity($remoteEid)
+     {
+-        assert('is_string($remoteid) && ctype_digit($remoteeid)');
++        assert('is_string($remoteEid) && ctype_digit($remoteEid)');
+ 
+         if (!array_key_exists($remoteEid, $this->_allowed)) {
+             $this->_allowed[$remoteEid] = array('remoteeid' => $remoteEid);
+@@ -1183,7 +1215,7 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+      */
+     private function _loadBlockedEntities()
+     {
+-        return $this->_loadLinkedEntities('blocked');
++        return $this->_loadLinkedEntities('blocked', $this->_entity->getEid(), $this->_entity->getRevisionid());
+     }
+ 
+     /**
+@@ -1198,7 +1230,7 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+      */
+     private function _loadAllowedEntities()
+     {
+-        return $this->_loadLinkedEntities('allowed');
++        return $this->_loadLinkedEntities('allowed', $this->_entity->getEid(), $this->_entity->getRevisionid());
+     }
+ 
+     /**
+@@ -1208,10 +1240,32 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+      *
+      * @return bool True on success and false on error
+      */
+-    private function _loadLinkedEntities($type)
++    private function _loadLinkedEntities($type, $eid, $revisionId)
+     {
++        $cacheStore = SimpleSAML_Store::getInstance();
++
++        // Only cache when memcache is configured, for caching in session does not work with REST
++        // and caching database results in a database is pointless
++        $useCache = false;
++        if($cacheStore instanceof SimpleSAML_Store_Memcache) {
++            $useCache = true;
++        }
++
++        if ($useCache) {
++            // Try to get result from fache
++            $cacheKey = 'entity-' . $type . '-entities-' . $eid . '-' . $revisionId;
++            $result = $cacheStore->get('array', $cacheKey);
++            if (!is_null($result)) {
++                $this->{'_'.$type} = $result;
++                return true;
++            }
++        }
++
+         $st = $this->execute(
+-            'SELECT linkedEntity.*, remoteEntity.entityid as remoteentityid
++            'SELECT linkedEntity.*,
++                    remoteEntity.entityid as remoteentityid,
++                    remoteEntity.eid as remoteeid,
++                    remoteEntity.revisionid as remoterevisonid
+             FROM '. self::$prefix . $type . 'Entity linkedEntity
+             JOIN (
+                 SELECT *
+@@ -1222,7 +1276,7 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+                     WHERE je.eid = eid
+             )) remoteEntity ON remoteEntity.eid = linkedEntity.remoteeid
+             WHERE linkedEntity.eid = ? AND linkedEntity.revisionid = ?',
+-            array($this->_entity->getEid(), $this->_entity->getRevisionid())
++            array($eid, $revisionId)
+         );
+ 
+         if ($st === false) {
+@@ -1237,6 +1291,12 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+             $this->{'_'.$type}[$row['remoteeid']] = $row;
+         }
+ 
++        if ($useCache) {
++            // Store linked entities in cache, note that this does not have to be flushed since a new revision
++            // will trigger a new version of the cache anyway
++            $cacheStore->set('array', $cacheKey, $this->{'_'.$type});
++        }
++
+         return true;
+     }
+ 
+@@ -1596,6 +1656,29 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+      */
+     private function _loadDisableConsent()
+     {
++        $eid = $this->_entity->getEid();
++        $revisionId = $this->_entity->getRevisionid();
++
++        $cacheStore = SimpleSAML_Store::getInstance();
++
++        // Only cache when memcache is configured, for caching in session does not work with REST
++        // and caching database results in a database is pointless
++        $useCache = false;
++        if($cacheStore instanceof SimpleSAML_Store_Memcache) {
++            $useCache = true;
++        }
++
++        if ($useCache) {
++            // Try to get result from cache
++            $cacheKey = 'entity-disableconsent-' . $eid . '-' . $revisionId;
++            $result = $cacheStore->get('array', $cacheKey);
++            if (!is_null($result)) {
++                $this->_disableConsent = $result;
++                return true;
++            }
++        }
++
++
+         $st = $this->execute(
+             'SELECT * 
+             FROM '. self::$prefix .'disableConsent 
+@@ -1614,6 +1697,12 @@ class sspmod_janus_EntityController extends sspmod_janus_Database
+             $this->_disableConsent[$data['remoteentityid']] = $data;
+         }
+ 
++        if ($useCache) {
++            // Store disable consent in cache, note that this does not have to be flushed since a new revision
++            // will trigger a new version of the cache anyway
++            $cacheStore->set('array', $cacheKey, $this->_disableConsent);
++        }
++
+         return true;
+     }
+ 
+diff --git a/modules/janus/lib/REST/Methods.php b/modules/janus/lib/REST/Methods.php
+index c485688..c0aec32 100644
+--- a/modules/janus/lib/REST/Methods.php
++++ b/modules/janus/lib/REST/Methods.php
+@@ -212,29 +212,33 @@ class sspmod_janus_REST_Methods
+             return '';
+         }
+ 
+-        $spRevisionId = null;
++        $spRevision = null;
+         if(isset($data['sprevision']) && ctype_digit($data['sprevision'])) {
+-            $spRevisionId = $data['sprevision'];
++            $spRevision = $data['sprevision'];
+         }
+ 
+-        // Check the SP metadata whether the SP-IdP connection is allowed.
+-        $isSpAllowed = self::_checkSPMetadataIsConnectionAllowed(
+-            $data['spentityid'],
+-            $data['idpentityid'],
+-            $spRevisionId
+-        );
+-
++        // @todo see if controllers can be instantiated only once
++        $spController = new sspmod_janus_EntityController(SimpleSAML_Configuration::getConfig('module_janus.php'));
++        $spController->setEntity($data['spentityid'], $spRevision);
+ 
+-        $idpRevisionId = null;
++        $idpRevision = null;
+         if(isset($data['idprevision']) && ctype_digit($data['idprevision'])) {
+-            $idpRevisionId = $data['idprevision'];
++            $idpRevision = $data['idprevision'];
+         }
+ 
++        $idpController = new sspmod_janus_EntityController(SimpleSAML_Configuration::getConfig('module_janus.php'));
++        $idpController->setEntity($data['idpentityid'], $idpRevision);
++
++        // Check the SP metadata whether the SP-IdP connection is allowed.
++        $isSpAllowed = self::_checkSPMetadataIsConnectionAllowed(
++            $spController->getEntity(),
++            $idpController->getEntity()
++        );
++
+         // Check the IdP metadata whether the SP-IdP connection is allowed.
+         $isIdpAllowed = self::_checkIdpMetadataIsConnectionAllowed(
+-            $data['spentityid'],
+-            $data['idpentityid'],
+-            $idpRevisionId
++            $spController->getEntity(),
++            $idpController->getEntity()
+         );
+ 
+         return ($isSpAllowed && $isIdpAllowed) ? array(true) : array(false);
+@@ -253,52 +257,49 @@ class sspmod_janus_REST_Methods
+      */
+     public static function method_getAllowedIdps($data, &$statusCode)
+     {
++        $config = SimpleSAML_Configuration::getConfig('module_janus.php');
++
+         if (!isset($data['spentityid'])) {
+             $statusCode = 400;
+             return '';
+         }
+ 
+-        $revisionId = null;
++        $spRevision = null;
+         if (isset($data['sprevision']) && ctype_digit($data['sprevision'])) {
+-            $revisionId = $data['sprevision'];
++            $spRevision = $data['sprevision'];
+         }
+ 
+-        $userController   = new sspmod_janus_UserController((SimpleSAML_Configuration::getConfig('module_janus.php')));
+-        $entityController = new sspmod_janus_EntityController(SimpleSAML_Configuration::getConfig('module_janus.php'));
+-        $entityController->setEntity($data['spentityid'], $revisionId);
++        $spController = new sspmod_janus_EntityController($config);
++        $spController->setEntity($data['spentityid'], $spRevision);
++        $sp = $spController->getEntity();
+ 
+-        $idpEntityIds = array();
+-        if ($entityController->getAllowedAll() === "yes") {
+-            // Get the Eids for all Identity Providers
+-            $idpEntityIds = array_map(
+-                function(sspmod_janus_Entity $entity) { return $entity->getEntityid(); },
+-                $userController->searchEntitiesByType('saml20-idp')
+-            );
++        if (!$sp instanceof sspmod_janus_Entity) {
++            $statusCode = 400;
++            return '';
++        }
++
++        $allowedIdps = array();
++        if ($spController->getAllowedAll() === "yes") {
++            $userController   = new sspmod_janus_UserController($config);
++            $allowedIdps = $userController->searchEntitiesByType('saml20-idp');
+         }
+         else {
+-            $allowed = $entityController->getAllowedEntities();
+-            $blocked = $entityController->getBlockedEntities();
+-
+-            if (count($allowed)) {
+-                $idpEntityIds = array_map(
+-                    function($allowedEntity) { return $allowedEntity['remoteentityid']; },
+-                    $allowed
+-                );
+-            } else if (count($blocked)) {
+-                $blocked = array_map(
+-                    function($blockedEntity) { return $blockedEntity['remoteentityid']; },
+-                    $blocked
+-                );
+-                $idpEntityIds = array_diff($idpEntityIds, $blocked);
++            $allowedIdps = $spController->getAllowedEntities();
++            $blockedIdps = $spController->getBlockedEntities();
++
++            if (count($blockedIdps)) {
++                $allowedIdps = array_diff($allowedIdps, $blockedIdps);
+             }
+         }
+ 
+-        $spEid = $entityController->getEntity()->getEid();
+-
++        $idpController = new sspmod_janus_EntityController($config);
+         $results = array();
+-        foreach ($idpEntityIds as $idpEntityId) {
+-            if (self::_checkIdPMetadataIsConnectionAllowed($spEid, $idpEntityId, $revisionId)) {
+-                $results[] = $idpEntityId;
++        foreach ($allowedIdps as $idpData) {
++            $idpController->setEntity($idpData['remoteeid'], $idpData['remoterevisonid']);
++            $idp = $idpController->getEntity();
++            if (self::_checkIdPMetadataIsConnectionAllowed($sp, $idp)
++            ) {
++                $results[] = $idp->getEntityid();
+             }
+         }
+         return $results;
+@@ -317,49 +318,51 @@ class sspmod_janus_REST_Methods
+      */
+     public static function method_getAllowedSps($data, &$statusCode)
+     {
++        $config = SimpleSAML_Configuration::getConfig('module_janus.php');
++
+         if (!isset($data['idpentityid'])) {
+             $statusCode = 400;
+             return '';
+         }
+ 
+-        $revisionId = null;
++        $idpRevision = null;
+         if (isset($data['idprevision']) && ctype_digit($data['idprevision'])) {
+-            $revisionId = $data['idprevision'];
++            $idpRevision = $data['idprevision'];
+         }
+ 
+-        $userController   = new sspmod_janus_UserController((SimpleSAML_Configuration::getConfig('module_janus.php')));
+-        $entityController = new sspmod_janus_EntityController(SimpleSAML_Configuration::getConfig('module_janus.php'));
+-        $entityController->setEntity($data['idpentityid'], $revisionId);
++        $idpController = new sspmod_janus_EntityController($config);
++        $idpController->setEntity($data['idpentityid'], $idpRevision);
++        $idp = $idpController->getEntity();
+ 
+-        $entityIds = array();
+-        if ($entityController->getAllowedAll() === "yes") {
+-            $entityIds = array_map(
+-                function(sspmod_janus_Entity $entity) { return $entity->getEntityId(); },
+-                $userController->searchEntitiesByType('saml20-sp')
+-            );
++        if (!$idp instanceof sspmod_janus_Entity) {
++            $statusCode = 400;
++            return '';
++        }
++
++        $idp = $idpController->getEntity();
++
++        $allowedSps = array();
++        if ($idpController->getAllowedAll() === "yes") {
++            $userController   = new sspmod_janus_UserController($config);
++            $allowedSps = $userController->searchEntitiesByType('saml20-sp');
+         }
+         else {
+-            $allowed = $entityController->getAllowedEntities();
+-            $blocked = $entityController->getBlockedEntities();
+-
+-            if (count($allowed)) {
+-                $entityIds = array_map(
+-                    function($allowedEntity) { return $allowedEntity['remoteentityid']; }, 
+-                    $allowed
+-                );
+-            } else if (count($blocked)) {
+-                $blocked = array_map(
+-                    function($blockedEntity) { return $blockedEntity['remoteentityid']; }, 
+-                    $blocked
+-                );
+-                $entityIds = array_diff($entityIds, $blocked);
++            $allowedSps = $idpController->getAllowedEntities();
++            $blockedSps = $idpController->getBlockedEntities();
++
++            if (count($blockedSps)) {
++                $allowedSps = array_diff($allowedSps, $blockedSps);
+             }
+         }
+ 
++        $spController = new sspmod_janus_EntityController($config);
+         $results = array();
+-        foreach ($entityIds as $entityId) {
+-            if (self::_checkSPMetadataIsConnectionAllowed($entityId, $data['idpentityid'], $revisionId)) {
+-                $results[] = $entityId;
++        /** @var $sp sspmod_janus_Entity */
++        foreach ($allowedSps as $spData) {
++            $idpController->setEntity($spData['remoteeid'], $spData['remoterevisionid']);
++            $sp = $spController->getEntity();
++            if (self::_checkSPMetadataIsConnectionAllowed($sp, $idp)) {
++                $results[] = $sp->getEntityid();
+             }
+         }
+         return $results;
+@@ -456,7 +459,7 @@ class sspmod_janus_REST_Methods
+      * @param array $keys
+      * @return array|bool
+      */
+-    protected static function _getMetadataForEntity(&$entity, $revisionId = NULL, $keys=array())
++    protected static function _getMetadataForEntity(sspmod_janus_Entity &$entity, $revisionId = NULL, $keys=array())
+     {
+         $entityController = new sspmod_janus_EntityController(SimpleSAML_Configuration::getConfig('module_janus.php'));
+ 
+@@ -561,23 +564,16 @@ class sspmod_janus_REST_Methods
+      * Does the Service Provider allow a particular connection?
+      *
+      * @static
+-     * @param string      $spEid        Service Provider to check against (either eid or entityId)
+-     * @param string      $idpEid       Identity Provider to check for (either eid or entityId)
+-     * @param null|string $spRevisionId Optional revision of SP to use
++     * @param sspmod_janus_Entity       $spEid        Service Provider to check against
++     * @param sspmod_janus_Entity       $idpEid       Identity Provider to check for
+      * @return bool Is the connection allowed?
+      */
+-    protected static function _checkSPMetadataIsConnectionAllowed($spEid, $idpEid, $spRevisionId=NULL)
++    protected static function _checkSPMetadataIsConnectionAllowed(sspmod_janus_Entity $sp, sspmod_janus_Entity $idp)
+     {
+         $spController = new sspmod_janus_EntityController(SimpleSAML_Configuration::getConfig('module_janus.php'));
+-        $spController->setEntity($spEid, $spRevisionId);
++        $spController->setEntity($sp);
+ 
+-        $idpController = new sspmod_janus_EntityController(SimpleSAML_Configuration::getConfig('module_janus.php'));
+-        $idpController->setEntity($idpEid);
+-        $idpEntity = $idpController->getEntity();
+-        if (!$idpEntity) {
+-            return false;
+-        }
+-        $idpEid = $idpEntity->getEid();
++        $idpEid = $idp->getEid();
+ 
+         if ($spController->getAllowedAll() === "yes") {
+             return true;
+@@ -600,23 +596,16 @@ class sspmod_janus_REST_Methods
+      * Does the Identity Provider allow a particular connection?
+      *
+      * @static
+-     * @param string      $spEid         Service Provider to check for
+-     * @param string      $idpEid        Identity Provider to check against
+-     * @param null|string $idpRevisionId Optional revision of IdP to use
++     * @param string      sspmod_janus_Entity $sp         Service Provider to check for
++     * @param string      sspmod_janus_Entity $idp        Identity Provider to check against
+      * @return bool Is the connection allowed?
+      */
+-    protected static function _checkIdPMetadataIsConnectionAllowed($spEid, $idpEid, $idpRevisionId=NULL)
++    protected static function _checkIdPMetadataIsConnectionAllowed(sspmod_janus_Entity $sp, sspmod_janus_Entity $idp)
+     {
+         $idpController = new sspmod_janus_EntityController(SimpleSAML_Configuration::getConfig('module_janus.php'));
+-        $idpController->setEntity($idpEid, $idpRevisionId);
++        $idpController->setEntity($idp);
+ 
+-        $spController = new sspmod_janus_EntityController(SimpleSAML_Configuration::getConfig('module_janus.php'));
+-        $spController->setEntity($spEid);
+-        $spEntity = $spController->getEntity();
+-        if (!$spEntity) {
+-            return false;
+-        }
+-        $spEid = $spEntity->getEid();
++        $spEid = $sp->getEid();
+ 
+         if ($idpController->getAllowedAll() === "yes") {
+             return true;
+diff --git a/modules/janus/lib/UserController.php b/modules/janus/lib/UserController.php
+index d5e128b..95c04f4 100644
+--- a/modules/janus/lib/UserController.php
++++ b/modules/janus/lib/UserController.php
+@@ -130,7 +130,7 @@ class sspmod_janus_UserController extends sspmod_janus_Database
+ 
+         // Select entity (only last revision)
+         $query = "
+-            SELECT DISTINCT ENTITY.eid," . $sortfield . "
++            SELECT DISTINCT ENTITY.eid,ENTITY.revisionid, " . $sortfield . "
+             FROM " . self::$prefix . "entity AS ENTITY";
+ 
+         $whereClauses = array(
+@@ -211,6 +211,7 @@ class sspmod_janus_UserController extends sspmod_janus_Database
+         foreach ($rs AS $row) {
+             $entity = new sspmod_janus_Entity($this->_config);
+             $entity->setEid($row['eid']);
++            $entity->setRevisionid($row['revisionid']);
+             if(!is_null($state)) {
+                 $entity->setWorkflow($state);
+             }
+@@ -529,6 +530,8 @@ class sspmod_janus_UserController extends sspmod_janus_Database
+         foreach ($rows AS $row) {
+             $entity = new sspmod_janus_Entity($this->_config);
+             $entity->setEid($row['eid']);
++            $entity->setRevisionid($row['revisionid']);
++            $entity->setWorkflow($row['state']);
+             if ($entity->load()) {
+                 $this->_entities[] = $entity;
+             } else {
+diff --git a/modules/janus/tests/runAllRestCalls.sh b/modules/janus/tests/runAllRestCalls.sh
+new file mode 100755
+index 0000000..e1a3340
+--- /dev/null
++++ b/modules/janus/tests/runAllRestCalls.sh
+@@ -0,0 +1,24 @@
++#!/bin/bash
++
++# Temporary test script to call all REST calls, useful for debugging and finding out how many database queries the REST interface causes
++
++#TODO: method_getUser
++#TODO: method_getMetadata
++#TODO: method_getAllowedSps
++#TODO: method_findIdentifiersByMetadata
++
++restUrls[1]='https://serviceregistry.demo.openconext.org/simplesaml/module.php/janus/services/rest/?method=getSpList&keys=&janus_key=engine&userid=engine&janus_sig=2b41bfad0d91ac66a1a63a7ab334c6b094f28e4b1effba501a26051db0b44c60e48b9c2f0ee9e949acf8d35a5b0469697b68632bc4c0e8d345eced77af57d1d7&rest=1'
++restUrls[2]='https://serviceregistry.demo.openconext.org/simplesaml/module.php/janus/services/rest/?method=getIdpList&keys=&janus_key=engine&userid=engine&janus_sig=1eb334cdf64cc3accf49f3b2c60bcc476730b08ba6c41de32d0e7e91e1256d5c88041299370703ddd3ed4d177f54de5cd01dca31dbd0e86ef873361508fbd839&rest=1'
++restUrls[3]='https://serviceregistry.demo.openconext.org/simplesaml/module.php/janus/services/rest/?method=getAllowedIdps&spentityid=https%3A%2F%2Fprofile.demo.openconext.org%2Fsimplesaml%2Fmodule.php%2Fsaml%2Fsp%2Fmetadata.php%2Fdefault-sp&janus_key=engine&userid=engine&janus_sig=aa523154448f918483f5f29ab5f55998d4b34dec5fe1f545b86ed0af87a039350be814a0cd98624c2296c5e5999d8e3e5edc6a01da807b93d7bdd33ae5694ccc&rest=1'
++restUrls[4]='https://serviceregistry.demo.openconext.org/simplesaml/module.php/janus/services/rest/?method=getEntity&entityid=http%3A%2F%2Fmock-idp&janus_key=engine&userid=engine&janus_sig=3e9febf59bb34541e54f3fc4d5c5bcb058efadbee1486b4764d39e92b18ed91f8d8aede203d1041bc0dd2a9e8583cfc091fb492dc2da03d4f379ecbfce38657c&rest=1'
++restUrls[5]='https://serviceregistry.demo.openconext.org/simplesaml/module.php/janus/services/rest/?method=isConnectionAllowed&spentityid=https%3A%2F%2Fprofile.demo.openconext.org%2Fsimplesaml%2Fmodule.php%2Fsaml%2Fsp%2Fmetadata.php%2Fdefault-sp&idpentityid=http%3A%2F%2Fmock-idp&janus_key=engine&userid=engine&janus_sig=657945a3042e85fade4c4f3f3ded47289db2bf02843e2a23c3124599173e41c727717340f1af9668408a3ba30132af634c16f89fb05709f65573a8766342b736&rest=1'
++restUrls[6]='https://serviceregistry.demo.openconext.org/simplesaml/module.php/janus/services/rest/?method=arp&entityid=https%3A%2F%2Fprofile.demo.openconext.org%2Fsimplesaml%2Fmodule.php%2Fsaml%2Fsp%2Fmetadata.php%2Fdefault-sp&janus_key=engine&userid=engine&janus_sig=9fd87dcb01edc47616827acc2982362898fe181c1d93d4dbdfa0db31531cb9503d971688eaa91c41f61643e73bf8d1ae6ccde9f724ffc983a7db9f77e6ead4a1&rest=1'
++restUrls[7]='https://serviceregistry.demo.openconext.org/simplesaml/module.php/janus/services/rest/?method=getEntity&entityid=https%3A%2F%2Fprofile.demo.openconext.org%2Fsimplesaml%2Fmodule.php%2Fsaml%2Fsp%2Fmetadata.php%2Fdefault-sp&janus_key=engine&userid=engine&janus_sig=5bbc2a20072b8dc05e05ce77b6eb35fcc1a900d1b248bbbd8836cf74357ec2c56ca83b43333d083e673edc1d662c00f8ba8aa34dfb377e11eae6c98e299bb53a&rest=1'
++
++for url in "${restUrls[@]}"
++do
++   :
++   # -k means ignore certificate warnings
++   echo "calling $url\n"
++   curl -k $url > /dev/null
++done
