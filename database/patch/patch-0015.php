@@ -23,6 +23,11 @@ $userController->setUser('engine');
 $entities = $userController->getEntities();
 /** @var sspmod_janus_Entity $entity */
 foreach ($entities as $entity) {
+
+    if ($entity->getType() != 'saml20-sp') {
+        continue;
+    }
+
     $entity->setRevisionnote('patch-0015.php: Added persistent, transient and unspecified to all entities as valid NameIDFormats');
 
     $entityController = new sspmod_janus_EntityController($janusConfig);
