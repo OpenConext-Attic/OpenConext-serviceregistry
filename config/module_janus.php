@@ -45,6 +45,7 @@ $config = array(
      * Dashboard configuration.
      */
     'dashboard.inbox.paginate_by' => 20,
+    'dashboard.arp.paginate_by' => 20,
 
     /*
      * Metadata field used as pretty name for entities

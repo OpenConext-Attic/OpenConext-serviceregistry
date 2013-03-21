@@ -1,0 +1,47 @@
+diff --git a/config/module_janus.php b/config/module_janus.php
+index 11d1a93..2e4fc73 100644
+--- a/config/module_janus.php
++++ b/config/module_janus.php
+@@ -45,6 +45,7 @@ $config = array(
+      * Dashboard configuration.
+      */
+     'dashboard.inbox.paginate_by' => 20,
++    'dashboard.arp.paginate_by' => 20,
+ 
+     /*
+      * Metadata field used as pretty name for entities
+diff --git a/modules/janus/lib/AdminUtil.php b/modules/janus/lib/AdminUtil.php
+index e1ba313..2eb193c 100644
+--- a/modules/janus/lib/AdminUtil.php
++++ b/modules/janus/lib/AdminUtil.php
+@@ -47,6 +47,12 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
+     private $_config;
+ 
+     /**
++     * Pagination count
++     * @var int
++     */
++    private $_paginate;
++
++    /**
+      * Creates a new administrator utility.
+      *
+      * @since Method available since Release 1.0.0
+@@ -55,6 +61,8 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
+     {
+         $this->_config = SimpleSAML_Configuration::getConfig('module_janus.php');
+ 
++        $this->_paginate = $this->_config->getValue('dashboard.arp.paginate_by', 20);
++
+         // Send DB config to parent class
+         parent::__construct($this->_config->getValue('store'));
+     }
+@@ -496,7 +504,7 @@ class sspmod_janus_AdminUtil extends sspmod_janus_Database
+         // parse GET parameters (search query q, page p and page size ps)
+         $query = isset($_GET['q']) ? $_GET['q'] : '';
+         $page  = !empty($_GET['p']) ? (int)$_GET['p'] : 1;
+-        $size  = !empty($_GET['ps']) ? (int)$_GET['ps'] : $defaultPageSize;
++        $size  = !empty($_GET['ps']) ? (int)$_GET['ps'] : $this->_paginate;
+ 
+         $arp = new sspmod_janus_ARP;
+ 
