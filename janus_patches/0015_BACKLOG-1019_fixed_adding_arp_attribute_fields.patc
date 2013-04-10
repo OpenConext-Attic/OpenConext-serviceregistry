@@ -1,0 +1,13 @@
+diff --git modules/janus/www/resources/scripts/arp.js modules/janus/www/resources/scripts/arp.js
+index 7eec020..1c76b8c 100644
+--- modules/janus/www/resources/scripts/arp.js
++++ modules/janus/www/resources/scripts/arp.js
+@@ -182,7 +182,7 @@ var ARP = {
+ 
+         var attributeValue = "*";
+         if (mustSpecifyValue) {
+-            if ($('##attribute_select_row .arp_select_attribute_value').is(':hidden')) {
++            if ($('#attribute_select_row .arp_select_attribute_value').is(':hidden')) {
+                 $('#attribute_select_row .arp_select_attribute_value').show();
+                 return;
+             }
