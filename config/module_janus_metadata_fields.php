@@ -79,6 +79,20 @@ $template = array(
             'required' => TRUE,
         ),
         'SingleSignOnService:0:Location' => array('required' => TRUE, 'validate' => 'isurl'),
+        'SingleSignOnService:1:Binding' => array(
+            'type' => 'select',
+            'select_values' => array(
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+                'urn:oasis:names:tc:SAML:2.0:bindings:SOAP',
+                'urn:oasis:names:tc:SAML:2.0:bindings:PAOS',
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact',
+                'urn:oasis:names:tc:SAML:2.0:bindings:URI'
+            ),
+            'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+            'required' => FALSE,
+        ),
+        'SingleSignOnService:1:Location' => array('required' => FALSE, 'validate' => 'isurl'),
         'certData'                  => array('required'=>TRUE),
 
         'coin:guest_qualifier' => array(
