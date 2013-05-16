@@ -22,6 +22,23 @@ $template = array(
         'certData'                  => array(),
         'certData2'                 => array(),
 
+        'SingleLogoutService_Binding' => array(
+            'type' => 'select',
+            'select_values' => array(
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+                'urn:oasis:names:tc:SAML:2.0:bindings:SOAP',
+                'urn:oasis:names:tc:SAML:2.0:bindings:PAOS',
+                'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact',
+                'urn:oasis:names:tc:SAML:2.0:bindings:URI'
+            ),
+            'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+            'required'=>FALSE,
+        ),
+        'SingleLogoutService_Location' => array(
+            'required'=>FALSE,
+            'validate' => 'isurl'
+        ),
         'NameIDFormat' => array(
             'type' => 'select',
             'required'=>FALSE,
