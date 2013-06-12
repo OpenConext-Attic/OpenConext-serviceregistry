@@ -165,6 +165,9 @@ $template = array(
         'AssertionConsumerService:0:Location' => array('required' => TRUE, 'validate' => 'isurl'),
         'AssertionConsumerService:#:Location' => array('required' => FALSE, 'validate' => 'isurl', 'supported' => array(1,2,3,4,5,6,7,8,9)),
 
+        'AssertionConsumerService:0:index' => array('required' => FALSE),
+        'AssertionConsumerService:#:index' => array('required' => FALSE, 'supported' => array(1,2,3,4,5,6,7,8,9)),
+
         'NameIDFormats:#' => array(
             'supported' => array(0,1,2),
             'type' => 'select',
