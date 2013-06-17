@@ -10,7 +10,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: Postman.php 1047 2012-05-03 09:03:53Z jach@wayf.dk $
+ * @version    SVN: $Id: Postman.php 1175 2013-04-15 10:29:48Z freek@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.2.0
  */
@@ -23,7 +23,7 @@
  * @author     Jacob Christiansen <jach@wayf.dk>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: Postman.php 1047 2012-05-03 09:03:53Z jach@wayf.dk $
+ * @version    SVN: $Id: Postman.php 1175 2013-04-15 10:29:48Z freek@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @see        sspmod_janus_Database
  * @since      Class available since Release 1.2.0
@@ -200,14 +200,14 @@ class sspmod_janus_Postman extends sspmod_janus_Database
     {
         $st = self::execute(
             'UPDATE `'. self::$prefix .'subscription` 
-             SET `type` = ?, `uid` = ?, `created` = ?, `ip` = ?
-             WHERE `sid` = ?;',
+             SET `type` = ?, `created` = ?, `ip` = ?
+             WHERE `sid` = ? and uid = ?;',
             array(
                 $type,
-                $uid,
                 date('c'),
                 $_SERVER['REMOTE_ADDR'],
-                $sid
+                $sid,
+                $uid,
             )
         );
 
@@ -215,6 +215,8 @@ class sspmod_janus_Postman extends sspmod_janus_Database
             simplesaml_logger::error('janus: Error updating subscription - ' . var_export(array($sid, $uid, $subscription, $type), true));
             return false;
         }
+        
+        if ($st->rowCount() == 0) { return false; }
 
         return true;
 

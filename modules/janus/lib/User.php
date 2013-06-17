@@ -11,7 +11,7 @@
  * @author     Sixto Martín, <smartin@yaco.es>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: User.php 852 2011-10-17 11:04:49Z relaxnownl@gmail.com $
+ * @version    SVN: $Id: User.php 1170 2013-04-08 14:20:29Z freek@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      File available since Release 1.0.0
  */
@@ -28,7 +28,7 @@
  * @author     Sixto Martín, <smartin@yaco.es>
  * @copyright  2009 Jacob Christiansen
  * @license    http://www.opensource.org/licenses/mit-license.php MIT License
- * @version    SVN: $Id: User.php 852 2011-10-17 11:04:49Z relaxnownl@gmail.com $
+ * @version    SVN: $Id: User.php 1170 2013-04-08 14:20:29Z freek@wayf.dk $
  * @link       http://code.google.com/p/janus-ssp/
  * @since      Class available since Release 1.0.0
  */
@@ -429,7 +429,7 @@ class sspmod_janus_User extends sspmod_janus_Database
      */
     public function getEmail()
     {
-        return $this->_email;
+        return $this->getUserid();
     }
 
     /**
