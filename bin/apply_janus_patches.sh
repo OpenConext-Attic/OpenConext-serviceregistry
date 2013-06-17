@@ -5,6 +5,7 @@ REJFILE="/tmp/janus_patches-rej-$(date +%s)"
 touch $REJFILE
 for FILENAME in janus_patches/*.patch
 do
+  echo "$FILENAME\n"
   patch -Np1 -r $REJFILE < $FILENAME
 done
 rm $REJFILE
