@@ -1,7 +1,6 @@
 {
     "name":"openconext/serviceregistry",
     "description":"Idp/Sp metadata registry",
-    "minimum-stability":"stable",
     "repositories":[
         {
             "type":"package",
@@ -40,5 +39,9 @@
             "type": "vcs",
             "url": "https://github.com/janus-ssp/installers"
         }
-    ]
+    ],
+    "require":{
+        "composer/installers":"dev-master",
+        "janus-ssp/janus":"dev-master"
+    }
 }

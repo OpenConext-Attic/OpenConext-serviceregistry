@@ -1,0 +1,156 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "90d050f2a8c59102a403f0ee0553616e",
+    "packages": [
+        {
+            "name": "composer/installers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/janus-ssp/installers.git",
+                "reference": "51d8bdb00dab0b9776a09023696c8fafdfb51fd6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/janus-ssp/installers/zipball/51d8bdb00dab0b9776a09023696c8fafdfb51fd6",
+                "reference": "51d8bdb00dab0b9776a09023696c8fafdfb51fd6",
+                "shasum": ""
+            },
+            "replace": {
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Composer\\Installers\\Installer",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Composer\\Installers\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "http://composer.github.com/installers/",
+            "keywords": [
+                "TYPO3 Flow",
+                "TYPO3 Neos",
+                "agl",
+                "cakephp",
+                "codeigniter",
+                "drupal",
+                "fuelphp",
+                "installer",
+                "joomla",
+                "kohana",
+                "laravel",
+                "li3",
+                "lithium",
+                "mako",
+                "phpbb",
+                "ppi",
+                "silverstripe",
+                "symfony",
+                "wordpress",
+                "zend"
+            ],
+            "support": {
+                "source": "https://github.com/janus-ssp/installers/tree/master"
+            },
+            "time": "2013-06-18 14:25:57"
+        },
+        {
+            "name": "janus-ssp/janus",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/janus-ssp/janus.git",
+                "reference": "79b525f4700a9835ef1d28fbb10249ed607fb5b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/79b525f4700a9835ef1d28fbb10249ed607fb5b8",
+                "reference": "79b525f4700a9835ef1d28fbb10249ed607fb5b8",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "dev-master",
+                "jquery/jquery": "1.9.1",
+                "jquery/jquery-ui": "1.10.1",
+                "jquery/jquery-ui-themes": "1.10.1"
+            },
+            "type": "simplesamlphp-module",
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "SimpleSamlPhp Janus module",
+            "time": "2013-06-18 14:49:48"
+        },
+        {
+            "name": "jquery/jquery",
+            "version": "1.9.1",
+            "dist": {
+                "type": "file",
+                "url": "http://code.jquery.com/jquery-1.9.1.min.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-ui",
+            "version": "1.10.1",
+            "dist": {
+                "type": "file",
+                "url": "http://code.jquery.com/ui/1.10.1/jquery-ui.min.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "jquery/jquery-ui-themes",
+            "version": "1.10.1",
+            "dist": {
+                "type": "zip",
+                "url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "composer/installers": 20,
+        "janus-ssp/janus": 20
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}
