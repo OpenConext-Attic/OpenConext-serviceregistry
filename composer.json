@@ -1,0 +1,5 @@
+{
+    "name":"openconext/serviceregistry",
+    "description":"Idp/Sp metadata registry",
+    "minimum-stability":"stable"
+}
