@@ -1,8 +1,24 @@
 {
     "name":"openconext/serviceregistry",
     "description":"Idp/Sp metadata registry",
-    "require":{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/janus-ssp/installers"
+        },
+        {
+            "type": "composer",
+            "url": "https://raw.github.com/cpliakas/simplesamlphp-composer/master"
+        }
+    ],
+    "require": {
+        "simplesamlphp/simplesamlphp":"1.9.0",
         "composer/installers":"dev-master",
         "janus-ssp/janus":"dev-master"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "bin/simplesamlphp-post-install.sh"
+        ]
     }
 }

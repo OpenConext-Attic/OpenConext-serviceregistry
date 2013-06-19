@@ -23,7 +23,7 @@ if (get_magic_quotes_runtime()) {
 
 
 /* Initialize the autoloader. */
-require_once(dirname(dirname(__FILE__)) . '/lib/_autoload.php');
+require_once(realpath(dirname(dirname(__FILE__))) . '/lib/_autoload.php');
 
 /* Enable assertion handler for all pages. */
 SimpleSAML_Error_Assertion::installHandler();
