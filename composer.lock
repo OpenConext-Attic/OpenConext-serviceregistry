@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "90d050f2a8c59102a403f0ee0553616e",
+    "hash": "3ddab4740edad4499d930a1114d1181f",
     "packages": [
         {
             "name": "composer/installers",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/janus-ssp/installers.git",
-                "reference": "51d8bdb00dab0b9776a09023696c8fafdfb51fd6"
+                "url": "https://github.com/composer/installers.git",
+                "reference": "a30e407c1fdd4aa7adc53b3bf9275a7d47f925da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/installers/zipball/51d8bdb00dab0b9776a09023696c8fafdfb51fd6",
-                "reference": "51d8bdb00dab0b9776a09023696c8fafdfb51fd6",
+                "url": "https://api.github.com/repos/composer/installers/zipball/a30e407c1fdd4aa7adc53b3bf9275a7d47f925da",
+                "reference": "a30e407c1fdd4aa7adc53b3bf9275a7d47f925da",
                 "shasum": ""
             },
             "replace": {
@@ -38,6 +38,7 @@
                     "Composer\\Installers\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -45,7 +46,8 @@
                 {
                     "name": "Kyle Robinson Young",
                     "email": "kyle@dontkry.com",
-                    "homepage": "https://github.com/shama"
+                    "homepage": "https://github.com/shama",
+                    "role": "Developer"
                 }
             ],
             "description": "A multi-framework Composer library installer",
@@ -72,10 +74,7 @@
                 "wordpress",
                 "zend"
             ],
-            "support": {
-                "source": "https://github.com/janus-ssp/installers/tree/master"
-            },
-            "time": "2013-06-18 14:25:57"
+            "time": "2013-06-13 16:21:37"
         },
         {
             "name": "janus-ssp/janus",
