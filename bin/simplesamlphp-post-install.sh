@@ -29,7 +29,7 @@ cp config/* vendor/simplesamlphp/simplesamlphp/config/
 cp metadata/* vendor/simplesamlphp/simplesamlphp/metadata/
 
 # Workaround: move modules back to correct location, this happpens due to incorrect installation order (janus before ssp)
-if [-d mv vendor/simplesamlphp/simplesamlphp/modules/modules/* vendor/simplesamlphp/simplesamlphp/modules/]; then
+if [ -d vendor/simplesamlphp/simplesamlphp/modules/modules ]; then
     mv vendor/simplesamlphp/simplesamlphp/modules/modules/* vendor/simplesamlphp/simplesamlphp/modules/
     rm -r vendor/simplesamlphp/simplesamlphp/modules/modules
 fi
