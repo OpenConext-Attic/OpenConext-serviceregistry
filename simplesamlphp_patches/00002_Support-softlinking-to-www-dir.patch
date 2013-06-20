@@ -1,0 +1,12 @@
+diff -r -u '--exclude=.git' vendor/simplesamlphp/simplesamlphp/www/_include.php simplesamlphp-surfnet/www/_include.php
+--- vendor/simplesamlphp/simplesamlphp/www/_include.php	2013-06-19 15:21:31.628445294 +0200
++++ vendor/simplesamlphp/simplesamlphp/www/_include.php	2013-06-19 15:01:46.136486394 +0200
+@@ -23,7 +23,7 @@
+ 
+ 
+ /* Initialize the autoloader. */
+-require_once(dirname(dirname(__FILE__)) . '/lib/_autoload.php');
++require_once(realpath(dirname(dirname(__FILE__))) . '/lib/_autoload.php');
+ 
+ /* Enable assertion handler for all pages. */
+ SimpleSAML_Error_Assertion::installHandler();
