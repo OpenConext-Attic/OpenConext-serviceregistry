@@ -195,12 +195,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "634b6aa46bf60a42700f45b18e86327e17262e7e"
+                "reference": "2eb83543f4bee32bfca5db148f0f73966670e2b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/634b6aa46bf60a42700f45b18e86327e17262e7e",
-                "reference": "634b6aa46bf60a42700f45b18e86327e17262e7e",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/2eb83543f4bee32bfca5db148f0f73966670e2b0",
+                "reference": "2eb83543f4bee32bfca5db148f0f73966670e2b0",
                 "shasum": ""
             },
             "require": {
@@ -211,7 +211,7 @@
             "type": "simplesamlphp-module",
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSamlPhp Janus module",
-            "time": "2013-06-20 10:03:50"
+            "time": "2013-06-20 10:12:55"
         },
         {
             "name": "kriswallsmith/assetic",
