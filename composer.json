@@ -14,7 +14,7 @@
     "require": {
         "simplesamlphp/simplesamlphp":"1.9.0",
         "composer/installers":"dev-master",
-        "janus-ssp/janus":"dev-master",
+        "janus-ssp/janus":"dev-doctrine-migrations",
         "dbpatch/dbpatch":"1.1.1"
     },
     "scripts": {
