@@ -2,8 +2,9 @@
 # Applies various changes to simplesamlphp, this should be ran when composer has installed it in vendor
 
 ROOT_DIR=$(pwd)
-
-#!/bin/sh
+VENDOR_DIR="$ROOT_DIR/vendor"
+SSP_MODULES_DIR="$VENDOR_DIR/simplesamlphp/simplesamlphp/modules"
+JANUS_DIR="$VENDOR_DIR/janus-ssp/janus"
 
 # Apply patch files
 echo -e "\nPatching files\n"
@@ -22,22 +23,33 @@ echo -e "\nFinished"
 
 cd $ROOT_DIR;
 
-# Add/override config
+# Add/override SimpleSamlPhp config
 cp config/* vendor/simplesamlphp/simplesamlphp/config/
 
-# Add/override metadata
+# Add/override SimpleSamlPhp metadata
 cp metadata/* vendor/simplesamlphp/simplesamlphp/metadata/
 
-# Workaround: move modules back to correct location, this happpens due to incorrect installation order (janus before ssp)
-if [ -d vendor/simplesamlphp/simplesamlphp/modules/modules ]; then
-    mv vendor/simplesamlphp/simplesamlphp/modules/modules/* vendor/simplesamlphp/simplesamlphp/modules/
-    rm -r vendor/simplesamlphp/simplesamlphp/modules/modules
-fi
-
-# Enable cron module
+# Enable SimpleSamlPhp cron module
 touch vendor/simplesamlphp/simplesamlphp/modules/cron/enable
 
+# Link janus module into SimpleSamlPhp
+cd $SSP_MODULES_DIR
+ln -sf ../../../janus-ssp/janus
+
+# Correct link to jquery since Janus itself is installed in the webroot
+cd $JANUS_DIR/www/resources
+ln -sf ../../../../jquery
+
+# Set custom janus dictionaries
+cd $JANUS_DIR
+git checkout dictionaries/metadatafields.definition.json
+cd $ROOT_DIR
+php bin/mergeJsonFiles.php \
+$JANUS_DIR/dictionaries/metadatafields.definition.json \
+$ROOT_DIR/janus-dictionaries/metadatafields.definition.json
+
 # Delete unused config, metadata and modules
+cd $ROOT_DIR
 rm -rf vendor/simplesamlphp/simplesamlphp/config/acl.php   \
     vendor/simplesamlphp/simplesamlphp/config/authmemcookie.php \
     vendor/simplesamlphp/simplesamlphp/config/cas-ldap.php \

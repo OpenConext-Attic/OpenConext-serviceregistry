@@ -1,21 +1,49 @@
 {
-    "name":"openconext/serviceregistry",
-    "description":"Idp/Sp metadata registry",
+    "name": "openconext/serviceregistry",
+    "description": "Idp/Sp metadata registry",
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/janus-ssp/installers"
-        },
         {
             "type": "composer",
             "url": "https://raw.github.com/cpliakas/simplesamlphp-composer/master"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery",
+                "version": "1.9.1",
+                "dist": {
+                    "url": "http://code.jquery.com/jquery-1.9.1.min.js",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery-ui",
+                "version": "1.10.1",
+                "dist": {
+                    "url": "http://code.jquery.com/ui/1.10.1/jquery-ui.min.js",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery-ui-themes",
+                "version": "1.10.1",
+                "dist": {
+                    "url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.1.zip",
+                    "type": "zip"
+                }
+            }
         }
     ],
     "require": {
-        "simplesamlphp/simplesamlphp":"1.9.0",
-        "composer/installers":"dev-master",
-        "janus-ssp/janus":"dev-doctrine-migrations",
-        "dbpatch/dbpatch":"1.1.1"
+        "simplesamlphp/simplesamlphp": "1.9.0",
+        "janus-ssp/janus": "dev-develop",
+        "dbpatch/dbpatch": "1.1.1"
     },
     "scripts": {
         "post-install-cmd": [
