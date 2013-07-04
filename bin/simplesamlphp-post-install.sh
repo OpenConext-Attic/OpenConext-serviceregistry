@@ -36,9 +36,9 @@ touch vendor/simplesamlphp/simplesamlphp/modules/cron/enable
 cd $SSP_MODULES_DIR
 ln -sf ../../../janus-ssp/janus
 
-# Correct link to jquery since Janus itself is installed in the webroot
+# Correct link to jquery since Janus itself is installed in the vendor dir instead of in simplesamlphp
 cd $JANUS_DIR/www/resources
-ln -sf ../../../../jquery
+ln -sf ../../../../../components
 
 # Set custom janus dictionaries
 cd $JANUS_DIR
