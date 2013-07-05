@@ -15,6 +15,9 @@
     "scripts": {
         "post-install-cmd": [
             "bin/simplesamlphp-post-install.sh"
+        ],
+        "post-update-cmd": [
+            "bin/simplesamlphp-post-install.sh"
         ]
     }
 }
