@@ -20,6 +20,6 @@ ALTER TABLE janus__metadata
 ALTER TABLE janus__subscription
 	CHANGE ip ip char(39) DEFAULT NULL;
 ALTER TABLE janus__user
-	CHANGE ip ip char(39) NOT NULL;
+	CHANGE ip ip char(39) DEFAULT NULL;
 ALTER TABLE janus__userData
 	CHANGE ip ip char(39) NOT NULL;
