@@ -10,15 +10,15 @@ ALTER TABLE janus__blockedEntity
 ALTER TABLE janus__disableConsent
 	CHANGE ip ip char(39) NOT NULL;
 ALTER TABLE janus__entity
-	CHANGE ip ip char(39) NOT NULL;
+	CHANGE ip ip char(39) DEFAULT NULL;
 ALTER TABLE janus__hasEntity
-	CHANGE ip ip char(39) NOT NULL;
+	CHANGE ip ip char(39) DEFAULT NULL;
 ALTER TABLE janus__message
-	CHANGE ip ip char(39) NOT NULL;
+	CHANGE ip ip char(39) DEFAULT NULL;
 ALTER TABLE janus__metadata
 	CHANGE ip ip char(39) NOT NULL;
 ALTER TABLE janus__subscription
-	CHANGE ip ip char(39) NOT NULL;
+	CHANGE ip ip char(39) DEFAULT NULL;
 ALTER TABLE janus__user
 	CHANGE ip ip char(39) NOT NULL;
 ALTER TABLE janus__userData
