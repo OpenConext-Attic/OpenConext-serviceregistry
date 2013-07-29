@@ -8,8 +8,6 @@
             "url": "https://raw.github.com/cpliakas/simplesamlphp-composer/master"
         }
     ],
-
-
     "require": {
         "simplesamlphp/simplesamlphp": "1.9.0",
         "janus-ssp/janus": "dev-doctrine-test@dev",
