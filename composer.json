@@ -6,10 +6,6 @@
         {
             "type": "composer",
             "url": "https://raw.github.com/cpliakas/simplesamlphp-composer/master"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/lucasvanlierop/dbal.git"
         }
     ],
 
@@ -17,8 +13,7 @@
     "require": {
         "simplesamlphp/simplesamlphp": "1.9.0",
         "janus-ssp/janus": "dev-doctrine-test@dev",
-        "dbpatch/dbpatch": "1.1.1",
-        "doctrine/dbal" : "dev-master as 2.3.4"
+        "dbpatch/dbpatch": "1.1.1"
     },
     "scripts": {
         "post-install-cmd": [
