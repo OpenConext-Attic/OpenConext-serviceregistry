@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4847898896c2b06faea995ea81375ea3",
+    "hash": "f71eb30e11606f3627a0fe4654d2c942",
     "packages": [
         {
             "name": "components/jquery",
@@ -119,16 +119,16 @@
         },
         {
             "name": "janus-ssp/janus",
-            "version": "dev-develop",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "d30d7f8c908e83a33409b646d3a1478b0bca540d"
+                "reference": "v.1.13.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/d30d7f8c908e83a33409b646d3a1478b0bca540d",
-                "reference": "d30d7f8c908e83a33409b646d3a1478b0bca540d",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/v.1.13.0",
+                "reference": "v.1.13.0",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +147,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2013-07-26 14:47:10"
+            "time": "2013-08-05 08:40:05"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -376,9 +376,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "janus-ssp/janus": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": [
 
     ],
