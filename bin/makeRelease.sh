@@ -55,7 +55,14 @@ rm -f ${RELEASE_DIR}/${PROJECT_NAME}/.gitignore
 rm -f ${RELEASE_DIR}/${PROJECT_NAME}/composer.json
 rm -f ${RELEASE_DIR}/${PROJECT_NAME}/composer.lock
 rm -f ${RELEASE_DIR}/${PROJECT_NAME}/makeRelease.sh
+rm -f ${RELEASE_DIR}/${PROJECT_NAME}/bin/composer.phar
+rm -f ${RELEASE_DIR}/${PROJECT_NAME}/bin/mergeJsonFiles.php
+rm -f ${RELEASE_DIR}/${PROJECT_NAME}/bin/simplesamlphp-post-install.sh
 rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/tests
+rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/config
+rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/metadata
+rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/janus-dictionaries
+rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/simplesamlphp_patches
 )
 
 # create tarball
