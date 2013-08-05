@@ -24,7 +24,7 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
 
-set_include_path(realpath(__DIR__ . '/../lib') . PATH_SEPARATOR . get_include_path());
+set_include_path(realpath(__DIR__ . '/../vendor/dbpatch/dbpatch/src/') . PATH_SEPARATOR . get_include_path());
 
 // Include SSP
 require __DIR__ . '/../www/_include.php';
@@ -36,5 +36,6 @@ $autoloader->registerNamespace('DbPatch_');
 $autoloader->registerNamespace('ServiceRegistry_');
 
 // Start DbPatch
+require_once __DIR__ . "/../lib/ServiceRegistry/DbPatch/Core/Application.php";
 $application = new ServiceRegistry_DbPatch_Core_Application();
 $application->main();
