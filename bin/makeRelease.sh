@@ -45,7 +45,7 @@ cd ${RELEASE_DIR}
 # run Composer
 (
 cd ${RELEASE_DIR}/${PROJECT_NAME}
-php ${RELEASE_DIR}/composer.phar install
+php ${RELEASE_DIR}/composer.phar install --no-dev
 )
 
 # remove Git and Composer files
