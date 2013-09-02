@@ -128,6 +128,9 @@ $template = array(
 
         // disable SAML scoping
         'coin:disable_scoping' => array('type' => 'boolean'),
+
+        // Hide idp from wayf and metadata
+        'coin:hidden' => array('type' => 'boolean')
     ),
 
     // Fields only for Service Providers

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f71eb30e11606f3627a0fe4654d2c942",
+    "hash": "93ffcb71c1d7c0fca4f6a21c9c241299",
     "packages": [
         {
             "name": "components/jquery",
@@ -119,16 +119,16 @@
         },
         {
             "name": "janus-ssp/janus",
-            "version": "1.13.0",
+            "version": "1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "v.1.13.0"
+                "reference": "6d81d777300e86280be33ed470b05d82343f9663"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/v.1.13.0",
-                "reference": "v.1.13.0",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/6d81d777300e86280be33ed470b05d82343f9663",
+                "reference": "6d81d777300e86280be33ed470b05d82343f9663",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +147,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2013-08-05 08:40:05"
+            "time": "2013-08-28 13:48:11"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -323,17 +323,17 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.3.2",
+            "version": "v2.3.4",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "v2.3.2"
+                "reference": "1e91553e1cedd0b8fb1da6ea4f89b02e21713d5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/v2.3.2",
-                "reference": "v2.3.2",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/1e91553e1cedd0b8fb1da6ea4f89b02e21713d5b",
+                "reference": "1e91553e1cedd0b8fb1da6ea4f89b02e21713d5b",
                 "shasum": ""
             },
             "require": {
@@ -366,7 +366,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2013-07-01 12:24:43"
+            "time": "2013-08-22 06:42:25"
         }
     ],
     "packages-dev": [
