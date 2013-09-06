@@ -27,66 +27,55 @@ else
     TAG=$1
 fi
 
+PROJECT_DIR_NAME=${PROJECT_NAME}-${TAG}
+PROJECT_DIR=${RELEASE_DIR}/${PROJECT_DIR_NAME}
+
+# Create empty dir
 mkdir -p ${RELEASE_DIR}
-rm -rf ${RELEASE_DIR}/${PROJECT_NAME}
+rm -rf ${PROJECT_DIR}
 
 # get Composer
-(
 cd ${RELEASE_DIR}
 curl -O http://getcomposer.org/composer.phar
-)
 
 # clone the tag
-(
 cd ${RELEASE_DIR}
-    git clone -b ${TAG} https://github.com/${GITHUB_USER}/${PROJECT_NAME}.git
-)
+git clone -b ${TAG} https://github.com/${GITHUB_USER}/${PROJECT_NAME}.git ${PROJECT_DIR_NAME}
 
 # run Composer
-(
-cd ${RELEASE_DIR}/${PROJECT_NAME}
+cd ${PROJECT_DIR}
 php ${RELEASE_DIR}/composer.phar install --no-dev
-)
 
 # remove files that are not required for production
-(
-rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/.idea
-rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/.git
-rm -f ${RELEASE_DIR}/${PROJECT_NAME}/.gitignore
-rm -f ${RELEASE_DIR}/${PROJECT_NAME}/composer.json
-rm -f ${RELEASE_DIR}/${PROJECT_NAME}/composer.lock
-rm -f ${RELEASE_DIR}/${PROJECT_NAME}/makeRelease.sh
-rm -f ${RELEASE_DIR}/${PROJECT_NAME}/bin/composer.phar
-rm -f ${RELEASE_DIR}/${PROJECT_NAME}/bin/mergeJsonFiles.php
-rm -f ${RELEASE_DIR}/${PROJECT_NAME}/bin/simplesamlphp-post-install.sh
-rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/tests
-rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/config
-rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/metadata
-rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/janus-dictionaries
-rm -rf ${RELEASE_DIR}/${PROJECT_NAME}/simplesamlphp_patches
-)
+rm -rf ${PROJECT_DIR}/.idea
+rm -rf ${PROJECT_DIR}/.git
+rm -f ${PROJECT_DIR}/.gitignore
+rm -f ${PROJECT_DIR}/composer.json
+rm -f ${PROJECT_DIR}/composer.lock
+rm -f ${PROJECT_DIR}/makeRelease.sh
+rm -f ${PROJECT_DIR}/bin/composer.phar
+rm -f ${PROJECT_DIR}/bin/mergeJsonFiles.php
+rm -f ${PROJECT_DIR}/bin/simplesamlphp-post-install.sh
+rm -rf ${PROJECT_DIR}/tests
+rm -rf ${PROJECT_DIR}/config
+rm -rf ${PROJECT_DIR}/metadata
+rm -rf ${PROJECT_DIR}/janus-dictionaries
+rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 
 # create tarball
-(
 cd ${RELEASE_DIR}
-
-tar -czf ${PROJECT_NAME}-${TAG}.tar.gz ${PROJECT_NAME}
-)
+tar -czf ${PROJECT_DIR_NAME}.tar.gz ${PROJECT_DIR_NAME}
 
 # create checksum file
-(
 cd ${RELEASE_DIR}
-shasum ${PROJECT_NAME}-${TAG}.tar.gz > ${PROJECT_NAME}.sha
-)
+shasum ${PROJECT_DIR_NAME}.tar.gz > ${PROJECT_DIR_NAME}.sha
 
 # sign it if requested
-(
 if [ -n "$2" ]
 then
 	if [ "$2" == "sign" ]
 	then
 		cd ${RELEASE_DIR}
-		gpg -o ${PROJECT_NAME}.sha.gpg  --clearsign ${PROJECT_NAME}.sha
+		gpg -o ${PROJECT_DIR_NAME}.sha.gpg  --clearsign ${PROJECT_DIR_NAME}.sha
 	fi
 fi
-)
