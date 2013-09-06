@@ -235,7 +235,10 @@ $template = array(
         'coin:implicit_vo_id'           => array(),
 
         'coin:transparant_issuer'       => array('type' => 'boolean'),
-        'coin:do_not_add_attribute_aliases' => array('type' => 'boolean', 'default' => FALSE)
+        'coin:do_not_add_attribute_aliases' => array('type' => 'boolean', 'default' => FALSE),
+
+        // Do we need to show all Idp's in the WAYF with the unconnected ones grey-out
+        'coin:display_unconnected_idps_wayf' => array('type' => 'boolean', 'default' => FALSE)
     ),
 );
 
