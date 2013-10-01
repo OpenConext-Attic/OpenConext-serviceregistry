@@ -61,6 +61,7 @@ rm -rf ${PROJECT_DIR}/config
 rm -rf ${PROJECT_DIR}/metadata
 rm -rf ${PROJECT_DIR}/janus-dictionaries
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
+rm -rf ${PROJECT_DIR}/vendor/janus-ssp/janus/www/install
 
 # create tarball
 cd ${RELEASE_DIR}
