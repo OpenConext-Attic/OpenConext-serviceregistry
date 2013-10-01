@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "93ffcb71c1d7c0fca4f6a21c9c241299",
+    "hash": "431d242631f5caeb8d42018d762056c9",
     "packages": [
         {
             "name": "components/jquery",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "1.9.1"
+                "reference": "0e94233e6a4ab678d8fc04312241b2f840717b0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/1.9.1",
-                "reference": "1.9.1",
+                "url": "https://api.github.com/repos/components/jquery/zipball/0e94233e6a4ab678d8fc04312241b2f840717b0c",
+                "reference": "0e94233e6a4ab678d8fc04312241b2f840717b0c",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2013-04-22 17:13:31"
+            "time": "2013-07-16 10:41:05"
         },
         {
             "name": "components/jqueryui",
@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jqueryui.git",
-                "reference": "1.10.2"
+                "reference": "1907b0db61e84f381e4bea8d5aa9e0807dd59e3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jqueryui/zipball/1.10.2",
-                "reference": "1.10.2",
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/1907b0db61e84f381e4bea8d5aa9e0807dd59e3d",
+                "reference": "1907b0db61e84f381e4bea8d5aa9e0807dd59e3d",
                 "shasum": ""
             },
             "require": {
@@ -119,16 +119,16 @@
         },
         {
             "name": "janus-ssp/janus",
-            "version": "1.14.0",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "6d81d777300e86280be33ed470b05d82343f9663"
+                "reference": "d7c2ee8967836efa1a3b36eedf1c8fc1000ce19d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/6d81d777300e86280be33ed470b05d82343f9663",
-                "reference": "6d81d777300e86280be33ed470b05d82343f9663",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/d7c2ee8967836efa1a3b36eedf1c8fc1000ce19d",
+                "reference": "d7c2ee8967836efa1a3b36eedf1c8fc1000ce19d",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +147,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2013-08-28 13:48:11"
+            "time": "2013-10-01 13:02:59"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -272,12 +272,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobLoach/component-installer.git",
-                "reference": "0.0.11"
+                "reference": "f8bbde8d027eed4d9bcc09ebc2d04d9e0df94b5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/0.0.11",
-                "reference": "0.0.11",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/f8bbde8d027eed4d9bcc09ebc2d04d9e0df94b5b",
+                "reference": "f8bbde8d027eed4d9bcc09ebc2d04d9e0df94b5b",
                 "shasum": ""
             },
             "require": {

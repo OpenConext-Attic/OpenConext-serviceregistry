@@ -6,10 +6,12 @@
  */
 
 $config = array (
-	'key'           => 'DrAXe6as',
+	'key'           => '',
 	'allowed_tags'  => array('daily', 'hourly', 'frequent'),
 	'debug_message' => TRUE,
-	'sendemail'     => FALSE,
+	'sendemail'     => TRUE,
+    'enabled'       => FALSE,
+
 );
 
 $localConfig = '/etc/surfconext/serviceregistry.module_cron.php';
