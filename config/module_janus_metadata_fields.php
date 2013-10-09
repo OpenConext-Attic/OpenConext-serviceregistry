@@ -21,6 +21,7 @@ $template = array(
 
         'certData'                  => array(),
         'certData2'                 => array(),
+        'certData3'                 => array(),
 
         'SingleLogoutService_Binding' => array(
             'type' => 'select',
