@@ -288,6 +288,9 @@ $config = array(
     /* Certificate which should be included in the signature. Should correspond to the private key. */
     'sign.certificate' => 'server.crt',
 
+    /* Whether metadata should be encrypted, e.g. do we also import encryption certificates */
+    'encryption.enable' => FALSE,
+
     /**
      * Access configuration of JANUS.
      *
