@@ -137,8 +137,8 @@ $template = array(
         'coin:hidden' => array('type' => 'boolean'),
 
         // shibmd:Scope element
-        'hibmd:scope:#:allowed' => array('supported' => array(0,1,2,3,4,5)),
-        'hibmd:scope:#:regexp' => array('type' => 'boolean', 'supported' => array(0,1,2,3,4,5))
+        'shibmd:scope:#:allowed' => array('supported' => array(0,1,2,3,4,5)),
+        'shibmd:scope:#:regexp' => array('type' => 'boolean', 'supported' => array(0,1,2,3,4,5))
     ),
 
     // Fields only for Service Providers
