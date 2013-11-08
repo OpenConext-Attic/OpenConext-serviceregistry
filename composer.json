@@ -10,7 +10,7 @@
     ],
     "require": {
         "simplesamlphp/simplesamlphp": "1.9.0",
-        "janus-ssp/janus": "dev-doctrine-test@dev",
+        "janus-ssp/janus": "dev-feature/386-ORM-support@dev",
         "dbpatch/dbpatch": "1.1.1"
     },
     "scripts": {
