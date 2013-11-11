@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "431d242631f5caeb8d42018d762056c9",
+    "hash": "8972f7209b623b4ce882871b41e782ec",
     "packages": [
         {
             "name": "components/jquery",
@@ -119,16 +119,16 @@
         },
         {
             "name": "janus-ssp/janus",
-            "version": "1.15.0",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "d7c2ee8967836efa1a3b36eedf1c8fc1000ce19d"
+                "reference": "5b5c82bf2382d337570b80496cdfd5c8ca8bc98b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/d7c2ee8967836efa1a3b36eedf1c8fc1000ce19d",
-                "reference": "d7c2ee8967836efa1a3b36eedf1c8fc1000ce19d",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/5b5c82bf2382d337570b80496cdfd5c8ca8bc98b",
+                "reference": "5b5c82bf2382d337570b80496cdfd5c8ca8bc98b",
                 "shasum": ""
             },
             "require": {
@@ -147,7 +147,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2013-10-01 13:02:59"
+            "time": "2013-10-28 12:33:55"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -268,16 +268,16 @@
         },
         {
             "name": "robloach/component-installer",
-            "version": "0.0.11",
+            "version": "0.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobLoach/component-installer.git",
-                "reference": "f8bbde8d027eed4d9bcc09ebc2d04d9e0df94b5b"
+                "reference": "1864f25db21fc173e02a359f646acd596c1b0460"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/f8bbde8d027eed4d9bcc09ebc2d04d9e0df94b5b",
-                "reference": "f8bbde8d027eed4d9bcc09ebc2d04d9e0df94b5b",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/1864f25db21fc173e02a359f646acd596c1b0460",
+                "reference": "1864f25db21fc173e02a359f646acd596c1b0460",
                 "shasum": ""
             },
             "require": {
@@ -308,7 +308,7 @@
                 }
             ],
             "description": "Allows installation of Components via Composer.",
-            "time": "2013-05-10 04:14:46"
+            "time": "2013-08-31 23:46:48"
         },
         {
             "name": "simplesamlphp/simplesamlphp",
@@ -323,17 +323,17 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.3.4",
+            "version": "v2.3.6",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "1e91553e1cedd0b8fb1da6ea4f89b02e21713d5b"
+                "reference": "81191e354fe9dad0451036ccf0fdf283649d3f1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/1e91553e1cedd0b8fb1da6ea4f89b02e21713d5b",
-                "reference": "1e91553e1cedd0b8fb1da6ea4f89b02e21713d5b",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/81191e354fe9dad0451036ccf0fdf283649d3f1e",
+                "reference": "81191e354fe9dad0451036ccf0fdf283649d3f1e",
                 "shasum": ""
             },
             "require": {
@@ -366,7 +366,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2013-08-22 06:42:25"
+            "time": "2013-10-09 21:17:57"
         }
     ],
     "packages-dev": [

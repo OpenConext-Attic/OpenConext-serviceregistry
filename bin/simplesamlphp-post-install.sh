@@ -29,9 +29,6 @@ cp config/* vendor/simplesamlphp/simplesamlphp/config/
 # Add/override SimpleSamlPhp metadata
 cp metadata/* vendor/simplesamlphp/simplesamlphp/metadata/
 
-# Enable SimpleSamlPhp cron module
-touch vendor/simplesamlphp/simplesamlphp/modules/cron/enable
-
 # Link janus module into SimpleSamlPhp
 cd $SSP_MODULES_DIR
 ln -sf ../../../janus-ssp/janus
