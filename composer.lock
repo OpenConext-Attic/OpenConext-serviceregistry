@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "8972f7209b623b4ce882871b41e782ec",
+    "hash": "c7adb14e713768ddba214b01f634e712",
     "packages": [
         {
             "name": "components/jquery",
@@ -268,16 +268,16 @@
         },
         {
             "name": "robloach/component-installer",
-            "version": "0.0.12",
+            "version": "0.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobLoach/component-installer.git",
-                "reference": "1864f25db21fc173e02a359f646acd596c1b0460"
+                "reference": "f8bbde8d027eed4d9bcc09ebc2d04d9e0df94b5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/1864f25db21fc173e02a359f646acd596c1b0460",
-                "reference": "1864f25db21fc173e02a359f646acd596c1b0460",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/f8bbde8d027eed4d9bcc09ebc2d04d9e0df94b5b",
+                "reference": "f8bbde8d027eed4d9bcc09ebc2d04d9e0df94b5b",
                 "shasum": ""
             },
             "require": {
@@ -308,7 +308,7 @@
                 }
             ],
             "description": "Allows installation of Components via Composer.",
-            "time": "2013-08-31 23:46:48"
+            "time": "2013-05-10 04:14:46"
         },
         {
             "name": "simplesamlphp/simplesamlphp",
