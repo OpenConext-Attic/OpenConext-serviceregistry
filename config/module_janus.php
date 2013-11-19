@@ -115,20 +115,15 @@ $config = array(
 
     /*
      * Allowed attributes
+     * see https://wiki.surfnet.nl/display/surfconextdev/Attributes+in+SURFconext
      */
     'attributes' => array(
 
-        // SCHAC
-        'schacHomeOrganization' => array(
-            'name' => 'urn:mace:terena.org:attribute-def:schacHomeOrganization',
+        'eduPersonTargetedID' => array(
+            'name' => 'urn:mace:dir:attribute-def:eduPersonTargetedID',
         ),
-        'schacHomeOrganizationType' => array(
-            'name' => 'urn:mace:terena.org:attribute-def:schacHomeOrganizationType',
-        ),
-
-        // MACE
-        'uid' => array(
-            'name' => 'urn:mace:dir:attribute-def:uid',
+        'eduPersonPrincipalName' => array(
+            'name' => 'urn:mace:dir:attribute-def:eduPersonPrincipalName',
         ),
         'displayName' => array(
             'name' => 'urn:mace:dir:attribute-def:displayName',
@@ -145,8 +140,11 @@ $config = array(
         'mail' => array(
             'name' => 'urn:mace:dir:attribute-def:mail',
         ),
-        'eduPersonPrincipalName' => array(
-            'name' => 'urn:mace:dir:attribute-def:eduPersonPrincipalName',
+        'schacHomeOrganization' => array(
+            'name' => 'urn:mace:terena.org:attribute-def:schacHomeOrganization',
+        ),
+        'schacHomeOrganizationType' => array(
+            'name' => 'urn:mace:terena.org:attribute-def:schacHomeOrganizationType',
         ),
         'eduPersonAffiliation' => array(
             'name' => 'urn:mace:dir:attribute-def:eduPersonAffiliation',
@@ -156,39 +154,15 @@ $config = array(
             'name' => 'urn:mace:dir:attribute-def:eduPersonEntitlement',
             'specify_values' => TRUE,
         ),
-        'preferredLanguage' => array(
-            'name' => 'urn:mace:dir:attribute-def:preferredLanguage',
-        ),
         'isMemberOf' => array(
             'name' => 'urn:mace:dir:attribute-def:isMemberOf',
             'specify_values' => TRUE,
         ),
-        'eduPersonTargetedID' => array(
-            'name' => 'urn:mace:dir:attribute-def:eduPersonTargetedID',
+        'uid' => array(
+            'name' => 'urn:mace:dir:attribute-def:uid',
         ),
-
-        // NLEDUPERSON
-        'nlEduPersonOrgUnit' => array(
-            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlEduPersonOrgUnit',
-            'specify_values' => TRUE,
-        ),
-        'nlEduPersonStudyBranch' => array(
-            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlEduPersonStudyBranch',
-            'specify_values' => TRUE,
-        ),
-        'nlStudielinkNummer' => array(
-            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlStudielinkNummer',
-        ),
-        'nlDigitalAuthorIdentifier' => array(
-            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlDigitalAuthorIdentifier',
-        ),
-
-        // SURFconext specific
-        'collabPersonId' => array(
-            'name' => 'urn:oid:1.3.6.1.4.1.1076.20.40.40.1',
-        ),
-        'licenseInfo' => array(
-            'name' => 'urn:nl.surfconext.licenseInfo',
+        'preferredLanguage' => array(
+            'name' => 'urn:mace:dir:attribute-def:preferredLanguage',
         ),
     ),
 
