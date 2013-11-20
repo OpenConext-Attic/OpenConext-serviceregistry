@@ -9,7 +9,7 @@
     ],
     "require": {
         "simplesamlphp/simplesamlphp": "1.9.0",
-        "janus-ssp/janus": "dev-feature/386-ORM-support",
+        "janus-ssp/janus": "dev-develop",
         "doctrine/migrations" : "dev-master#37aacdae6507faad03c3df1624e7d3a6e6c1b388 as 1",
         "robloach/component-installer": "0.0.11",
         "dbpatch/dbpatch": "1.1.1"

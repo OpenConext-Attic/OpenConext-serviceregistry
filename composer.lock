@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "475fa5188c26e25d0a2bef4bdb4af62b",
+    "hash": "0ccb92fe528172ca68fc7c93f0e85a82",
     "packages": [
         {
             "name": "components/jquery",
@@ -230,7 +230,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -297,7 +297,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -370,7 +370,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -389,7 +389,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -499,7 +499,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -719,16 +719,16 @@
         },
         {
             "name": "janus-ssp/janus",
-            "version": "dev-feature/386-ORM-support",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "931a58182e0a97da81b2ccd2107d58406c63cddc"
+                "reference": "9e88bea0c558cd98b6535b3b1e6b9163ac3bbaca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/931a58182e0a97da81b2ccd2107d58406c63cddc",
-                "reference": "931a58182e0a97da81b2ccd2107d58406c63cddc",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/9e88bea0c558cd98b6535b3b1e6b9163ac3bbaca",
+                "reference": "9e88bea0c558cd98b6535b3b1e6b9163ac3bbaca",
                 "shasum": ""
             },
             "require": {
@@ -753,7 +753,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2013-11-20 13:02:22"
+            "time": "2013-11-20 14:58:24"
         },
         {
             "name": "jms/metadata",
