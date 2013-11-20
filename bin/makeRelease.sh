@@ -1,5 +1,4 @@
 #!/bin/sh
-
 RELEASE_DIR=${HOME}/Releases
 GITHUB_USER=OpenConext
 PROJECT_NAME=OpenConext-serviceregistry
@@ -11,7 +10,7 @@ cat << EOF
 Please specify the tag or branch to make a release of.
 
 Examples:
-    
+
     sh makeRelease.sh 0.1.0
     sh makeRelease.sh master
     sh makeRelease.sh develop
@@ -27,8 +26,9 @@ else
     TAG=$1
 fi
 
-PROJECT_DIR_NAME=${PROJECT_NAME}-${TAG}
+PROJECT_DIR_NAME=$(echo "${PROJECT_NAME}-${TAG}"| sed -e "s/\//-/g")
 PROJECT_DIR=${RELEASE_DIR}/${PROJECT_DIR_NAME}
+JANUS_DIR="${PROJECT_DIR}/vendor/janus-ssp/janus/"
 
 # Create empty dir
 mkdir -p ${RELEASE_DIR}
@@ -46,6 +46,10 @@ git clone -b ${TAG} https://github.com/${GITHUB_USER}/${PROJECT_NAME}.git ${PROJ
 cd ${PROJECT_DIR}
 php ${RELEASE_DIR}/composer.phar install --no-dev
 
+cd ${JANUS_DIR}
+chmod -R 777 cache/serializer
+./bin/prepareCache.sh
+
 # remove files that are not required for production
 rm -rf ${PROJECT_DIR}/.idea
 rm -rf ${PROJECT_DIR}/.git
@@ -61,15 +65,17 @@ rm -rf ${PROJECT_DIR}/config
 rm -rf ${PROJECT_DIR}/metadata
 rm -rf ${PROJECT_DIR}/janus-dictionaries
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
-rm -rf ${PROJECT_DIR}/vendor/janus-ssp/janus/www/install
+rm -rf ${JANUS_DIR}/www/install
 
 # create tarball
+RELEASE_TARBALL_NAME=${PROJECT_DIR_NAME}.tar.gz
+RELEASE_TARBALL_FILE=${RELEASE_DIR}/${RELEASE_TARBALL_NAME}
 cd ${RELEASE_DIR}
-tar -czf ${PROJECT_DIR_NAME}.tar.gz ${PROJECT_DIR_NAME}
+tar -czf ${RELEASE_TARBALL_FILE} ${PROJECT_DIR_NAME}
 
 # create checksum file
 cd ${RELEASE_DIR}
-# sha1sum ${PROJECT_DIR_NAME}.tar.gz > ${PROJECT_DIR_NAME}.sha
+sha1sum ${RELEASE_TARBALL_FILE} > ${PROJECT_DIR_NAME}.sha
 
 # sign it if requested
 if [ -n "$2" ]
