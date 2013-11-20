@@ -370,7 +370,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -389,7 +389,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -723,12 +723,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "981de13d7189793cbc835b7e101b0d5c0a635c5d"
+                "reference": "77aeca0fe901be014972cebf2bcc9ef3b394522b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/981de13d7189793cbc835b7e101b0d5c0a635c5d",
-                "reference": "981de13d7189793cbc835b7e101b0d5c0a635c5d",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/77aeca0fe901be014972cebf2bcc9ef3b394522b",
+                "reference": "77aeca0fe901be014972cebf2bcc9ef3b394522b",
                 "shasum": ""
             },
             "require": {
@@ -747,12 +747,13 @@
             "type": "library",
             "autoload": {
                 "classmap": [
+                    "lib/",
                     "tests/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2013-11-13 13:52:46"
+            "time": "2013-11-19 15:08:49"
         },
         {
             "name": "jms/metadata",
