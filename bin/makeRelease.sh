@@ -28,6 +28,7 @@ fi
 
 PROJECT_DIR_NAME=$(echo "${PROJECT_NAME}-${TAG}"| sed -e "s/\//-/g")
 PROJECT_DIR=${RELEASE_DIR}/${PROJECT_DIR_NAME}
+JANUS_DIR="${PROJECT_DIR}/vendor/janus-ssp/janus/"
 
 # Create empty dir
 mkdir -p ${RELEASE_DIR}
@@ -45,6 +46,10 @@ git clone -b ${TAG} https://github.com/${GITHUB_USER}/${PROJECT_NAME}.git ${PROJ
 cd ${PROJECT_DIR}
 php ${RELEASE_DIR}/composer.phar install --no-dev
 
+cd ${JANUS_DIR}
+chmod -R 777 cache/serializer
+./bin/prepareCache.sh
+
 # remove files that are not required for production
 rm -rf ${PROJECT_DIR}/.idea
 rm -rf ${PROJECT_DIR}/.git
@@ -60,7 +65,7 @@ rm -rf ${PROJECT_DIR}/config
 rm -rf ${PROJECT_DIR}/metadata
 rm -rf ${PROJECT_DIR}/janus-dictionaries
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
-rm -rf ${PROJECT_DIR}/vendor/janus-ssp/janus/www/install
+rm -rf ${JANUS_DIR}/www/install
 
 # create tarball
 RELEASE_TARBALL_NAME=${PROJECT_DIR_NAME}.tar.gz
