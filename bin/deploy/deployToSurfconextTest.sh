@@ -19,19 +19,33 @@ else
 fi
 
 # Make a new release
-bin/makeRelease.sh ${TAG}
+./bin/makeRelease.sh ${TAG}
+
+#@todo get these variables from makeRelease script
+PROJECT_NAME=OpenConext-serviceregistry
+RELEASE_DIR=${HOME}/Releases
+PROJECT_DIR_NAME=$(echo "${PROJECT_NAME}-${TAG}"| sed -e "s/\//-/g")
+PROJECT_DIR=${RELEASE_DIR}/${PROJECT_DIR_NAME}
+RELEASE_TARBALL_NAME=${PROJECT_DIR_NAME}.tar.gz
+RELEASE_TARBALL_FILE=${RELEASE_DIR}/${RELEASE_TARBALL_NAME}
+TARGET_DIR_NAME="OpenConext-serviceregistry"
 
 # Copy release to test server
-scp ~/Releases/OpenConext-serviceregistry-${TAG}.tar.gz lucas@surf-test:/opt/data/test/
+scp ${RELEASE_TARBALL_FILE} lucas@surf-test:/opt/data/test/
 
 # @todo add error handling
 # Replace current version with new version and run migrations
 ssh lucas@surf-test <<COMMANDS
     cd /opt/data/test
-    tar -xzf OpenConext-serviceregistry-${TAG}.tar.gz
-    rm OpenConext-serviceregistry-${TAG}.tar.gz
-    rm -rf OpenConext-serviceregistry
-    mv OpenConext-serviceregistry-${TAG} OpenConext-serviceregistry
-    cd /opt/www/serviceregistry
+
+    # Unpack and remove tar
+    tar -xzf ${RELEASE_TARBALL_NAME}
+    rm ${RELEASE_TARBALL_NAME}
+    rm -rf ${TARGET_DIR_NAME}
+
+    # Copy unpacked tar
+    mv ${PROJECT_DIR_NAME} ${TARGET_DIR_NAME}
+    cd ${TARGET_DIR_NAME}
+
     bin/migrate
 COMMANDS

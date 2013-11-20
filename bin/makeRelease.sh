@@ -1,5 +1,4 @@
 #!/bin/sh
-
 RELEASE_DIR=${HOME}/Releases
 GITHUB_USER=OpenConext
 PROJECT_NAME=OpenConext-serviceregistry
@@ -11,7 +10,7 @@ cat << EOF
 Please specify the tag or branch to make a release of.
 
 Examples:
-    
+
     sh makeRelease.sh 0.1.0
     sh makeRelease.sh master
     sh makeRelease.sh develop
@@ -27,7 +26,7 @@ else
     TAG=$1
 fi
 
-PROJECT_DIR_NAME=${PROJECT_NAME}-${TAG}
+PROJECT_DIR_NAME=$(echo "${PROJECT_NAME}-${TAG}"| sed -e "s/\//-/g")
 PROJECT_DIR=${RELEASE_DIR}/${PROJECT_DIR_NAME}
 
 # Create empty dir
@@ -64,12 +63,14 @@ rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 rm -rf ${PROJECT_DIR}/vendor/janus-ssp/janus/www/install
 
 # create tarball
+RELEASE_TARBALL_NAME=${PROJECT_DIR_NAME}.tar.gz
+RELEASE_TARBALL_FILE=${RELEASE_DIR}/${RELEASE_TARBALL_NAME}
 cd ${RELEASE_DIR}
-tar -czf ${PROJECT_DIR_NAME}.tar.gz ${PROJECT_DIR_NAME}
+tar -czf ${RELEASE_TARBALL_FILE} ${PROJECT_DIR_NAME}
 
 # create checksum file
 cd ${RELEASE_DIR}
-sha1sum ${PROJECT_DIR_NAME}.tar.gz > ${PROJECT_DIR_NAME}.sha
+sha1sum ${RELEASE_TARBALL_FILE} > ${PROJECT_DIR_NAME}.sha
 
 # sign it if requested
 if [ -n "$2" ]
