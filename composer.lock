@@ -723,12 +723,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "9e88bea0c558cd98b6535b3b1e6b9163ac3bbaca"
+                "reference": "6e9e9caf5c27e23ee20c2711f3db564caea70e8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/9e88bea0c558cd98b6535b3b1e6b9163ac3bbaca",
-                "reference": "9e88bea0c558cd98b6535b3b1e6b9163ac3bbaca",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/6e9e9caf5c27e23ee20c2711f3db564caea70e8b",
+                "reference": "6e9e9caf5c27e23ee20c2711f3db564caea70e8b",
                 "shasum": ""
             },
             "require": {
@@ -753,7 +753,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2013-11-20 14:58:24"
+            "time": "2013-11-21 11:14:34"
         },
         {
             "name": "jms/metadata",
