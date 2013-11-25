@@ -47,7 +47,7 @@ cd ${PROJECT_DIR}
 php ${RELEASE_DIR}/composer.phar install --no-dev
 
 cd ${JANUS_DIR}
-chmod -R 777 cache/serializer
+chmod -R 777 cache/serializer doctrine/proxy
 ./bin/prepareCache.sh
 
 # remove files that are not required for production
