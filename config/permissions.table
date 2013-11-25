@@ -1,6 +1,7 @@
 Right               | Roles
 -----------------------------------------------
 Create new Entity   | all
+Change Entity Id    | admin
 All Entities        | admin
 Export All Entities | admin
 ARP editor          | admin
