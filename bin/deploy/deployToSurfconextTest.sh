@@ -47,5 +47,9 @@ ssh lucas@surf-test <<COMMANDS
     mv ${PROJECT_DIR_NAME} ${TARGET_DIR_NAME}
     cd ${TARGET_DIR_NAME}
 
+    chmod -R 777 \
+        vendor/janus-ssp/janus/cache/serializer \
+        vendor/janus-ssp/janus/doctrine/proxy
+
     bin/migrate
 COMMANDS
