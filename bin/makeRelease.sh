@@ -73,9 +73,7 @@ RELEASE_TARBALL_FILE=${RELEASE_DIR}/${RELEASE_TARBALL_NAME}
 cd ${RELEASE_DIR}
 tar -czf ${RELEASE_TARBALL_FILE} ${PROJECT_DIR_NAME}
 
-# create checksum file
 cd ${RELEASE_DIR}
-sha1sum ${RELEASE_TARBALL_FILE} > ${PROJECT_DIR_NAME}.sha
 
 # sign it if requested
 if [ -n "$2" ]
