@@ -2,3 +2,4 @@
 vendor
 components
 serviceregistry_2013-09-11.sql
+bin/deploy/deployToSurfconextTestOkke.sh
