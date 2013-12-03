@@ -30,10 +30,10 @@ $config = array(
      * Configuration for the database connection.
      */
     'store' => array(
-        'dsn'       => 'mysql:host=localhost;dbname=serviceregistry',
-        'username'  => 'serviceregistry',
-        'password'  => 'serviceregistry',
-        'prefix'    => 'janus__',
+        'dsn' => 'mysql:host=localhost;dbname=serviceregistry',
+        'username' => 'serviceregistry',
+        'password' => 'serviceregistry',
+        'prefix' => 'janus__',
     ),
 
     /*
@@ -55,10 +55,10 @@ $config = array(
     /*
      * Enable entity types
      */
-    'enable.saml20-sp' =>   true,
-    'enable.saml20-idp' =>  true,
-    'enable.shib13-sp' =>   false,
-    'enable.shib13-idp' =>  false,
+    'enable.saml20-sp' => true,
+    'enable.saml20-idp' => true,
+    'enable.shib13-sp' => false,
+    'enable.shib13-idp' => false,
 
     /*
      * Janus supports a blacklist (mark idps that are not allowed to connect to an sp)
@@ -114,9 +114,9 @@ $config = array(
     'workflowstate.default' => 'testaccepted',
 
     /*
-     * Allowed attributes
-     * see https://wiki.surfnet.nl/display/surfconextdev/Attributes+in+SURFconext
-     */
+    * Allowed attributes
+    * see https://wiki.surfnet.nl/display/surfconextdev/Attributes+in+SURFconext
+    */
     'attributes' => array(
 
         'eduPersonTargetedID' => array(
@@ -164,19 +164,44 @@ $config = array(
         'preferredLanguage' => array(
             'name' => 'urn:mace:dir:attribute-def:preferredLanguage',
         ),
+        /*
+         * All deprecated ones
+         */
+        'eduPersonTargetedID (deprecated)' => array(
+            'name' => 'urn:mace:dir:attribute-def:eduPersonTargetedID',
+        ),
+        'nlEduPersonOrgUnit (deprecated)' => array(
+            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlEduPersonOrgUnit',
+            'specify_values' => TRUE,
+        ),
+        'nlEduPersonStudyBranch (deprecated)' => array(
+            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlEduPersonStudyBranch',
+            'specify_values' => TRUE,
+        ),
+        'nlStudielinkNummer (deprecated)' => array(
+            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlStudielinkNummer',
+        ),
+        'nlDigitalAuthorIdentifier (deprecated)' => array(
+            'name' => 'urn:mace:surffederatie.nl:attribute-def:nlDigitalAuthorIdentifier',
+        ),
+        /*
+         * SURFnet specific
+         */
+        'collabPersonId (deprecated)' => array(
+            'name' => 'urn:oid:1.3.6.1.4.1.1076.20.40.40.1',
+        ),
     ),
-
     /*
      * specify mapping from metadata key to db key
      */
-    'md.mapping' => array (
-         'UIInfo:Logo:0:height' => 'logo:0:height',
-         'UIInfo:Logo:0:width' => 'logo:0:width',
-         'UIInfo:Logo:0:url' => 'logo:0:url',
-         'UIInfo:Keywords:en' => 'keywords:en',
-         'UIInfo:Keywords:nl' => 'keywords:nl',
-         'UIInfo:Description:en' => 'description:en',
-         'UIInfo:Description:nl' => 'description:nl',
+    'md.mapping' => array(
+        'UIInfo:Logo:0:height' => 'logo:0:height',
+        'UIInfo:Logo:0:width' => 'logo:0:width',
+        'UIInfo:Logo:0:url' => 'logo:0:url',
+        'UIInfo:Keywords:en' => 'keywords:en',
+        'UIInfo:Keywords:nl' => 'keywords:nl',
+        'UIInfo:Description:en' => 'description:en',
+        'UIInfo:Description:nl' => 'description:nl',
     ),
 
     /*
@@ -195,11 +220,11 @@ $config = array(
             'class' => 'janus:SimpleMail',
             'name' => 'Mail',
             'option' => array(
-                'headers' => 'MIME-Version: 1.0' . "\r\n".
-                    'Content-type: text/html; charset=iso-8859-1' . "\r\n".
-                    'From: JANUS <no-reply@example.org>' . "\r\n" .
-                    'Reply-To: JANUS Admin <admin@example.org>' . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion(),
+                'headers' => 'MIME-Version: 1.0' . "\r\n" .
+                'Content-type: text/html; charset=iso-8859-1' . "\r\n" .
+                'From: JANUS <no-reply@example.org>' . "\r\n" .
+                'Reply-To: JANUS Admin <admin@example.org>' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion(),
             ),
         ),
     ),
@@ -247,8 +272,8 @@ $config = array(
 
     'export.entitiesDescriptorName' => 'Federation',
 
-    'maxCache'      => 60*60*24, // 24 hour cache time
-    'maxDuration'   => 60*60*24*5, // Maximum 5 days duration on ValidUntil.
+    'maxCache' => 60 * 60 * 24, // 24 hour cache time
+    'maxDuration' => 60 * 60 * 24 * 5, // Maximum 5 days duration on ValidUntil.
 
     /* Whether metadata should be signed. */
     'sign.enable' => FALSE,
@@ -528,7 +553,7 @@ $config = array(
         ),
     ),
 
-    'metadata_refresh_cron_tags'      => array('daily'),
+    'metadata_refresh_cron_tags' => array('daily'),
     'validate_entity_certificate_cron_tags' => array('daily'),
     'validate_entity_endpoints_cron_tags' => array('daily'),
     'ca_bundle_file' => '/etc/pki/tls/certs/ca-bundle.crt',
