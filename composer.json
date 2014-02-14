@@ -14,6 +14,9 @@
         "robloach/component-installer": "0.0.11",
         "dbpatch/dbpatch": "1.1.1"
     },
+    "autoload": {
+        "classmap": [ "lib/"]
+    },
     "scripts": {
         "post-install-cmd": [
             "bin/simplesamlphp-post-install.sh"
