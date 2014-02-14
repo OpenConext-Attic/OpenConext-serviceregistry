@@ -1,4 +1,7 @@
 <?php
+// This is only required when loading config files directly from Janus (classes aren't autoloaded)
+require_once __DIR__ . "/../lib/ServiceRegistry/Janus/Config/GlobalPermissionTableParser.php";
+require_once __DIR__ . "/../lib/ServiceRegistry/Janus/Config/EntityPermissionTableParser.php";
 
 use ServiceRegistry\Janus\Config\GlobalPermissionTableParser;
 use ServiceRegistry\Janus\Config\EntityPermissionTableParser;

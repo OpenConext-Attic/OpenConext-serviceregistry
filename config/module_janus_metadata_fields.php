@@ -1,5 +1,10 @@
 <?php
-use Janus\ServiceRegistry\Compat\MetadataFieldsParser;
+die (realpath(__DIR__ . "/../"));
+
+// This is only required when loading config files directly from Janus (classes aren't autoloaded)
+require_once __DIR__ . "/../lib/ServiceRegistry/Janus/Config/MetadataFieldsParser.php";
+
+use ServiceRegistry\Janus\Config\MetadataFieldsParser;
 
 
 define('JANUS_FIELDS_TYPE_ALL' , '*');

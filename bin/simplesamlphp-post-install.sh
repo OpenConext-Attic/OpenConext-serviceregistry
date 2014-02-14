@@ -21,10 +21,20 @@ echo "Removed $REJFILE"
 
 echo -e "\nFinished"
 
-cd $ROOT_DIR;
+cd $ROOT_DIR
 
 # Add/override SimpleSamlPhp config
-cp config/* vendor/simplesamlphp/simplesamlphp/config/
+for FILENAME in config/*
+do
+    echo "FILE"$FILENAME
+    cd $ROOT_DIR/vendor/simplesamlphp/simplesamlphp/config/
+    ls -l
+    ln -sf $FILENAME
+    ls -l
+done
+
+cd $ROOT_DIR
+exit
 
 # Add/override SimpleSamlPhp metadata
 cp metadata/* vendor/simplesamlphp/simplesamlphp/metadata/
