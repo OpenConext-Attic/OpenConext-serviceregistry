@@ -1,5 +1,5 @@
 <?php
-namespace Janus\ServiceRegistry\Compat;
+namespace ServiceRegistry\Janus\Config;
 
 /**
  * Fill out some defaults and apply ordering
