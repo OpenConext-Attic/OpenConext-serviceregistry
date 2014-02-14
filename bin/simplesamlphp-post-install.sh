@@ -29,7 +29,7 @@ do
     echo "FILE"$FILENAME
     cd $ROOT_DIR/vendor/simplesamlphp/simplesamlphp/config/
     ls -l
-    ln -sf $ROOT_DIR/$FILENAME
+    ln -sf ../../../../$FILENAME
     ls -l
 done
 
