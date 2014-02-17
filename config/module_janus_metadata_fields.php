@@ -6,11 +6,6 @@ require_once __DIR__ . "/../lib/ServiceRegistry/Janus/Config/MetadataFieldsParse
 
 use ServiceRegistry\Janus\Config\MetadataFieldsParser;
 
-
-define('JANUS_FIELDS_TYPE_ALL' , '*');
-define('JANUS_FIELDS_TYPE_IDP' , 'saml20-idp');
-define('JANUS_FIELDS_TYPE_SP'  , 'saml20-sp');
-
 /**
  * Defaults:
  *      type = 'text'
@@ -21,7 +16,7 @@ define('JANUS_FIELDS_TYPE_SP'  , 'saml20-sp');
 
 $template = array(
     // Fields for ALL entities (both Service Provider and Identity Provider)
-    JANUS_FIELDS_TYPE_ALL => array(
+    MetadataFieldsParser::JANUS_FIELDS_TYPE_ALL => array(
         'name:#'                    => array('required'=>TRUE, 'supported' => array('en', 'nl')),
         'displayName:#'             => array(                  'supported' => array('en', 'nl')),
         'description:#'             => array('required'=>TRUE, 'supported' => array('en', 'nl')),
@@ -91,7 +86,7 @@ $template = array(
     ),
 
     // Fields only for Identity Providers
-    JANUS_FIELDS_TYPE_IDP => array(
+    MetadataFieldsParser::JANUS_FIELDS_TYPE_IDP => array(
         // Endpoint fields
         'SingleSignOnService:0:Binding' => array(
             'type' => 'select',
@@ -149,7 +144,7 @@ $template = array(
     ),
 
     // Fields only for Service Providers
-    JANUS_FIELDS_TYPE_SP => array(
+    MetadataFieldsParser::JANUS_FIELDS_TYPE_SP => array(
         # Must have at least 1 binding
         'AssertionConsumerService:0:Binding' => array(
             'type' => 'select',
