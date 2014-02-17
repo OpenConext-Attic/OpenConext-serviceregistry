@@ -1,6 +1,4 @@
 <?php
-die (realpath(__DIR__ . "/../"));
-
 // This is only required when loading config files directly from Janus (classes aren't autoloaded)
 require_once __DIR__ . "/../lib/ServiceRegistry/Janus/Config/MetadataFieldsParser.php";
 
