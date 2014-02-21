@@ -31,7 +31,6 @@ do
 done
 
 cd $ROOT_DIR
-exit
 
 # Add/override SimpleSamlPhp metadata
 cp metadata/* vendor/simplesamlphp/simplesamlphp/metadata/
