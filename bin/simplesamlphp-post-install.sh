@@ -26,11 +26,8 @@ cd $ROOT_DIR
 # Add/override SimpleSamlPhp config
 for FILENAME in config/*
 do
-    echo "FILE"$FILENAME
     cd $ROOT_DIR/vendor/simplesamlphp/simplesamlphp/config/
-    ls -l
     ln -sf ../../../../$FILENAME
-    ls -l
 done
 
 cd $ROOT_DIR
