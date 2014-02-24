@@ -29,12 +29,24 @@
     "autoload": {
         "classmap": [ "lib/"]
     },
+    "extra": {
+        "symfony-app-dir": "vendor/janus-ssp/janus/app",
+        "symfony-web-dir": "vendor/janus-ssp/janus/web"
+    },
     "scripts": {
         "post-install-cmd": [
-            "bin/simplesamlphp-post-install.sh"
+            "bin/simplesamlphp-post-install.sh",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
-            "bin/simplesamlphp-post-install.sh"
+            "bin/simplesamlphp-post-install.sh",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]
     }
 }
