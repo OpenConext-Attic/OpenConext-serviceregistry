@@ -1770,11 +1770,16 @@
             "version": "1.9.0",
             "dist": {
                 "type": "tar",
-                "url": "https://simplesamlphp.googlecode.com/files/simplesamlphp-1.9.0.tar.gz",
+                "url": "http://simplesamlphp.googlecode.com/files/simplesamlphp-1.9.0.tar.gz",
                 "reference": null,
                 "shasum": null
             },
-            "type": "library"
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            }
         },
         {
             "name": "swiftmailer/swiftmailer",
