@@ -1,16 +1,25 @@
 {
     "name": "openconext/serviceregistry",
     "description": "Idp/Sp metadata registry",
+    "minimum-stability": "stable",
     "repositories": [
         {
-            "type": "composer",
-            "url": "https://raw.github.com/cpliakas/simplesamlphp-composer/master"
+            "type":"package",
+            "package": {
+                "name": "simplesamlphp/simplesamlphp",
+                "version": "1.9.0",
+                "dist": {
+                    "url": "http://simplesamlphp.googlecode.com/files/simplesamlphp-1.9.0.tar.gz",
+                    "type": "tar"
+                }
+            }
         }
     ],
     "require": {
         "simplesamlphp/simplesamlphp": "1.9.0",
         "janus-ssp/janus": "dev-develop",
-        "doctrine/migrations" : "dev-master#37aacdae6507faad03c3df1624e7d3a6e6c1b388 as 1",
+        "doctrine/migrations": "dev-master as 1",
+        "doctrine/doctrine-migrations-bundle": "dev-master as 1",
         "robloach/component-installer": "0.0.11",
         "dbpatch/dbpatch": "1.1.1"
     },
