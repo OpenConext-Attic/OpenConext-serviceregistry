@@ -26,6 +26,7 @@ cd $ROOT_DIR
 # Add/override SimpleSamlPhp config
 for FILENAME in config/*
 do
+    mkdir -p $ROOT_DIR/vendor/simplesamlphp/simplesamlphp/config/
     cd $ROOT_DIR/vendor/simplesamlphp/simplesamlphp/config/
     ln -sf ../../../../$FILENAME
 done
@@ -33,6 +34,7 @@ done
 cd $ROOT_DIR
 
 # Add/override SimpleSamlPhp metadata
+mkdir -p vendor/simplesamlphp/simplesamlphp/metadata/
 cp metadata/* vendor/simplesamlphp/simplesamlphp/metadata/
 
 # Link janus module into SimpleSamlPhp
