@@ -61,7 +61,6 @@ rm -f ${PROJECT_DIR}/bin/composer.phar
 rm -f ${PROJECT_DIR}/bin/mergeJsonFiles.php
 rm -f ${PROJECT_DIR}/bin/simplesamlphp-post-install.sh
 rm -rf ${PROJECT_DIR}/tests
-rm -rf ${PROJECT_DIR}/metadata
 rm -rf ${PROJECT_DIR}/janus-dictionaries
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 rm -rf ${JANUS_DIR}/www/install
