@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "84c034a1e700d1fcc937fb3c7cb8a2ab",
+    "hash": "81ad312df510d0a4a5bb86a9f8063174",
     "packages": [
         {
             "name": "components/jquery",
@@ -863,12 +863,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "46b17ed952f60ae6bc54ee47224da13987b15765"
+                "reference": "cb3002abcfc2300391aeb65df49d46459939a48b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/46b17ed952f60ae6bc54ee47224da13987b15765",
-                "reference": "46b17ed952f60ae6bc54ee47224da13987b15765",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/cb3002abcfc2300391aeb65df49d46459939a48b",
+                "reference": "cb3002abcfc2300391aeb65df49d46459939a48b",
                 "shasum": ""
             },
             "require": {
@@ -917,7 +917,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2014-03-03 16:23:03"
+            "time": "2014-03-03 16:49:05"
         },
         {
             "name": "jdorn/sql-formatter",
