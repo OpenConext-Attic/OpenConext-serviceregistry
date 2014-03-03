@@ -1,7 +1,6 @@
 {
     "name": "openconext/serviceregistry",
     "description": "Idp/Sp metadata registry",
-    "minimum-stability": "dev",
     "require": {
         "doctrine/migrations": "dev-master as 1",
         "doctrine/doctrine-migrations-bundle": "dev-master as 1",
