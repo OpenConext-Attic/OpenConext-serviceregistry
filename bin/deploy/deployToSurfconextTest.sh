@@ -48,8 +48,8 @@ ssh lucas@surf-test <<COMMANDS
     cd ${TARGET_DIR_NAME}
 
     chmod -R 777 \
-        vendor/janus-ssp/janus/cache/serializer \
-        vendor/janus-ssp/janus/doctrine/proxy
+        vendor/janus-ssp/janus/app/cache \
+        vendor/janus-ssp/janus/app/logs
 
     bin/migrate
 COMMANDS
