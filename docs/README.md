@@ -1,13 +1,26 @@
-# SURFnet SURFconext Service Registry #
+# OpenConext Service Registry #
 
-The SURFnet SURFconext Service Registry is the federation metadata management tool for SURFconext.
+ServiceRegistry (SR) is a web-based registry for managing federation metadata, including 
+SAML2 SP and IdP metadata, ARP and ACL information.  It is currently also used to register 
+the OAuth metadata of entities that work with the OpenConext platform.  The product is 
+based on JANUS, originally developed by WAYF, the Danish Federation Operator and now 
+maintained by SURFnet.  Only a few minor configuration extensions were applied to implement 
+JANUS into the ServiceRegistry module of OpenConext.  For more information on JANUS, please 
+visit http://code.google.com/p/janus-ssp/.
 
-It's responsibilities are twofold:
-1. Allow administering of SAML2 metadata for the federation.
-2. Allow automated access via the REST api to the metadata information.
+The SR allows the following:
+1. administering of SAML2 metadata for the federation.
+2. automated access via the REST api to the metadata information.
 
+## License
 
-## Requirements ##
+See the LICENSE-2.0.txt file
+
+## Disclaimer
+
+See the NOTICE.txt file
+
+## System Requirements ##
 * Linux
 * Apache with modules:
     - mod_php
@@ -59,10 +72,10 @@ Copy over the example configuration files and directory from the *docs/etc/* dir
 
 Then edit the copied files with your favorite editor and review the settings to make sure it matches your configuration.
 
-### Enable Janus Module ###
+### Enable JANUS Module ###
 
-Janus must be enabled, since it is not by default. This is because it is an external library in our svn. To enable
-janus execute the following command from the directory you checked out the serviceregistry application:
+JANUS must be enabled, since it is not by default. This is because it is an external library in our svn. To enable
+JANUS execute the following command from the directory you checked out the serviceregistry application:
 
     touch modules/janus/enable
 
@@ -179,6 +192,6 @@ If you are using this pattern, an update can be done with the following:
     cd bin
     ./migrate
 
-6. Enable the janus module:
+6. Enable the JANUS module:
 
     touch modules/janus/enable
