@@ -167,9 +167,6 @@ $config = array(
         /*
          * All deprecated ones
          */
-        'eduPersonTargetedID (deprecated)' => array(
-            'name' => 'urn:mace:dir:attribute-def:eduPersonTargetedID',
-        ),
         'nlEduPersonOrgUnit (deprecated)' => array(
             'name' => 'urn:mace:surffederatie.nl:attribute-def:nlEduPersonOrgUnit',
             'specify_values' => TRUE,
