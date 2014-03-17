@@ -23,7 +23,6 @@
         "janus-ssp/janus": "dev-develop",
         "doctrine/migrations": "dev-master as 1",
         "doctrine/doctrine-migrations-bundle": "dev-master as 1",
-        "robloach/component-installer": "0.0.11",
         "dbpatch/dbpatch": "1.1.1"
     },
     "autoload": {
