@@ -182,9 +182,7 @@ If you are using this pattern, an update can be done with the following:
 2. Check out the release notes in docs/release_notes/X.Y.Z.md (where X.Y.Z is the version number) for any
    additional steps.
 
-3. Run the JANUS patches:
-
-    ./bin/apply_janus_patches.sh
+3. Run composer install
 
 4. Change the symlink.
 
