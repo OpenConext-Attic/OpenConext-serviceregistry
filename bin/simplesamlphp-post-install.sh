@@ -41,7 +41,7 @@ ln -sf ../../../janus-ssp/janus
 
 # Correct link to jquery since Janus itself is installed in the vendor dir instead of in simplesamlphp
 cd $JANUS_DIR/www/resources
-ln -sf ../../../../../components
+ln -sf ../../../../components/
 
 # Set custom janus dictionaries
 cd $JANUS_DIR/dictionaries
