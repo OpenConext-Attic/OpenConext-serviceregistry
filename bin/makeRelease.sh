@@ -47,8 +47,6 @@ cd ${PROJECT_DIR}
 php ${RELEASE_DIR}/composer.phar install --no-dev
 
 cd ${JANUS_DIR}
-chmod -R 777 app/cache app/logs
-./bin/prepareCache.sh
 
 # remove files that are not required for production
 rm -rf ${PROJECT_DIR}/.idea
