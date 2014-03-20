@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a752d7fdc8d5467abda86c7a485ede49",
+    "hash": "ecce85238b7529aa120ab6a19a15da2e",
     "packages": [
         {
             "name": "components/jquery",
@@ -77,16 +77,16 @@
         },
         {
             "name": "dbpatch/dbpatch",
-            "version": "v1.1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dbpatch/DbPatch.git",
-                "reference": "c8f8bdb66d351f2995ac51a02bcfc3278e467660"
+                "reference": "ee40d5ae89a86a91bfe77d86ff703fa6b95a6528"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dbpatch/DbPatch/zipball/c8f8bdb66d351f2995ac51a02bcfc3278e467660",
-                "reference": "c8f8bdb66d351f2995ac51a02bcfc3278e467660",
+                "url": "https://api.github.com/repos/dbpatch/DbPatch/zipball/ee40d5ae89a86a91bfe77d86ff703fa6b95a6528",
+                "reference": "ee40d5ae89a86a91bfe77d86ff703fa6b95a6528",
                 "shasum": ""
             },
             "require": {
@@ -115,7 +115,7 @@
                 "db",
                 "migrations"
             ],
-            "time": "2012-06-13 17:30:48"
+            "time": "2013-09-11 20:35:15"
         },
         {
             "name": "doctrine/annotations",
@@ -155,7 +155,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -859,16 +859,16 @@
         },
         {
             "name": "janus-ssp/janus",
-            "version": "dev-develop",
+            "version": "1.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "53df12bc0b1d713544d5f72c80f51ba8e17e1380"
+                "reference": "ee85830ed787faa18417649b1c72465832c9663a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/53df12bc0b1d713544d5f72c80f51ba8e17e1380",
-                "reference": "53df12bc0b1d713544d5f72c80f51ba8e17e1380",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/ee85830ed787faa18417649b1c72465832c9663a",
+                "reference": "ee85830ed787faa18417649b1c72465832c9663a",
                 "shasum": ""
             },
             "require": {
@@ -917,7 +917,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2014-03-18 09:19:03"
+            "time": "2014-03-20 12:34:26"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1178,7 +1178,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -2239,7 +2239,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "janus-ssp/janus": 20,
         "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20
     },
