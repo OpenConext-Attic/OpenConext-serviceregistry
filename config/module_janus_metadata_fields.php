@@ -78,8 +78,10 @@ $template = array(
         'coin:publish_in_edugain' => array('type' => 'boolean'),
         'coin:publish_in_edugain_date' => array('validate' => 'isdatetime'),
 
-        'coin:additional_logging' => array('type' => 'boolean')
+        'coin:additional_logging' => array('type' => 'boolean'),
 
+        // Institution
+        'coin:institution_id' => array()
 
     ),
 
@@ -126,9 +128,6 @@ $template = array(
 
         // MDUI stuff
         'keywords:#'    => array('required' => TRUE, 'supported'=>array('en','nl')),
-
-        // Institution
-        'coin:institution_id' => array(),
 
         // disable SAML scoping
         'coin:disable_scoping' => array('type' => 'boolean'),
