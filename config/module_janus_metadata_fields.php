@@ -78,10 +78,10 @@ $template = array(
         'coin:publish_in_edugain' => array('type' => 'boolean'),
         'coin:publish_in_edugain_date' => array('validate' => 'isdatetime'),
 
-        'coin:additional_logging' => array('type' => 'boolean')
+        'coin:additional_logging' => array('type' => 'boolean'),
 
         // Institution
-        'coin:institution_id' => array(),
+        'coin:institution_id' => array()
 
     ),
 
