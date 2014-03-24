@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b274e121eba0b4bb4f16bfff04d31af4",
+    "hash": "302673af44d77f29c0d47ddc4c15849b",
     "packages": [
         {
             "name": "adrienbrault/form-serializer",
@@ -1049,12 +1049,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "59e1f8edcc03a238dd56cdcb1c29e667749bee30"
+                "reference": "2d4d1260e9bcd7a4fe8d29125f11d976caeb28d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/59e1f8edcc03a238dd56cdcb1c29e667749bee30",
-                "reference": "59e1f8edcc03a238dd56cdcb1c29e667749bee30",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/2d4d1260e9bcd7a4fe8d29125f11d976caeb28d2",
+                "reference": "2d4d1260e9bcd7a4fe8d29125f11d976caeb28d2",
                 "shasum": ""
             },
             "require": {
@@ -1070,12 +1070,13 @@
                 "jms/serializer": "0.13.0",
                 "jms/serializer-bundle": "0.12",
                 "nelmio/api-doc-bundle": "~2.5.0",
+                "openid/php-openid": "dev-master#ee669c6a9d4d95b58ecd9b6945627276807694fb as 2.2.2",
                 "php": ">=5.3.3",
                 "pimple/pimple": "1.0.x",
                 "sensio/distribution-bundle": "2.3.*",
                 "sensio/framework-extra-bundle": "2.3.*",
                 "sensio/generator-bundle": "2.3.*",
-                "simplesamlphp/simplesamlphp": "*",
+                "simplesamlphp/simplesamlphp": "dev-master#cdf7cb95a8c9b682534f9169f3f5a27198f6bcc5 as 1.12.0-alpha",
                 "symfony/assetic-bundle": "2.3.*",
                 "symfony/icu": "1.0.*",
                 "symfony/monolog-bundle": "~2.3",
@@ -1107,7 +1108,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2014-03-24 11:29:33"
+            "time": "2014-03-24 13:17:43"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -3025,19 +3026,19 @@
             "alias": "1",
             "alias_normalized": "1.0.0.0",
             "version": "9999999-dev",
-            "package": "doctrine/migrations"
+            "package": "doctrine/doctrine-migrations-bundle"
         },
         {
             "alias": "1",
             "alias_normalized": "1.0.0.0",
             "version": "9999999-dev",
-            "package": "doctrine/doctrine-migrations-bundle"
+            "package": "doctrine/migrations"
         },
         {
-            "alias": "1.12.0-alpha",
-            "alias_normalized": "1.12.0.0-alpha",
+            "alias": "0.5",
+            "alias_normalized": "0.5.0.0",
             "version": "9999999-dev",
-            "package": "simplesamlphp/simplesamlphp"
+            "package": "fsc/hateoas-bundle"
         },
         {
             "alias": "2.2.2",
@@ -3046,24 +3047,24 @@
             "package": "openid/php-openid"
         },
         {
-            "alias": "0.5",
-            "alias_normalized": "0.5.0.0",
+            "alias": "1.12.0-alpha",
+            "alias_normalized": "1.12.0.0-alpha",
             "version": "9999999-dev",
-            "package": "fsc/hateoas-bundle"
+            "package": "simplesamlphp/simplesamlphp"
         }
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "janus-ssp/janus": 20,
-        "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20,
-        "simplesamlphp/simplesamlphp": 20,
+        "doctrine/migrations": 20,
+        "fsc/hateoas-bundle": 20,
+        "janus-ssp/janus": 20,
         "openid/php-openid": 20,
-        "fsc/hateoas-bundle": 20
+        "simplesamlphp/simplesamlphp": 20
     },
-    "platform": [
-
-    ],
+    "platform": {
+        "php": ">=5.3.3"
+    },
     "platform-dev": [
 
     ]
