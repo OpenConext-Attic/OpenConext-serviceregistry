@@ -59,6 +59,11 @@ rm -rf ${PROJECT_DIR}/janus-dictionaries
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 rm -rf ${JANUS_DIR}/www/install
 
+# Tag it
+COMMITHASH=`git rev-parse HEAD`
+echo "Tag: ${TAG}" > ${PROJECT_DIR}/RELEASE
+echo "Commit: ${COMMITHASH}" >> ${PROJECT_DIR}/RELEASE
+
 # create tarball
 RELEASE_TARBALL_NAME=${PROJECT_DIR_NAME}.tar.gz
 RELEASE_TARBALL_FILE=${RELEASE_DIR}/${RELEASE_TARBALL_NAME}
