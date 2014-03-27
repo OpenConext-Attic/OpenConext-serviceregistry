@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 # @todo remove hardcoded user name
 
 if [ -z "$1" ]
