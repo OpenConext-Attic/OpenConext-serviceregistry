@@ -928,12 +928,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "7cbc0e0d42c4cf6d917c54fc106d6ed9c2c88974"
+                "reference": "5344294ff4c95c334ea83c89414626622fd3b344"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/7cbc0e0d42c4cf6d917c54fc106d6ed9c2c88974",
-                "reference": "7cbc0e0d42c4cf6d917c54fc106d6ed9c2c88974",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/5344294ff4c95c334ea83c89414626622fd3b344",
+                "reference": "5344294ff4c95c334ea83c89414626622fd3b344",
                 "shasum": ""
             },
             "require": {
@@ -987,7 +987,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2014-03-25 08:35:07"
+            "time": "2014-03-27 16:24:06"
         },
         {
             "name": "jdorn/sql-formatter",

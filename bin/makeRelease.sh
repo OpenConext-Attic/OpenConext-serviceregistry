@@ -34,17 +34,13 @@ JANUS_DIR="${PROJECT_DIR}/vendor/janus-ssp/janus/"
 mkdir -p ${RELEASE_DIR}
 rm -rf ${PROJECT_DIR}
 
-# get Composer
-cd ${RELEASE_DIR}
-curl -O http://getcomposer.org/composer.phar
-
 # clone the tag
 cd ${RELEASE_DIR}
 git clone -b ${TAG} https://github.com/${GITHUB_USER}/${PROJECT_NAME}.git ${PROJECT_DIR_NAME}
 
 # run Composer
 cd ${PROJECT_DIR}
-php ${RELEASE_DIR}/composer.phar install --no-dev
+php ./bin/composer.phar install --no-dev
 
 cd ${JANUS_DIR}
 
@@ -62,6 +58,11 @@ rm -rf ${PROJECT_DIR}/tests
 rm -rf ${PROJECT_DIR}/janus-dictionaries
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 rm -rf ${JANUS_DIR}/www/install
+
+# Tag it
+COMMITHASH=`git rev-parse HEAD`
+echo "Tag: ${TAG}" > ${PROJECT_DIR}/RELEASE
+echo "Commit: ${COMMITHASH}" >> ${PROJECT_DIR}/RELEASE
 
 # create tarball
 RELEASE_TARBALL_NAME=${PROJECT_DIR_NAME}.tar.gz
