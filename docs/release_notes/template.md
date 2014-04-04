@@ -1,4 +1,4 @@
-# SURFnet SURFconext $VERSION$ Release Notes #
+# OpenConext Service Registry $VERSION$ Release Notes #
 
 * About this release, what is the main focus *
 
