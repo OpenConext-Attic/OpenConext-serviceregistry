@@ -44,6 +44,11 @@ php ./bin/composer.phar install --no-dev
 
 cd ${JANUS_DIR}
 
+# Tag it
+COMMITHASH=`git rev-parse HEAD`
+echo "Tag: ${TAG}" > ${PROJECT_DIR}/RELEASE
+echo "Commit: ${COMMITHASH}" >> ${PROJECT_DIR}/RELEASE
+
 # remove files that are not required for production
 rm -rf ${PROJECT_DIR}/.idea
 rm -rf ${PROJECT_DIR}/.git
@@ -58,11 +63,6 @@ rm -rf ${PROJECT_DIR}/tests
 rm -rf ${PROJECT_DIR}/janus-dictionaries
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 rm -rf ${JANUS_DIR}/www/install
-
-# Tag it
-COMMITHASH=`git rev-parse HEAD`
-echo "Tag: ${TAG}" > ${PROJECT_DIR}/RELEASE
-echo "Commit: ${COMMITHASH}" >> ${PROJECT_DIR}/RELEASE
 
 # create tarball
 RELEASE_TARBALL_NAME=${PROJECT_DIR_NAME}.tar.gz
