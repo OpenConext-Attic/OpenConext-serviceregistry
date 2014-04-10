@@ -230,7 +230,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -297,7 +297,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -859,16 +859,16 @@
         },
         {
             "name": "janus-ssp/janus",
-            "version": "1.17.3",
+            "version": "1.17.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/janus-ssp/janus.git",
-                "reference": "3dbb30a3e81df3ab48bbdcaf1bcd2bf2fd0da615"
+                "reference": "34cd604c6c7893822c51c4301f58ae8b03aa3f4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/3dbb30a3e81df3ab48bbdcaf1bcd2bf2fd0da615",
-                "reference": "3dbb30a3e81df3ab48bbdcaf1bcd2bf2fd0da615",
+                "url": "https://api.github.com/repos/janus-ssp/janus/zipball/34cd604c6c7893822c51c4301f58ae8b03aa3f4e",
+                "reference": "34cd604c6c7893822c51c4301f58ae8b03aa3f4e",
                 "shasum": ""
             },
             "require": {
@@ -917,7 +917,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "SimpleSaml php Janus module",
-            "time": "2014-04-04 12:35:33"
+            "time": "2014-04-10 11:19:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1108,7 +1108,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1949,17 +1949,17 @@
         },
         {
             "name": "symfony/swiftmailer-bundle",
-            "version": "v2.3.6",
+            "version": "v2.3.7",
             "target-dir": "Symfony/Bundle/SwiftmailerBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle.git",
-                "reference": "d272424f01656f9327198fd6c07a48499622d133"
+                "reference": "e98defd402f72e8b54a029ba4d3ac4cb51dc3577"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/d272424f01656f9327198fd6c07a48499622d133",
-                "reference": "d272424f01656f9327198fd6c07a48499622d133",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/e98defd402f72e8b54a029ba4d3ac4cb51dc3577",
+                "reference": "e98defd402f72e8b54a029ba4d3ac4cb51dc3577",
                 "shasum": ""
             },
             "require": {
@@ -2002,7 +2002,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2014-04-03 07:36:17"
+            "time": "2014-04-05 17:15:52"
         },
         {
             "name": "symfony/symfony",
