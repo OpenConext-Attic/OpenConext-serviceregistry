@@ -18,7 +18,7 @@ $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
 $janusConfig = SimpleSAML_Configuration::getConfig('module_janus.php');
 
-$userController = new sspmod_janus_UserController($janusConfig);
+$userController = new sspmod_janus_UserController($janusConfig, sspmod_janus_DiContainer::getInstance()->getSecurityContext());
 $userController->setUser('engine');
 $entities = $userController->getEntities();
 /** @var sspmod_janus_Entity $entity */

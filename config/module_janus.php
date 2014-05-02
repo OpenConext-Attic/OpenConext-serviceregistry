@@ -218,6 +218,8 @@ $config = array(
         // Buildin admin user type. Define if you want to create more admin user
         // accounts.
         'admin',
+        // Readonly account for API access.
+        'readonly',
         //SAML 2.0 contact types
         'technical',
     ),
