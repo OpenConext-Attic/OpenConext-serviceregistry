@@ -28,7 +28,7 @@ fi
 
 PROJECT_DIR_NAME=$(echo "${PROJECT_NAME}-${TAG}"| sed -e "s/\//-/g")
 PROJECT_DIR=${RELEASE_DIR}/${PROJECT_DIR_NAME}
-JANUS_DIR="${PROJECT_DIR}/vendor/janus-ssp/janus/"
+JANUS_DIR="${PROJECT_DIR}/simplesamlphp/modules/janus/"
 
 # Create empty dir
 mkdir -p ${RELEASE_DIR}
@@ -40,9 +40,7 @@ git clone -b ${TAG} https://github.com/${GITHUB_USER}/${PROJECT_NAME}.git ${PROJ
 
 # run Composer
 cd ${PROJECT_DIR}
-php ./bin/composer.phar install --no-dev
-
-cd ${JANUS_DIR}
+bin/install.sh
 
 # Tag it
 COMMITHASH=`git rev-parse HEAD`
@@ -53,13 +51,8 @@ echo "Commit: ${COMMITHASH}" >> ${PROJECT_DIR}/RELEASE
 rm -rf ${PROJECT_DIR}/.idea
 rm -rf ${PROJECT_DIR}/.git
 rm -f ${PROJECT_DIR}/.gitignore
-rm -f ${PROJECT_DIR}/composer.json
-rm -f ${PROJECT_DIR}/composer.lock
 rm -f ${PROJECT_DIR}/makeRelease.sh
-rm -f ${PROJECT_DIR}/bin/composer.phar
 rm -f ${PROJECT_DIR}/bin/mergeJsonFiles.php
-rm -f ${PROJECT_DIR}/bin/simplesamlphp-post-install.sh
-rm -rf ${PROJECT_DIR}/tests
 rm -rf ${PROJECT_DIR}/janus-dictionaries
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 rm -rf ${JANUS_DIR}/www/install
