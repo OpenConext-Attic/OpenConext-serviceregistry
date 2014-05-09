@@ -4,6 +4,7 @@
 
 ROOT_DIR=$(pwd)
 SSP_VERSION="1.9.0"
+JANUS_VERSION="1.17.4"
 SSP_DIR="$ROOT_DIR/simplesamlphp"
 SSP_MODULES_DIR="$SSP_DIR/modules"
 JANUS_DIR="$SSP_MODULES_DIR/janus"
@@ -35,6 +36,7 @@ fi
 if [ ! -d $JANUS_DIR ]; then
     echo "cloning janus"
     git clone https://github.com/janus-ssp/janus.git $JANUS_DIR
+    git checkout $JANUS_VERSION
 fi
 
 # echo checking out branch/tag
