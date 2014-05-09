@@ -6,11 +6,10 @@ SSP_DIR="$ROOT_DIR/simplesamlphp"
 SSP_MODULES_DIR="$SSP_DIR/modules"
 JANUS_DIR="$SSP_MODULES_DIR/janus"
 
-
 if [ ! -d simplesamlphp ]; then
     # @todo make version variable
     echo "installing SSP"
-    $tarFile="simplesamlphp-$SSP_VERSION.tar.gz"
+    tarFile="simplesamlphp-$SSP_VERSION.tar.gz"
     wget http://simplesamlphp.googlecode.com/files/$tarFile
     tar -xzf $tarFile
     rm $tarFile
