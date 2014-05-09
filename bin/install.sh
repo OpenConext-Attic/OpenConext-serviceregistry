@@ -1,5 +1,3 @@
-# @todo Convert this to a php script that can use parts of the Janus make release tool
-
 #!/bin/sh
 
 ROOT_DIR=$(pwd)

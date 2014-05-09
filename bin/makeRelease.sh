@@ -1,3 +1,5 @@
+# @todo Convert this to a php script that can use parts of the Janus make release tool
+
 #!/bin/sh
 RELEASE_DIR=${HOME}/Releases
 GITHUB_USER=OpenConext
