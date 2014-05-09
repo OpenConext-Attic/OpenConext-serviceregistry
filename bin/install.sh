@@ -1,6 +1,7 @@
 #!/bin/sh
 
 ROOT_DIR=$(pwd)
+SSP_VERSION="1.9.0"
 SSP_DIR="$ROOT_DIR/simplesamlphp"
 SSP_MODULES_DIR="$SSP_DIR/modules"
 JANUS_DIR="$SSP_MODULES_DIR/janus"
@@ -9,10 +10,11 @@ JANUS_DIR="$SSP_MODULES_DIR/janus"
 if [ ! -d simplesamlphp ]; then
     # @todo make version variable
     echo "installing SSP"
-    wget http://simplesamlphp.googlecode.com/files/simplesamlphp-1.9.0.tar.gz
-    tar -xzf simplesamlphp-1.9.0.tar.gz
-    rm simplesamlphp-1.9.0.tar.gz
-    mv simplesamlphp-1.9.0 simplesamlphp
+    $tarFile="simplesamlphp-$SSP_VERSION.tar.gz"
+    wget http://simplesamlphp.googlecode.com/files/$tarFile
+    tar -xzf $tarFile
+    rm $tarFile
+    mv simplesamlphp-$SSP_VERSION simplesamlphp
 
     # Apply patch files
     -echo -e "\nPatching files\n"
