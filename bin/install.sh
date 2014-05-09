@@ -13,6 +13,20 @@ if [ ! -d simplesamlphp ]; then
     tar -xzf simplesamlphp-1.9.0.tar.gz
     rm simplesamlphp-1.9.0.tar.gz
     mv simplesamlphp-1.9.0 simplesamlphp
+
+    # Apply patch files
+    -echo -e "\nPatching files\n"
+    REJFILE="/tmp/simplesamlphp_patches-rej-$(date +%s)"
+    touch $REJFILE
+    for FILENAME in simplesamlphp_patches/*.patch
+    do
+      echo "- Executing patch: $FILENAME\n"
+      patch -Np0 -r $REJFILE < $FILENAME
+      echo "\n"
+    done
+    rm $REJFILE
+    echo "Removed $REJFILE"
+    echo -e "\nFinished"
 fi
 
 if [ ! -d $JANUS_DIR ]; then

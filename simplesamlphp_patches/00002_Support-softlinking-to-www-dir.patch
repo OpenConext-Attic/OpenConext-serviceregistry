@@ -1,6 +1,6 @@
-diff -r -u '--exclude=.git' vendor/simplesamlphp/simplesamlphp/www/_include.php simplesamlphp-surfnet/www/_include.php
---- vendor/simplesamlphp/simplesamlphp/www/_include.php	2013-06-19 15:21:31.628445294 +0200
-+++ vendor/simplesamlphp/simplesamlphp/www/_include.php	2013-06-19 15:01:46.136486394 +0200
+diff -r -u '--exclude=.git' simplesamlphp/www/_include.php simplesamlphp-surfnet/www/_include.php
+--- simplesamlphp/www/_include.php	2013-06-19 15:21:31.628445294 +0200
++++ simplesamlphp/www/_include.php	2013-06-19 15:01:46.136486394 +0200
 @@ -23,7 +23,7 @@
  
  
