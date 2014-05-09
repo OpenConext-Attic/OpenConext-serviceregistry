@@ -19,7 +19,7 @@ if [ ! -d simplesamlphp ]; then
     mv simplesamlphp-$SSP_VERSION simplesamlphp
 
     # Apply patch files
-    -echo -e "\nPatching files\n"
+    echo -e "\nPatching files\n"
     REJFILE="/tmp/simplesamlphp_patches-rej-$(date +%s)"
     touch $REJFILE
     for FILENAME in simplesamlphp_patches/*.patch
