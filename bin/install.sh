@@ -35,7 +35,8 @@ fi
 
 if [ ! -d $JANUS_DIR ]; then
     echo "cloning janus"
-    git clone https://github.com/janus-ssp/janus.git $JANUS_DIR
+    git clone https://github.com/janus-ssp/janus.git $JANUS_DIR && \
+    cd $JANUS_DIR && \
     git checkout $JANUS_VERSION
 fi
 
