@@ -62,15 +62,3 @@ RELEASE_TARBALL_NAME=${PROJECT_DIR_NAME}.tar.gz
 RELEASE_TARBALL_FILE=${RELEASE_DIR}/${RELEASE_TARBALL_NAME}
 cd ${RELEASE_DIR}
 tar -czf ${RELEASE_TARBALL_FILE} ${PROJECT_DIR_NAME}
-
-cd ${RELEASE_DIR}
-
-# sign it if requested
-if [ -n "$2" ]
-then
-	if [ "$2" == "sign" ]
-	then
-		cd ${RELEASE_DIR}
-		gpg -o ${PROJECT_DIR_NAME}.sha.gpg  --clearsign ${PROJECT_DIR_NAME}.sha
-	fi
-fi
