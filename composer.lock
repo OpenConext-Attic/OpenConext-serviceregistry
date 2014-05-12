@@ -1,0 +1,67 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "6dd1804e09bac0aa94fc57d106f5d440",
+    "packages": [
+        {
+            "name": "dbpatch/dbpatch",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dbpatch/DbPatch.git",
+                "reference": "ee40d5ae89a86a91bfe77d86ff703fa6b95a6528"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dbpatch/DbPatch/zipball/ee40d5ae89a86a91bfe77d86ff703fa6b95a6528",
+                "reference": "ee40d5ae89a86a91bfe77d86ff703fa6b95a6528",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.0"
+            },
+            "bin": [
+                "bin/dbpatch.php"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Sandy Pleyte"
+                },
+                {
+                    "name": "Martijn de Letter"
+                }
+            ],
+            "description": "DbPatch is a commandline utility to manage/track (my)sql/php patch files.",
+            "homepage": "http://www.dbpatch-project.com/",
+            "keywords": [
+                "database",
+                "db",
+                "migrations"
+            ],
+            "time": "2013-09-11 20:35:15"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ],
+    "platform": {
+        "php": ">=5.3.3"
+    },
+    "platform-dev": [
+
+    ]
+}

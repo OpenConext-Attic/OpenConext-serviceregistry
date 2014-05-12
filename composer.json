@@ -1,0 +1,19 @@
+{
+    "name": "openconext/serviceregistry",
+    "description": "Idp/Sp metadata registry",
+    "require": {
+        "php": ">=5.3.3",
+        "dbpatch/dbpatch" : "~1.2"
+    },
+    "autoload": {
+        "classmap": [ "lib/"]
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "bin/install.sh"
+        ],
+        "post-update-cmd": [
+            "bin/install.sh"
+        ]
+    }
+}
