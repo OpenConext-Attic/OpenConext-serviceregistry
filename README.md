@@ -60,11 +60,11 @@ to start your installation.
 ### Check out the application ###
 
 Before you can start configuring you have to check out the application (if you didn't already do so). e.g. put it
-in ``sh /var/www``. Get a prepacked tarball from Github.
+in ``sh /var/www``. Get a prepacked tarball from Github: https://github.com/OpenConext/OpenConext-serviceregistry/releases
 
 ### Then configure the application ###
 
-Copy over the example configuration files and directory from the *docs/etc/* directory to */etc/surfconext/*:
+Copy over the example configuration files and directory from the `` docs/etc/`` directory to `` /etc/surfconext/``:
 ```sh
     sudo mkdir /etc/surfconext
     sudo cp -Rvf docs/etc/* /etc/surfconext/
@@ -103,7 +103,7 @@ with the following Apache rewrite rules on a *:80 VirtualHost:
     Go to your Service Registry instance.
     Go to the **Federation** tab.
     Click **JANUS module**.
-    Log in with the admin user and the password you configured in */etc/surfconext/serviceregistry.config.php*.
+    Log in with the admin user and the password you configured in `` /etc/surfconext/serviceregistry.config.php``.
 
 2. Add the Service Registry as an SP in JANUS
 
@@ -133,17 +133,17 @@ You should now be able to log in successfully via your configured EngineBlock in
 
 ### Switch to Single Sign On via EngineBlock ###
 
-Edit */etc/surfconext/serviceregistry.module_janus.php* and change:
-``
+Edit ``/etc/surfconext/serviceregistry.module_janus.php`` and change:
+```
     $config['auth'] = 'admin'; // Admin password (for installing or debugging)
     #$config['auth'] = 'default-sp'; // Single Sign On via EngineBlock
-``
+```
 
 To:
-``
+```
     #$config['auth'] = 'admin'; // Admin password (for installing or debugging)
     $config['auth'] = 'default-sp'; // Single Sign On via EngineBlock
-``
+```
 
 And enjoy your new Service Registry instance!
 
@@ -154,19 +154,19 @@ It is recommended practice that you deploy the Service Registry in a directory t
 the version number and use a symlink to link to the 'current' version of the Service Registry.
 
 **EXAMPLE**
-``
+```sh
     .
     ..
     serviceregistry -> serviceregistry-v1.6.0
     serviceregistry-v1.5.0
     serviceregistry-v1.6.0
-``
+```
 
 If you are using this pattern, an update can be done with the following:
 
 1. Download and deploy a new version in a new directory.
 
-2. Check out the release notes in docs/release_notes/X.Y.Z.md (where X.Y.Z is the version number) for any
+2. Check out the release notes in ``docs/release_notes/X.Y.Z.md`` (where X.Y.Z is the version number) for any
    additional steps.
 
 4. Change the symlink.
