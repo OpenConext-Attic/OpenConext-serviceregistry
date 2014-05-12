@@ -66,22 +66,10 @@ do
     ln -sf ../../$FILENAME
 done
 
-# Set custom janus dictionaries
-cd $JANUS_DIR/dictionaries
-
-# Make a backup of the original metadatafields definitions
-if [ ! -f metadatafields.definition.json.org ]; then
-    cp metadatafields.definition.json metadatafields.definition.json.org
-fi
-
-# Reset the metadatafields definitions
-cp metadatafields.definition.json.org metadatafields.definition.json
-
-# Merge metadatafields definitions with overrides
-cd $ROOT_DIR
-php bin/mergeJsonFiles.php \
-$JANUS_DIR/dictionaries/metadatafields.definition.json \
-$ROOT_DIR/janus-dictionaries/metadatafields.definition.json
+# Add OpenConext janus dictionary
+cd $JANUS_DIR/dictionaries && \
+ln -sf ../../../../janus-dictionaries/metadatafields.definition.json \
+metadatafields-custom.definition.json
 
 # Delete unused config, metadata and modules
 cd $ROOT_DIR
