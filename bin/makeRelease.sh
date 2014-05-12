@@ -42,6 +42,7 @@ git clone -b ${TAG} https://github.com/${GITHUB_USER}/${PROJECT_NAME}.git ${PROJ
 
 # run Composer
 cd ${PROJECT_DIR}
+composer install --no-dev
 bin/install.sh
 
 # Tag it
