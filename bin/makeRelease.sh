@@ -56,7 +56,6 @@ rm -rf ${PROJECT_DIR}/.git
 rm -f ${PROJECT_DIR}/.gitignore
 rm -f ${PROJECT_DIR}/makeRelease.sh
 rm -f ${PROJECT_DIR}/bin/mergeJsonFiles.php
-rm -rf ${PROJECT_DIR}/janus-dictionaries
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 rm -rf ${JANUS_DIR}/www/install
 
