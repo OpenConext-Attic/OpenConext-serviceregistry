@@ -1,6 +1,6 @@
-diff -r -u '--exclude=.git' vendor/simplesamlphp/simplesamlphp/lib/SimpleSAML/Metadata/SAMLParser.php simplesamlphp-surfnet/lib/SimpleSAML/Metadata/SAMLParser.php
---- vendor/simplesamlphp/simplesamlphp/lib/SimpleSAML/Metadata/SAMLParser.php	2013-06-19 15:21:31.632445294 +0200
-+++ vendor/simplesamlphp/simplesamlphp/lib/SimpleSAML/Metadata/SAMLParser.php	2013-05-10 11:35:28.005327909 +0200
+diff -r -u '--exclude=.git' simplesamlphp/lib/SimpleSAML/Metadata/SAMLParser.php simplesamlphp-surfnet/lib/SimpleSAML/Metadata/SAMLParser.php
+--- simplesamlphp/lib/SimpleSAML/Metadata/SAMLParser.php	2013-06-19 15:21:31.632445294 +0200
++++ simplesamlphp/lib/SimpleSAML/Metadata/SAMLParser.php	2013-05-10 11:35:28.005327909 +0200
 @@ -648,11 +648,6 @@
  	 * @return Associative array with metadata or NULL if we are unable to generate metadata for a SAML 2.0 IdP.
  	 */
