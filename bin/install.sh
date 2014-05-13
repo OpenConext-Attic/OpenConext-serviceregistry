@@ -42,9 +42,9 @@ fi
 cd $JANUS_DIR
 # Note that this pulls the current branch so if you want to work on a feature branch of Janus, no problem!
 git pull
-composer install
+$ROOT_DIR/bin/composer.phar install
 rm -rf $JANUS_DIR/vendor/simplesamlphp
-composer dump-autoload
+$ROOT_DIR/bin/composer.phar dump-autoload
 rm -rf /tmp/janus/*
 rm -rf /var/log/janus/*
 
