@@ -51,11 +51,13 @@ echo "Tag: ${TAG}" > ${PROJECT_DIR}/RELEASE
 echo "Commit: ${COMMITHASH}" >> ${PROJECT_DIR}/RELEASE
 
 # remove files that are not required for production
+rm -rf ${PROJECT_DIR}/composer.json
+rm -rf ${PROJECT_DIR}/composer.lock
 rm -rf ${PROJECT_DIR}/.idea
 rm -rf ${PROJECT_DIR}/.git
 rm -f ${PROJECT_DIR}/.gitignore
+rm -f ${PROJECT_DIR}/install.sh
 rm -f ${PROJECT_DIR}/makeRelease.sh
-rm -f ${PROJECT_DIR}/bin/mergeJsonFiles.php
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 rm -rf ${JANUS_DIR}/www/install
 
