@@ -40,20 +40,6 @@ $template = array(
             'required'=>FALSE,
             'validate' => 'isurl'
         ),
-        'NameIDFormat' => array(
-            'type' => 'select',
-            'required'=>TRUE,
-            'select_values' => array(
-                'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
-                /**
-                 * @deprecated This is an incorrect name id format since unspecified does no longer exist in SAML 2.0, only use this for backwards compatibility
-                 */
-                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified'
-            ),
-            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
-        ),
         'contacts:#:contactType'    => array(
             'type' => 'select',
             'required' => TRUE,
@@ -126,6 +112,21 @@ $template = array(
         ),
         'coin:schachomeorganization' => array(),
 
+        'NameIDFormat' => array(
+            'type' => 'select',
+            'required'=>FALSE,
+            'select_values' => array(
+                'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+                /**
+                 * @deprecated This is an incorrect name id format since unspecified does no longer exist in SAML 2.0, only use this for backwards compatibility
+                 */
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified'
+            ),
+            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+        ),
+
         // MDUI stuff
         'keywords:#'    => array('required' => TRUE, 'supported'=>array('en','nl')),
 
@@ -178,6 +179,20 @@ $template = array(
         'AssertionConsumerService:0:index' => array('required' => FALSE),
         'AssertionConsumerService:#:index' => array('required' => FALSE, 'supported' => array(1,2,3,4,5,6,7,8,9)),
 
+        'NameIDFormat' => array(
+            'type' => 'select',
+            'required'=>TRUE,
+            'select_values' => array(
+                'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+                /**
+                 * @deprecated This is an incorrect name id format since unspecified does no longer exist in SAML 2.0, only use this for backwards compatibility
+                 */
+                'urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified'
+            ),
+            'default' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+        ),
         'NameIDFormats:#' => array(
             'supported' => array(0,1,2),
             'type' => 'select',
