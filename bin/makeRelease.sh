@@ -61,6 +61,7 @@ rm -f ${PROJECT_DIR}/bin/install.sh
 rm -f ${PROJECT_DIR}/bin/makeRelease.sh
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
 rm -rf ${JANUS_DIR}/www/install
+rm -rf ${JANUS_DIR}/app/config/parameters
 
 # create tarball
 RELEASE_TARBALL_NAME=${PROJECT_DIR_NAME}.tar.gz
