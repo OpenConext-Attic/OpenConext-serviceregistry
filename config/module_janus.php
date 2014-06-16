@@ -19,12 +19,11 @@ $config = array(
      * Auth source used to gain access to JANUS
      */
     'auth' => 'default-sp',
-    #'auth'=>'admin',
+
     /*
      * Attibute used to identify users
      */
-    'useridattr' => 'NameID',
-    #'useridattr' => 'user',
+    'useridattr' => 'urn:mace:dir:attribute-def:eduPersonTargetedID',
 
     /*
      * Configuration for the database connection.
