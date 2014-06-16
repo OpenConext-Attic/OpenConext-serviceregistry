@@ -55,7 +55,6 @@ $config = array(
      * Dashboard configuration.
      */
     'dashboard.inbox.paginate_by' => 20,
-    'dashboard.arp.paginate_by' => 20,
 
     /*
      * Metadata field used as pretty name for entities
@@ -238,26 +237,7 @@ $config = array(
         ),
     ),
 
-    /*
-     * Cron tags says when Janus hook is executed
-     * Uncomment to enable the cron job
-     */
-    //'cron' => array('daily'),
 
-
-    /*
-     * Configuration of JANUS aggregators
-     */
-    'aggregators' => array(
-        'prod-sp' => array(
-            'state' => 'prodaccepted',
-            'type' => 'saml20-sp',
-        ),
-        'prod-idp' => array(
-            'state' => 'prodaccepted',
-            'type' => 'saml20-idp',
-        ),
-    ),
 
     'export.external' => array(
         'filesystem' => array(
