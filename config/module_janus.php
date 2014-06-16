@@ -86,7 +86,7 @@ $config = array(
     /*
      * Enable self user creation
      */
-    'usercreation.allow' => true,
+    'user.autocreate' => true,
 
     /*
      * Configuration of systems in JANUS.
