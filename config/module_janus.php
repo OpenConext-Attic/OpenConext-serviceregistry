@@ -237,44 +237,24 @@ $config = array(
         ),
     ),
 
+    'mdexport.default_options' => array(
+        'entitiesDescriptorName' => 'Federation',
 
+        'maxCache' => 60 * 60 * 24, // 24 hour cache time
+        'maxDuration' => 60 * 60 * 24 * 5, // Maximum 5 days duration on ValidUntil.
 
-    'export.external' => array(
-        'filesystem' => array(
-            'class' => 'janus:FileSystem',
-            'name' => 'Filesystem',
-            'option' => array(
-                'path' => '/path/to/put/metadata.xml',
-            ),
-        ),
-        'FTP' => array(
-            'class' => 'janus:FTP',
-            'name' => 'FTP',
-            'option' => array(
-                'host' => 'hostname',
-                'path' => '/path/to/put/metadata.xml',
-                'username' => 'jach',
-                'password' => 'xxx',
-            ),
-        ),
+        /* Whether metadata should be signed. */
+        'sign.enable' => FALSE,
+
+        /* Private key which should be used when signing the metadata. */
+        'sign.privatekey' => 'server.pem',
+
+        /* Password to decrypt private key, or NULL if the private key is unencrypted. */
+        'sign.privatekey_pass' => NULL,
+
+        /* Certificate which should be included in the signature. Should correspond to the private key. */
+        'sign.certificate' => 'server.crt',
     ),
-
-    'export.entitiesDescriptorName' => 'Federation',
-
-    'maxCache' => 60 * 60 * 24, // 24 hour cache time
-    'maxDuration' => 60 * 60 * 24 * 5, // Maximum 5 days duration on ValidUntil.
-
-    /* Whether metadata should be signed. */
-    'sign.enable' => FALSE,
-
-    /* Private key which should be used when signing the metadata. */
-    'sign.privatekey' => 'server.pem',
-
-    /* Password to decrypt private key, or NULL if the private key is unencrypted. */
-    'sign.privatekey_pass' => NULL,
-
-    /* Certificate which should be included in the signature. Should correspond to the private key. */
-    'sign.certificate' => 'server.crt',
 
     /* Whether metadata should be encrypted, e.g. do we also import encryption certificates */
     'encryption.enable' => FALSE,
