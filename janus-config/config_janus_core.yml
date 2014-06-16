@@ -1,9 +1,9 @@
 janus_service_registry_core:
     admin:
-        name: 'SURFconext admin'
-        email: surfconext-admin@example.edu
-    auth: admin
-    useridattr: user
+        name: 'SURFconext'
+        email: info@surfconext.nl
+    auth: default-sp
+    useridattr: NameID
     user:
         autocreate: true
     dashboard:
