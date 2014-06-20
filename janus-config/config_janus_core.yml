@@ -3,7 +3,7 @@ janus_service_registry_core:
         name: 'SURFconext'
         email: info@surfconext.nl
     auth: default-sp
-    useridattr: NameID
+    useridattr: nameid
     user:
         autocreate: true
     dashboard:
