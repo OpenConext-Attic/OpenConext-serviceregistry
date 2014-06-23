@@ -158,7 +158,7 @@ $config = array(
             'name' => 'urn:mace:dir:attribute-def:eduPersonAffiliation',
             'specify_values' => TRUE,
         ),
-        'eduPersonAffiliation' => array(
+        'eduPersonScopedAffiliation' => array(
             'name' => 'urn:mace:dir:attribute-def:eduPersonScopedAffiliation',
             'specify_values' => TRUE,
         ),
