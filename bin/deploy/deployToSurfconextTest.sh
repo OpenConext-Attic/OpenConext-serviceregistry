@@ -45,7 +45,9 @@ ssh lucas@surf-test <<COMMANDS
 
     # Copy unpacked tar
     mv ${PROJECT_DIR_NAME} ${TARGET_DIR_NAME}
-    cd ${TARGET_DIR_NAME}
+    cd ${TARGET_DIR_NAME}/simplesamlphp/modules/janus/app/config
+    ln -sf /etc/surfconext/serviceregistry.module_janus.parameters.yml parameters.yml
 
+    cd ${TARGET_DIR_NAME}
     bin/migrate
 COMMANDS

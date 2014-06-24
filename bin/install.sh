@@ -71,6 +71,14 @@ cd $JANUS_DIR/dictionaries && \
 ln -sf ../../../../janus-dictionaries/metadatafields.definition.json \
 metadatafields-custom.definition.json
 
+# Add/override Janus config
+cd $ROOT_DIR
+for FILENAME in janus-config/*
+do
+    cd $JANUS_DIR/app/config/
+    ln -sf  ../../../../../$FILENAME
+done
+
 # Delete unused config, metadata and modules
 cd $ROOT_DIR
 rm -rf $SSP_DIR/config/acl.php   \
