@@ -2,7 +2,7 @@
 
 ROOT_DIR=$(pwd)
 SSP_VERSION="1.12.0"
-JANUS_VERSION="feature/472-convert-config-to-yml"
+JANUS_VERSION="develop"
 SSP_DIR="$ROOT_DIR/simplesamlphp"
 SSP_MODULES_DIR="$SSP_DIR/modules"
 JANUS_DIR="$SSP_MODULES_DIR/janus"
