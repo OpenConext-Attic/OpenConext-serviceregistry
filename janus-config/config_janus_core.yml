@@ -1,9 +1,9 @@
 janus_service_registry_core:
     admin:
-        name: 'SURFconext'
+        name: Surfconext
         email: info@surfconext.nl
     auth: default-sp
-    useridattr: NameID
+    useridattr: 'urn:mace:dir:attribute-def:eduPersonTargetedID'
     user:
         autocreate: true
     dashboard:
@@ -62,6 +62,9 @@ janus_service_registry_core:
             name: 'urn:mace:terena.org:attribute-def:schacHomeOrganizationType'
         eduPersonAffiliation:
             name: 'urn:mace:dir:attribute-def:eduPersonAffiliation'
+            specify_values: true
+        eduPersonScopedAffiliation:
+            name: 'urn:mace:dir:attribute-def:eduPersonScopedAffiliation'
             specify_values: true
         eduPersonEntitlement:
             name: 'urn:mace:dir:attribute-def:eduPersonEntitlement'
