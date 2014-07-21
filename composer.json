@@ -3,16 +3,19 @@
     "description": "Idp/Sp metadata registry",
     "require": {
         "php": ">=5.3.3",
-        "dbpatch/dbpatch" : "~1.2"
+        "dbpatch/dbpatch" : "~1.2",
+        "symfony/yaml": "*"
     },
     "autoload": {
-        "classmap": [ "lib/"]
+        "classmap": [ "lib/", "vendor/dbpatch/dbpatch/src"]
     },
     "scripts": {
         "post-install-cmd": [
+            "bin/stripZendFrameworkRequires.sh",
             "bin/install.sh"
         ],
         "post-update-cmd": [
+            "bin/stripZendFrameworkRequires.sh",
             "bin/install.sh"
         ]
     }

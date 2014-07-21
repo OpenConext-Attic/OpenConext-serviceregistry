@@ -23,19 +23,8 @@
  * @copyright Copyright © 2010-2011 SURFnet SURFnet bv, The Netherlands (http://www.surfnet.nl)
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  */
-
-set_include_path(realpath(__DIR__ . '/../vendor/dbpatch/dbpatch/src/') . PATH_SEPARATOR . get_include_path());
-
 // Include SSP
-require __DIR__ . '/../www/_include.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-// Include Zend Autoloader
-require_once 'Zend/Loader/Autoloader.php';
-$autoloader = Zend_Loader_Autoloader::getInstance();
-$autoloader->registerNamespace('DbPatch_');
-$autoloader->registerNamespace('ServiceRegistry_');
-
-// Start DbPatch
-require_once __DIR__ . "/../lib/ServiceRegistry/DbPatch/Core/Application.php";
 $application = new ServiceRegistry_DbPatch_Core_Application();
 $application->main();
