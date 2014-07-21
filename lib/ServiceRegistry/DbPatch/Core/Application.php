@@ -23,11 +23,12 @@ class ServiceRegistry_DbPatch_Core_Application extends DbPatch_Core_Application
             throw new \RuntimeException("Parameters file cannot be read '{$pathToParameters}''");
         }
 
+        // Read parameters from file
         $parametersYaml = file_get_contents($pathToParameters);
         $yamlParser = new \Symfony\Component\Yaml\Parser();
         $parameters = $yamlParser->parse($parametersYaml);
 
-
+        // Extract db parameters
         $databaseParameters = array();
         $prefix = 'database_';
         $prefixLength = strlen($prefix);
