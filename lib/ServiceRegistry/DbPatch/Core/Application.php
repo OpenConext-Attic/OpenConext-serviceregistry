@@ -20,7 +20,7 @@ class ServiceRegistry_DbPatch_Core_Application extends DbPatch_Core_Application
     {
         $pathToParameters = realpath(__DIR__ . '/../../../../simplesamlphp/modules/janus/app/config/parameters.yml');
         if (!is_readable($pathToParameters)) {
-            throw new \RuntimeException("Parameters file cannot be read");
+            throw new \RuntimeException("Parameters file cannot be read '{$pathToParameters}''");
         }
 
         $parametersYaml = file_get_contents($pathToParameters);
