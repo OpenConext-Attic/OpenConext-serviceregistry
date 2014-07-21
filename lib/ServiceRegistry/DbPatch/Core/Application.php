@@ -10,32 +10,49 @@ class ServiceRegistry_DbPatch_Core_Application extends DbPatch_Core_Application
 {
     const PATCH_DIR_RELATIVE = '/../../../../database/patch';
 
+    /**
+     * Loads Janus database parameters
+     *
+     * @return array
+     * @throws RuntimeException
+     */
     private function _getDatabaseConfig()
     {
-        return new Zend_Config(SimpleSAML_Configuration::getConfig('module_janus.php')->getArray('store'));
+        $pathToParameters = realpath(__DIR__ . '/../../../../simplesamlphp/modules/janus/app/config/parameters.yml');
+        if (!is_readable($pathToParameters)) {
+            throw new \RuntimeException("Parameters file cannot be read");
+        }
+
+        $parametersYaml = file_get_contents($pathToParameters);
+        $yamlParser = new \Symfony\Component\Yaml\Parser();
+        $parameters = $yamlParser->parse($parametersYaml);
+
+
+        $databaseParameters = array();
+        $prefix = 'database_';
+        $prefixLength = strlen($prefix);
+        foreach($parameters['parameters'] as $name => $value) {
+            if(substr($name, 0, $prefixLength) === $prefix) {
+                $databaseParameters[substr($name, $prefixLength)] = $value;
+            }
+        }
+
+        return $databaseParameters;
     }
 
     protected function getConfig($filename = null)
     {
         $dbConfig = $this->_getDatabaseConfig();
 
-        $dsnParsed = parse_url($dbConfig->dsn);
-        $dsnPathParts = explode(';', $dsnParsed['path']);
-        $dsnProperties = array();
-        foreach ($dsnPathParts as $dsnPathPart) {
-            $dsnPathPart = explode('=', $dsnPathPart);
-            $dsnProperties[array_shift($dsnPathPart)] = implode($dsnPathPart, '=');
-        }
-
         $config = array(
             'db' => array(
-                'adapter'   => $this->_convertPdoDriverToZendDbAdapter($dsnParsed['scheme']),
+                'adapter'   => $this->_convertPdoDriverToZendDbAdapter('mysql'),
                 'params' => array(
-                    'host'      => isset($dsnProperties['host'])    ? $dsnProperties['host']    : 'localhost',
-                    'username'  => isset($dbConfig->username)       ? $dbConfig->username   : 'root',
-                    'password'  => isset($dbConfig->password)       ? $dbConfig->password       : '',
-                    'dbname'    => isset($dsnProperties['dbname'])  ? $dsnProperties['dbname']  : 'serviceregistry',
-                    'charset'   => isset($dsnProperties['charset']) ? $dsnProperties['charset'] : 'utf8',
+                    'host'      => $dbConfig['host'],
+                    'username'  => $dbConfig['user'],
+                    'password'  => $dbConfig['password'],
+                    'dbname'    => $dbConfig['name'],
+                    'charset'   => 'utf8',
                 ),
             ),
             'patch_directory' => realpath(__DIR__ . self::PATCH_DIR_RELATIVE),
