@@ -32,8 +32,8 @@ class ServiceRegistry_DbPatch_Core_Application extends DbPatch_Core_Application
         $databaseParameters = array();
         $prefix = 'database_';
         $prefixLength = strlen($prefix);
-        foreach($parameters['parameters'] as $name => $value) {
-            if(substr($name, 0, $prefixLength) === $prefix) {
+        foreach ($parameters['parameters'] as $name => $value) {
+            if (substr($name, 0, $prefixLength) === $prefix) {
                 $databaseParameters[substr($name, $prefixLength)] = $value;
             }
         }
@@ -47,13 +47,13 @@ class ServiceRegistry_DbPatch_Core_Application extends DbPatch_Core_Application
 
         $config = array(
             'db' => array(
-                'adapter'   => $this->_convertPdoDriverToZendDbAdapter('mysql'),
+                'adapter' => $this->_convertPdoDriverToZendDbAdapter('mysql'),
                 'params' => array(
-                    'host'      => $dbConfig['host'],
-                    'username'  => $dbConfig['user'],
-                    'password'  => $dbConfig['password'],
-                    'dbname'    => $dbConfig['name'],
-                    'charset'   => 'utf8',
+                    'host' => $dbConfig['host'],
+                    'username' => $dbConfig['user'],
+                    'password' => $dbConfig['password'],
+                    'dbname' => $dbConfig['name'],
+                    'charset' => 'utf8',
                 ),
             ),
             'patch_directory' => realpath(__DIR__ . self::PATCH_DIR_RELATIVE),
