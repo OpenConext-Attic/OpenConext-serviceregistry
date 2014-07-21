@@ -56,7 +56,7 @@ rm -rf ${PROJECT_DIR}/composer.lock
 rm -rf ${PROJECT_DIR}/.idea
 rm -rf ${PROJECT_DIR}/.git
 rm -f ${PROJECT_DIR}/.gitignore
-rm -f ${PROJECT_DIR}/bin/deploy
+rm -rf ${PROJECT_DIR}/bin/deploy
 rm -f ${PROJECT_DIR}/bin/install.sh
 rm -f ${PROJECT_DIR}/bin/makeRelease.sh
 rm -rf ${PROJECT_DIR}/simplesamlphp_patches
