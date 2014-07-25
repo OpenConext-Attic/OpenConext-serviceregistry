@@ -1,0 +1,8 @@
+--- vendor/simplesamlphp/simplesamlphp/www/index.php	2014-07-23 13:41:43.000000000 +0200
++++ vendor/simplesamlphp/simplesamlphp/www/index.php	2014-07-23 13:43:22.000000000 +0200
+@@ -3,4 +3,4 @@
+ require_once('_include.php');
+ 
+ 
+-SimpleSAML_Utilities::redirect(SimpleSAML_Module::getModuleURL('core/frontpage_welcome.php'));
++SimpleSAML_Utilities::redirect(SimpleSAML_Module::getModuleURL('janus/index.php'));
