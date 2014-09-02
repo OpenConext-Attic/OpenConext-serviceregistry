@@ -196,14 +196,14 @@ $config = array (
 	 * through https. If the user can access the service through
 	 * both http and https, this must be set to FALSE.
 	 */
-	'session.cookie.secure' => FALSE,
+	'session.cookie.secure' => TRUE,
 
 	/*
 	 * Options to override the default settings for php sessions.
 	 */
 	'session.phpsession.cookiename'  => null,
 	'session.phpsession.savepath'    => null,
-	'session.phpsession.httponly'    => FALSE,
+	'session.phpsession.httponly'    => TRUE,
 
 	/*
 	 * Option to override the default settings for the auth token cookie
