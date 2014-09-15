@@ -1,49 +1,22 @@
 {
     "name": "openconext/serviceregistry",
     "description": "Idp/Sp metadata registry",
-    "minimum-stability": "stable",
-    "repositories": [
-        {
-            "type":"package",
-            "package": {
-                "name": "simplesamlphp/simplesamlphp",
-                "version": "1.9.0",
-                "dist": {
-                    "url": "http://simplesamlphp.googlecode.com/files/simplesamlphp-1.9.0.tar.gz",
-                    "type": "tar"
-                },
-                "autoload": {
-                    "classmap": ["lib/"]
-                }
-            }
-        }
-    ],
     "require": {
-        "simplesamlphp/simplesamlphp": "~1.9",
-        "janus-ssp/janus": "~1.17",
-        "doctrine/migrations": "dev-master as 1",
-        "doctrine/doctrine-migrations-bundle": "dev-master as 1",
-        "dbpatch/dbpatch": "~1.1"
+        "php": ">=5.3.3",
+        "dbpatch/dbpatch" : "~1.2",
+        "symfony/yaml": "*"
     },
     "autoload": {
-        "classmap": [ "lib/"]
-    },
-    "extra": {
-        "symfony-app-dir": "vendor/janus-ssp/janus/app",
-        "symfony-web-dir": "vendor/janus-ssp/janus/web"
+        "classmap": [ "lib/", "vendor/dbpatch/dbpatch/src"]
     },
     "scripts": {
         "post-install-cmd": [
-            "bin/simplesamlphp-post-install.sh",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "bin/stripZendFrameworkRequires.sh",
+            "bin/install.sh"
         ],
         "post-update-cmd": [
-            "bin/simplesamlphp-post-install.sh",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "bin/stripZendFrameworkRequires.sh",
+            "bin/install.sh"
         ]
     }
 }

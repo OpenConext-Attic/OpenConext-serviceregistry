@@ -22,6 +22,7 @@ fi
 ./bin/makeRelease.sh ${TAG}
 
 #@todo get these variables from makeRelease script
+DATA_DIR="/opt/data/test"
 PROJECT_NAME=OpenConext-serviceregistry
 RELEASE_DIR=${HOME}/Releases
 PROJECT_DIR_NAME=$(echo "${PROJECT_NAME}-${TAG}"| sed -e "s/\//-/g")
@@ -36,7 +37,7 @@ scp ${RELEASE_TARBALL_FILE} lucas@surf-test:/opt/data/test/
 # @todo add error handling
 # Replace current version with new version and run migrations
 ssh lucas@surf-test <<COMMANDS
-    cd /opt/data/test
+    cd ${DATA_DIR}
 
     # Unpack and remove tar
     tar -xzf ${RELEASE_TARBALL_NAME}
@@ -45,7 +46,9 @@ ssh lucas@surf-test <<COMMANDS
 
     # Copy unpacked tar
     mv ${PROJECT_DIR_NAME} ${TARGET_DIR_NAME}
-    cd ${TARGET_DIR_NAME}
+    cd ${TARGET_DIR_NAME}/simplesamlphp/modules/janus/app/config
+    ln -sf /etc/surfconext/serviceregistry.module_janus.parameters.yml parameters.yml
 
+    cd ${DATA_DIR}/${TARGET_DIR_NAME}
     bin/migrate
 COMMANDS
