@@ -1,3 +1,8 @@
+# This project has been made obsolete by SURFConext-Deploy! #
+See: https://github.com/SURFconext/SURFconext-deploy/tree/master/ansible/roles/janus
+
+
+
 # OpenConext Service Registry #
 
 ServiceRegistry (SR) is a web-based registry for managing federation metadata, including
