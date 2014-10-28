@@ -1,7 +1,7 @@
 # This project has been made obsolete by SURFConext-Deploy! #
 See: https://github.com/SURFconext/SURFconext-deploy/tree/master/ansible/roles/janus
 
-
+---
 
 # OpenConext Service Registry #
 
