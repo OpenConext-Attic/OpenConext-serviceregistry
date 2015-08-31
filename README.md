@@ -6,7 +6,7 @@ the OAuth metadata of entities that work with the OpenConext platform.  The prod
 based on JANUS, originally developed by WAYF, the Danish Federation Operator and now
 maintained by SURFnet.  Only a few minor configuration extensions were applied to implement
 JANUS into the ServiceRegistry module of OpenConext.  For more information on JANUS, please
-visit http://code.google.com/p/janus-ssp/.
+visit https://github.com/janus-ssp/janus.
 
 The SR allows the following:
 1. administering of SAML2 metadata for the federation.
