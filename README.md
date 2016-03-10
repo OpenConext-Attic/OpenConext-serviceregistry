@@ -1,3 +1,9 @@
+# Deprecated
+
+This repository is deprecated, abandoned and obsolete. It should be deleted but instead you find a link to the Github repository you should turn to, to get a genuine and truly working copy of Service Registry AKA Janus.
+
+https://github.com/janus-ssp/janus
+
 # OpenConext Service Registry #
 
 ServiceRegistry (SR) is a web-based registry for managing federation metadata, including
